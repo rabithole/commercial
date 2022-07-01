@@ -38,7 +38,7 @@ exports.up = function(knex) {
         table.float('balance').notNullable();
         table.float('amount_paid').notNullable().unsigned();
         table.datetime('date_time', { precision: 6 }).defaultTo(knex.fn.now(6)).notNullable().unsigned();
-        table.boolean('fullfillment')defaultTo('no', { fullfillment: 'fullfillment_value' }).notNullable();
+        table.boolean('fullfillment').defaultTo('no', { fullfillment: 'fullfillment_value' }).notNullable();
         table.string('notes', [1000]).nullable();
         table.integer('order_id').notNullable().unsigned();
     })
@@ -47,6 +47,13 @@ exports.up = function(knex) {
         table.float('total').notNullable().unsigned();
         table.float('balance').notNullable();
         table.float('amount_paid').notNullable().unsigned();
+        table.datetime('date_time', { precision: 6 }).defaultTo(knex.fn.now(6)).notNullable().unsigned();
+        table.boolean('fullfillment').defaultTo('no', { fullfillment: 'fullfillment_value'}).notNullable();
+
+        // Be sure to use stringify when building route 
+        table.json('products').notNullable();
+        table.string('notes', [1000]).nullable();
+        table.integer('company_id').notNullable().unsigned().references('companies.company_id').onUpdate('CASCADE').onDelete('CASCADE');
     })
 };
 
@@ -60,4 +67,6 @@ exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists('companies');
     .dropTableIfExists('employee');
+    .dropTableIfExists('invoice');
+    .dropTableIfExists('order');
 };
