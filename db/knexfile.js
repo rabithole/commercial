@@ -7,9 +7,9 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'testDb',
-      user:     'robert',
-      password: null,
+      database: 'testdb',
+      user:     'postgres',
+      password: 'h6eB?n;x%],5cA$_',
     },
     pool: {
       min: 2,
@@ -17,6 +17,9 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds'
     }
   },
 
