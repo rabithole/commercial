@@ -10,7 +10,7 @@ exports.up = function(knex) {
     table.float('balance');
     table.float('paid');
     table.datetime('date_time');
-    table.boolean('fullfillment');
+    table.boolean('fulfillment');
     table.float('total');
     table.text('notes');
 
