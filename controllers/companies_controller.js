@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get('/', (req, res) => {
+router.get('/companies', (req, res) => {
     Company.query()
     .then(data => {
         res.status(200).json(data);
