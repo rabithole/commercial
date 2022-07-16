@@ -1,25 +1,26 @@
 const express = require('express');
-const Company = require('../db/models/companies_model');
-// const { address } = require('../db/models/companies_model');
+// const Company = require('../db/models/companies_model');
+const companyRouter = require('../controllers/companies_controller');
+const employeesRouter = require('../controllers/employees_controller');
+const invoicesController = require('../controllers/invoices_controller');
+const membershipsController = require('../controllers/memberships_controller');
+const orderLineItemsController = require('../controllers/order_line_items_controller');
+const ordersController = require('../controllers/orders_controller');
 
-const router = express.Router();
+const router = express();
 
-router.get('/', (req, res) => {
-    res.send(router.stack
-        .filter(r => r.route) 
-        .map(r => r.route.path))
-})
+router.use(express.json());
 
-router.get('/routes', (req, res) => {
- res.status(200).json({ server: 'You found the routes directory'})
+router.use('/companies', companyRouter);
+router.use('/employees', employeesRouter);
+router.use('/invoices', invoicesController);
+router.use('/memberships', membershipsController);
+router.use('/orderLineItems', orderLineItemsController);
+router.use('/orders', ordersController);
+
+router.get('/', (request, response) => {
+    response.status(200).json({ server: 'Is Running'})
 });
-
-router.get('/companies', async (req, res, next) => {
-    // const { id, name } = req.params;
-    const company = await Company.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
-    console.log('Name:', company);
-    res.json(company);
-})
 
 module.exports = router;
 

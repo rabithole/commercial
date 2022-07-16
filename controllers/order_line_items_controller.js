@@ -1,19 +1,23 @@
 const express = require('express');
-const Company = require('../db/models/companies_model.js');
+const OrderLineItems = require('../db/models/order_line_items_model.js');
 
 const router = express.Router();
 
 router.use(express.json());
 
+router.get('/test', (req, res) => {
+ res.status(200).json({ server: 'You found the companies controller'})
+});
+
 // router.get('/companies', async (req, res, next) => {
 //     // const { id, name } = req.params;
-//     const company = await Company.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
+//     const company = await OrderLineItems.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
 //     console.log('Name:', company);
 //     res.json(company);
 // })
 
 router.get('/', (req, res) => {
-    Company.query()
+    OrderLineItems.query()
     .then(data => {
         res.status(200).json(data);
     })

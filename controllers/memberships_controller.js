@@ -1,12 +1,12 @@
 const express = require('express');
-const Employee = require('../db/models/employees_model.js');
+const Memberships = require('../db/models/memberships_model.js');
 
 const router = express.Router();
 
 router.use(express.json());
 
 router.get('/', (req, res) => {
-    Employee.query()
+    Memberships.query()
     .then(data => {
         res.status(200).json(data);
     })

@@ -1,5 +1,5 @@
 const { Model } = require('objection');
-const db = require('../db/testDb')
+const db = require('../../db/testDb')
 
 Model.knex(db)
 
