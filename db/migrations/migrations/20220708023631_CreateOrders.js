@@ -5,8 +5,8 @@
 exports.up = function(knex) {
   return knex.schema.createTable('orders', table => {
     table.increments();
-    table.integer('company_id');
-    table.integer('user_id');
+    table.integer('company_id').references('id').inTable('companies').onUpdate('CASCADE').onDelete('CASCADE');
+    table.integer('user_id').references('id').inTable('employees').onUpdate('CASCADE').onDelete('CASCADE');
     table.string('status');
     table.text('notes');
 

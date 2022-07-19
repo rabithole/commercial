@@ -7,11 +7,11 @@ exports.up = function(knex) {
         table.increments();
         table.string('first_name').notNullable();
         table.string('last_name').notNullable();
-        table.string('email').unique();
-        table.string('phone').checkRegex('[0-9]{10}');
+        table.string('email').notNullable().unique(); // email is username
+        table.string('phone').notNullable().checkRegex('[0-9]{10}');
         table.string('password').notNullable();
-        table.string('username');
         table.string('title');
+        // add timestamps table? table.timestamps(true, true). referencing the "true, true" in the timestamps function (created at, updated at)
     })
 };
 
@@ -21,5 +21,4 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
     return knex.schema.dropTableIfExists('employees');
-  
 };

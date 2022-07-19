@@ -6,14 +6,15 @@ exports.up = function(knex) {
   return knex.schema.createTable('companies', table => {
         table.increments(); 
         table.string('name').notNullable();
-        table.integer('cost_plus').notNullable().unsigned();
+        table.integer('cost_plus').notNullable().unsigned().defaultsTo(15); // unsigend means no negative numbers
         table.string('street').notNullable();
         table.string('city').notNullable();
         table.string('state').notNullable();
 
         // cannot specify integer length in postgres?
-        table.integer('zip', 5);  
-        table.float('annual_revenue');
+        table.integer('zip', 5).notNullable();  
+        table.float('annual_revenue').unsigned(); // Foreign key? 
+        table.integer('user_id').references('id').inTable('employees').onUpdate('CASCADE').onDelete('CASCADE');
     })
 };
 
