@@ -1,11 +1,11 @@
 const express = require('express');
 // const Company = require('../db/models/companies_model');
-const companyController = require('../controllers/companies_controller');
-const employeesController = require('../controllers/employees_controller');
-const invoicesController = require('../controllers/invoices_controller');
-const membershipsController = require('../controllers/memberships_controller');
-const orderLineItemsController = require('../controllers/order_line_items_controller');
-const ordersController = require('../controllers/orders_controller');
+const companyController = require('./companies_controller');
+const employeesController = require('./employees_controller');
+const invoicesController = require('./invoices_controller');
+const membershipsController = require('./memberships_controller');
+const orderLineItemsController = require('./order_line_items_controller');
+const ordersController = require('./orders_controller');
 
 const router = express();
 
