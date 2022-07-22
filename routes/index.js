@@ -15,7 +15,7 @@ router.use('/companies', companyController);
 router.use('/employees', employeesController);
 router.use('/invoices', invoicesController);
 router.use('/memberships', membershipsController);
-router.use('/orderLineItems', orderLineItemsController);
+router.use('/order_Line_Items', orderLineItemsController);
 router.use('/orders', ordersController);
 
 router.get('/', (request, response) => {

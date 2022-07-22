@@ -10,4 +10,5 @@ exports.seed = async function(knex) {
     {id: 2, order_id: 2, product_id: 2, quantity: 1, unit_price: 67.05 },
     {id: 3, order_id: 3, product_id: 3, quantity: 5, unit_price: 23.34 }
   ]);
+  
 };
