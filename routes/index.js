@@ -19,7 +19,8 @@ router.use('/order_Line_Items', orderLineItemsController);
 router.use('/orders', ordersController);
 
 router.get('/', (request, response) => {
-    response.status(200).json({ server: 'Is Running'})
+    response.status(200).json({ server: 'Is Running'});
+    console.log('Found index.js')
 });
 
 module.exports = router;

@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+// import Company from '../routes/companies_controller';
 
 function EndPointData(props) {
-	await axios.get('/companies')
-		.then(function (response) {
-			console.log(response);
-		})
-		.catch(function (error) {
-			console.log(error);
+
+	useEffect(() => {
+		// axios.get('https://10.0.2.2:5080/companies')
+		axios.get('/../../routes/index')
+			.then(function (response) {
+				var info = response.data;
+				console.log('Response Yes', response, info);
+			})
+			.catch(function (error) {
+				console.log('Error happened here ---', error);
+			})
 		})
 
 	return (
 		<div>
-			
+			Data is being requested here...
 		</div>
 	);
 }

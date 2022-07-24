@@ -2,16 +2,17 @@
   "name": "commercial-page",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "migrate": "knex migrate:latest --knexfile db/migrations/knexfile.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.1",
     "knex": "^2.2.0",
     "objection": "^3.0.1",
