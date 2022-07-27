@@ -1,3 +1,20 @@
+# To Do List
+### Add env variables
+### Add restrictions to making duplicate companies etc
+### 
+
+
+# Questions for Brett
+### Searching api? 
+#### For individual companies
+#### For specific employee
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -22,18 +22,30 @@ router.get('/', (req, res) => {
     });
 })
 
-router.get('/:name', async (req, res) => {
-    const { id, name } = req.params;
-    const company = await Company.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
-    Company.query()
-    .then(data => {
-        res.status(200).json(company[id]);
-    })
-    .catch(error => {
-        res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
+router.get('/:key', async (req, res) => {
+    
+    let key = req.params.key;
+    console.log(key);
+
+    let data = await Company.query().findOne({
+        name: 'Discount Indoor Gardening'
     });
+    res.send(data);
+
+
+    // const { id, name } = req.params;
+    // const company = await Company.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
+    // Company.query()
+    // .then(data => {
+    //     res.status(200).json(company[id]);
+    // })
+    // .catch(error => {
+    //     res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
+    // });
 })
 
+
+// Add restrictions to making a duplicate company
 router.post('/', (req, res) => {
     console.log(req.body)
     Company.query().insert(req.body)
