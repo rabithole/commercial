@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
     });
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:name', async (req, res) => {
     const { id, name } = req.params;
     const company = await Company.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
     Company.query()
