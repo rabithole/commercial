@@ -7,13 +7,15 @@ function App() {
 
   return (
     <div className="App">
-      <CompanyList />
       
       <header className="App-header">
         <p>
-          Something is gonna happen here... Or here!
+          Header to come...
         </p>
       </header>        
+
+      <CompanyList />
+
     </div>
   );
 }

@@ -8,6 +8,10 @@ class Company extends Model {
     return 'companies';
   };
 
+  // static get idColumn() {
+  //   return 'id';
+  // }
+
   static get virtualAttributes() {
     return ['address'];
   }

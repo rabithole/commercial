@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../css/companies.css';
 
 function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
@@ -18,15 +19,18 @@ function CompaniesList(props) {
 		},[]);
 
 	return (
-		<section>
+		<section className='company-cards-container'>
 			{companiesList.map(company => (
-				<div>
-					<h3>Name: {company.name}</h3>
-					<p>Address: <br/>{company.street}<br/>{company.city} {company.state} {company.zip}</p>
+				<div className='company-card'>
+					<h3>{company.name}</h3>
+					<div>
+				{/* Markup percentage to be entered from individual companies page */}
+						<p>Markup: {company.cost_plus}%</p>
 
-					<p>Markup: {company.cost_plus}</p>
-					<p>Annual Revenue: {company.annual_revenue}</p>
-					<p>List of users to come...</p>
+					{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}
+						<p>Annual Revenue: ${company.annual_revenue}</p>
+						<p>List of users to come...</p>
+					</div>
 					
 				</div>
 			))}
