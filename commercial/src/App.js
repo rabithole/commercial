@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import CompanyList from './components/companies_list';
 
@@ -10,7 +11,7 @@ function App() {
       
       <header className="App-header">
         <p>
-          Header to come...
+          <Link to='/single_company'>Company</Link>
         </p>
       </header>        
 

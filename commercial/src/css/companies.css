@@ -19,3 +19,11 @@
 		flex-direction: column;
 	}
 }
+
+input {
+	width: 50%;
+	height: 20px;
+	background-color: lightgrey;
+	box-shadow: 5px 5px 5px black;
+	font-size: large;
+}
