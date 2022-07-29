@@ -31,6 +31,7 @@ function CompaniesList(props) {
 			.get(`http://localhost:5080/companies/${singleCompany}`)
 			.then(function(response) {
 				console.log('Company Info', response.data)
+				// alert('Data', response.data)
 			}) 
 			.catch(error => {
 				console.log('Error has occured ---', error );
@@ -40,7 +41,7 @@ function CompaniesList(props) {
 
 	return (
 		<section className='company-cards-container'>
-			<form onSubmit={submitSearchQuery}>
+			<form onClick={submitSearchQuery}>
 				<p>Search for Company by Name</p>
 				<input type='text' id='name' name='name' onChange={getCompanyName}></input>
 			</form>
@@ -51,17 +52,17 @@ function CompaniesList(props) {
 				}else if(company.name.toLowerCase().includes(singleCompany.toLowerCase())) {
 					return company;
 				}
-			}).map((company) => (
-				<Link to={`/single_company/${singleCompany}`}>
-					<div className='company-card'>
-						<h3>{company.name}</h3>
+			}).map(({ name, cost_plus, annual_revenue, id}) => (
+				<Link to={`/single_company:${id}`}>
+					<div className='company-card' key={id}>
+						<h3>{name}</h3>
 
 						<div>
 							{/* Markup percentage to be entered from individual companies page */}
-							<p>Markup: {company.cost_plus}%</p>
+							<p>Markup: {cost_plus}%</p>
 
 							{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}
-							<p>Annual Revenue: ${company.annual_revenue}</p>
+							<p>Annual Revenue: ${annual_revenue}</p>
 							<p>List of users to come...</p>
 						</div>
 

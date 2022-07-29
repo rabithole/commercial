@@ -1,11 +1,12 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import axios from 'axios';
 import CompanyList from './components/companies_list';
 import SingleCompany from './components/single_company';
 
 function App() {
+  // let { companyId } = useParams();
 
   return (
     <BrowserRouter>
@@ -18,7 +19,7 @@ function App() {
         
         <Routes>
           <Route path='companies' exact element={<CompanyList />} />
-          <Route path='single_company' element={<SingleCompany />} />
+          <Route path='/single_company:id' element={<SingleCompany />} />
         </Routes>
       </div>
     </BrowserRouter>

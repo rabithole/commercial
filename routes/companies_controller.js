@@ -15,15 +15,23 @@ router.get('/', (req, res) => {
     });
 })
 
-router.get('/:name', async (req, res) => {
-    
-    let name = req.params.name;
-    console.log(name);
+router.get('/single_company', async (req, res) => {
+    // const companyId = 
+    // let id = req.params.id;
+    console.log('ID');
 
-    let data = await Company.query().findOne({
-        name: name
+    Company.query()
+    .then(data => {
+        res.status(200).json(data);
+    })
+    .catch(error => {
+        res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
     });
-    res.send(data);
+
+    // let data = await Company.query().findOne({
+    //     id: id
+    // });
+    // res.send(data);
 })
 
 
