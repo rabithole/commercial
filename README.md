@@ -11,7 +11,7 @@
 
 ### Install dependancies from package.json in commercial-page and commercial-page/commercial directories
 
-### /commercial-page command:
+### Run below command from directory: /commercial-page command:
 #### --- nodemon
-### /commercial-page/commercial:
+### Run below command from directory: /commercial-page/commercial:
 #### --- yarn start

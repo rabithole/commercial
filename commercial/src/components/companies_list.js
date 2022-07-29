@@ -62,7 +62,7 @@ function CompaniesList(props) {
 							<p>Markup: {cost_plus}%</p>
 
 							{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}
-							<p>Annual Revenue: ${annual_revenue}</p>
+							<p>Annual Revenue: ${new  Intl.NumberFormat().format(annual_revenue)}</p>
 							<p>List of users to come...</p>
 						</div>
 

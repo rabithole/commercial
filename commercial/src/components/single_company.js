@@ -5,16 +5,16 @@ import { Link, useParams } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState({})
-	console.log('Company Data', companyData)
+	// console.log('Company Data', companyData)
 
 	let { id } = useParams();
-	console.log('Id ---', id) 
+	// console.log('Id ---', id) 
 
 	useEffect(() => {
 		axios
 			.get('http://localhost:5080/companies/single_company/' + id)
 			.then(function(response) {
-				console.log('Response', response.data)
+				// console.log('Response', response.data)
 				setCompanyData(response.data)
 			})
 			.catch(error => {
@@ -29,12 +29,18 @@ function SingleCompany(props) {
 			</nav>
 		
 			<h3>{companyData.name}</h3>
-			<p>Street: {companyData.street}</p>
-			<p>City: {companyData.city}</p>
-			<p>State: {companyData.state}</p>
-			<p>Zip: {companyData.zip}</p>
-			<p>Pricing: {companyData.cost_plus}% Above our cost.</p>
-			<p>Annual Revenue: ${new  Intl.NumberFormat().format(companyData.annual_revenue)}</p>
+			<h4>Street:</h4> 
+			<blockquote>{companyData.street}</blockquote>
+			<h4>City:</h4> 
+			<blockquote>{companyData.city}</blockquote>
+			<h4>State:</h4> 
+			<blockquote>{companyData.state}</blockquote>
+			<h4>Zip:</h4> 
+			<blockquote>{companyData.zip}</blockquote>
+			<h4>Cost Plus / Percentage above our cost</h4>
+			<blockquote>{companyData.cost_plus}%</blockquote>
+			<h4>Annual Revenue:</h4> 
+			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
 		</div>
 	)
 }

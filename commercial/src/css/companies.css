@@ -1,6 +1,13 @@
+/* Global */
+
 /* List of all companies page */
 .company-cards-container {
 	margin: 5px;
+}
+
+.company-cards-container a {
+	color: black;
+	text-decoration: none;
 }
 
 .company-card {
@@ -29,8 +36,34 @@ input {
 	font-size: large;
 }
 
+
+
 /* Single Company Card */
 .single_company {
 	border: 2px solid black;
 	margin: 15px;
+	padding: 10px 30px;
+	text-align: left;
+	background-color: #7FB38E;
+}
+
+blockquote {
+	background-color: lightgrey;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+.single_company nav {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.single_company a {
+	text-decoration: none;
+	color: white;
+	font-size: large;
+	font-weight: bold;
+	background-color: #23453D;
+	padding: 8px 15px;
+	border-radius: 5px;
 }

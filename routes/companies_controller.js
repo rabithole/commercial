@@ -16,17 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/single_company/:id', async (req, res) => {
-    // const companyId = 
     let id = req.params.id;
-    console.log('ID', id);
-
-    // Company.query()
-    // .then(data => {
-    //     res.status(200).json(data);
-    // })
-    // .catch(error => {
-    //     res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
-    // });
 
     let data = await Company.query().findOne({
         id: id
