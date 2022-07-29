@@ -18,8 +18,8 @@ function App() {
         </header>    
         
         <Routes>
-          <Route path='companies' exact element={<CompanyList />} />
-          <Route path='/single_company:id' element={<SingleCompany />} />
+          <Route path='/' exact element={<CompanyList />} />
+          <Route path='companies/single_company:id' element={<SingleCompany />} />
         </Routes>
       </div>
     </BrowserRouter>

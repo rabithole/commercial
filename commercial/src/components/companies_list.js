@@ -53,7 +53,7 @@ function CompaniesList(props) {
 					return company;
 				}
 			}).map(({ name, cost_plus, annual_revenue, id}) => (
-				<Link to={`/single_company:${id}`}>
+				<Link to={`companies/single_company${id}`}>
 					<div className='company-card' key={id}>
 						<h3>{name}</h3>
 
