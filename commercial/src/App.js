@@ -1,23 +1,27 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import axios from 'axios';
 import CompanyList from './components/companies_list';
+import SingleCompany from './components/single_company';
 
 function App() {
 
   return (
-    <div className="App">
-      
-      <header className="App-header">
-        <p>
-          <Link to='/single_company'>Company</Link>
-        </p>
-      </header>        
-
-      <CompanyList />
-
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">
+          <h1>
+            The Header Man
+          </h1>
+        </header>    
+        
+        <Routes>
+          <Route path='companies' exact element={<CompanyList />} />
+          <Route path='single_company' element={<SingleCompany />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
