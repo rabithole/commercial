@@ -1,3 +1,4 @@
+/* List of all companies page */
 .company-cards-container {
 	margin: 5px;
 }
@@ -26,4 +27,10 @@ input {
 	background-color: lightgrey;
 	box-shadow: 5px 5px 5px black;
 	font-size: large;
+}
+
+/* Single Company Card */
+.single_company {
+	border: 2px solid black;
+	margin: 15px;
 }

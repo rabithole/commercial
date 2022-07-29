@@ -1,13 +1,14 @@
 # To Do List
 ### Add env variables
 ### Add restrictions to making duplicate companies etc
-### 
+### Add process for an employee to set cost plus pricing per company.
+#### Add method for an employee to modify all company data
+
+### Create process for employee to send add company info to a client.
 
 
 # Questions for Brett
-### Searching api? 
-#### For individual companies
-#### For specific employee
+
 
 
 

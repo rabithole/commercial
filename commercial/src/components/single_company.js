@@ -23,18 +23,18 @@ function SingleCompany(props) {
 	},[]);
 
 	return (
-		<div>
+		<div className='single_company'>
 			<nav>
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
 			<h3>{companyData.name}</h3>
-			<p>{companyData.street}</p>
-			<p>{companyData.city}</p>
-			<p>{companyData.state}</p>
-			<p>{companyData.zip}</p>
-			<p>{companyData.cost_plus}</p>
-			<p>{companyData.annual_revenue}</p>
+			<p>Street: {companyData.street}</p>
+			<p>City: {companyData.city}</p>
+			<p>State: {companyData.state}</p>
+			<p>Zip: {companyData.zip}</p>
+			<p>Pricing: {companyData.cost_plus}% Above our cost.</p>
+			<p>Annual Revenue: ${new  Intl.NumberFormat().format(companyData.annual_revenue)}</p>
 		</div>
 	)
 }
