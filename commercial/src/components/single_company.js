@@ -28,7 +28,7 @@ function SingleCompany(props) {
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h3>{companyData.name}</h3>
+			<h2>{companyData.name}</h2>
 			<h4>Street:</h4> 
 			<blockquote>{companyData.street}</blockquote>
 			<h4>City:</h4> 

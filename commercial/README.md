@@ -6,6 +6,9 @@
 
 ### Create process for employee to send add company info to a client.
 
+### Add textarea for notes in company profiles / pages
+### Company users list creation etc...
+
 
 # Questions for Brett
 

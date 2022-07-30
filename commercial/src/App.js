@@ -4,6 +4,7 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import axios from 'axios';
 import CompanyList from './components/companies_list';
 import SingleCompany from './components/single_company';
+import CreateCompany from './components/create_company';
 
 function App() {
   // let { companyId } = useParams();
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/' exact element={<CompanyList />} />
           <Route path='companies/single_company:id' element={<SingleCompany />} />
+          <Route path='companies/create_company' element={<CreateCompany />} />
         </Routes>
       </div>
     </BrowserRouter>

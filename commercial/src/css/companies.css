@@ -2,7 +2,20 @@
 
 /* List of all companies page */
 .company-cards-container {
-	margin: 5px;
+	margin: 15px 5px;
+	text-align: center;
+}
+
+#create_company_button {
+	color: white;
+	font-size: large;
+	font-weight: 400;
+	text-decoration: none;
+	background-color: #23453D;
+	padding: 8px 15px;
+	border-radius: 5px;
+	margin-left: 20px;
+	border: 5px solid white;
 }
 
 .company-cards-container a {
@@ -66,4 +79,25 @@ blockquote {
 	background-color: #23453D;
 	padding: 8px 15px;
 	border-radius: 5px;
+}
+
+
+/* Create company page / form */
+.single_company input {
+	margin-bottom: 25px;
+	padding-left: 45px;
+	width: 90%;
+	height: 30px;
+}
+
+.single_company label {
+	font-weight: bold;
+}
+
+.single_company textarea {
+	width: 90%;
+	background-color: lightgrey;
+	height: 80px;
+	box-shadow: 5px 5px 5px black;
+	border: 2px solid black;
 }
