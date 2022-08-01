@@ -27,12 +27,21 @@
 	border: 1px solid black;
 	background-color: lightgrey;
 	margin: 15px;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
 }
 
 .company-card div {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+}
+
+.company-card button {
+	width: 200px ;
+	padding: 5px 20px;
+
 }
 
 @media only screen and ( max-width: 600px ) {
@@ -113,4 +122,17 @@ button {
 
 .company button {
 	margin-top: 20px;
+	box-shadow: 5px 5px 8px lightblue;
+}
+
+.company h2 {
+	margin-top: 80px;
+	margin-bottom: 0px;
+	font-weight: 800;
+}
+
+.company hr {
+	height: 5px;
+	background-color: black;
+
 }

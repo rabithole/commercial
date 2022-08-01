@@ -37,6 +37,15 @@ router.post('/', (req, res) => {
     });
 })
 
+router.delete('/company/:id', async (req, res) => {
+    let id = req.params.id;
+
+    let data = await Company.query().findOne({
+        id: id
+    });
+    res.send(data);
+})
+
 module.exports = router;
 
 

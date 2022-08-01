@@ -43,7 +43,7 @@ function CreateCompany(props) {
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h2>Your Company Information</h2>
+			<h2>Input Your Company Information</h2>
 
 			<form onSubmit={handleSubmit}> 
 				<label>Company Name:</label><br/>
@@ -112,6 +112,8 @@ function CreateCompany(props) {
 				<button>Submit</button>
 			</form>
 
+			<hr/>
+
 			<h2>Primary Contact Information</h2>
 			<form>
 				<br/>
@@ -129,9 +131,9 @@ function CreateCompany(props) {
 					id='phone'
 					onChange={handleChange}  
 				/>
-			</form>
 
-			<button>Submit</button>
+				<button>Submit</button>
+			</form>
 		</div>
 	)
 }

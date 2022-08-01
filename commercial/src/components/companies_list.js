@@ -20,6 +20,15 @@ function CompaniesList(props) {
 			})
 	},[]);
 
+	const deleteItem = (event, item) => {
+    event.preventDefault();
+    axios.delete(`http://localhost:5000/friends/${item.id}`)
+      .then(res => {
+        this.setState({ friends: res.data });
+        this.props.history.push('/');
+      })
+  }
+
 	function getCompanyName(event) {
 		let inputValue = event.target.value;
 		setSingleCompany(inputValue);
@@ -41,8 +50,9 @@ function CompaniesList(props) {
 						return company;
 					}
 				}).map(({ name, cost_plus, annual_revenue, id}) => (
-					<Link to={`companies/company${id}`} key={id}>
-						<div className='company-card'>
+					
+						<div className='company-card' key={id}>
+							<Link to={`companies/company${id}`}>
 							<h3>{name}</h3>
 
 							<div>
@@ -53,9 +63,10 @@ function CompaniesList(props) {
 								<p>Annual Revenue: ${new  Intl.NumberFormat().format(annual_revenue)}</p>
 								<p>List of users to come...</p>
 							</div>
-
+							</Link>
+							<button>Delete Company</button>
 						</div>
-					</Link>
+					
 				))}
 			</section>
 		</div>
