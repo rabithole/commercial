@@ -12,7 +12,7 @@ function SingleCompany(props) {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:5080/companies/single_company/' + id)
+			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
 				// console.log('Response', response.data)
 				setCompanyData(response.data)
@@ -23,7 +23,7 @@ function SingleCompany(props) {
 	},[]);
 
 	return (
-		<div className='single_company'>
+		<div className='company'>
 			<nav>
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>

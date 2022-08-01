@@ -52,7 +52,7 @@ input {
 
 
 /* Single Company Card */
-.single_company {
+.company {
 	border: 2px solid black;
 	margin: 15px;
 	padding: 10px 30px;
@@ -66,12 +66,12 @@ blockquote {
 	border: 1px solid black;
 }
 
-.single_company nav {
+.company nav {
 	margin-top: 10px;
 	text-align: center;
 }
 
-.single_company a {
+.company a {
 	text-decoration: none;
 	color: white;
 	font-size: large;
@@ -83,21 +83,34 @@ blockquote {
 
 
 /* Create company page / form */
-.single_company input {
+.company input {
 	margin-bottom: 25px;
 	padding-left: 45px;
 	width: 90%;
 	height: 30px;
 }
 
-.single_company label {
+.company label {
 	font-weight: bold;
 }
 
-.single_company textarea {
+.company textarea {
 	width: 90%;
 	background-color: lightgrey;
 	height: 80px;
 	box-shadow: 5px 5px 5px black;
 	border: 2px solid black;
+}
+
+button {
+	color: white;
+	font-size: large;
+	font-weight: bold;
+	background-color: #23453D;
+	padding: 8px 15px;
+	border-radius: 5px;
+}
+
+.company button {
+	margin-top: 20px;
 }

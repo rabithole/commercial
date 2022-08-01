@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     });
 })
 
-router.get('/single_company/:id', async (req, res) => {
+router.get('/company/:id', async (req, res) => {
     let id = req.params.id;
 
     let data = await Company.query().findOne({

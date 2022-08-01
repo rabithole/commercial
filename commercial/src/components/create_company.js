@@ -4,58 +4,134 @@ import '../css/companies.css';
 import { Link, useParams } from 'react-router-dom';
 
 function CreateCompany(props) {
+	const [newCompany, setCompanyData] = useState({
+		name: '',
+		cost_plus: '',
+		street: '',
+		city: '',
+		state: '',
+		zip: ''
+	})
+	console.log('The New Company', newCompany)
 
-	let { id } = useParams();
+	const handleSubmit = event => {
+		event.preventDefault();
 
-	// useEffect(() => {
-	// 	axios
-	// 		.post('http://localhost:5080/companies/single_company/' + id)
-	// 		.then(function(response) {
-	// 			console.log('Response', response.data)
-	// 			setCompanyData(response.data)
-	// 		})
-	// 		.catch(error => {
-	// 			console.log('Error, error, error', error)
-	// 		})
-	// },[]);
+		// useEffect(() => {
+			axios
+				.post('http://localhost:5080/companies', newCompany)
+				.then(function(response) {
+					console.log('Response', response.data)
+					// setCompanyData(response.data)x
+				})
+				.catch(error => {
+					console.log('Error, error, error', error)
+				})
+		// },[]);
+	}
+
+	const handleChange = (event) => {
+		setCompanyData({
+			...newCompany,
+			[event.target.name]: event.target.value,
+		})
+	}
 
 	return (
-		<div className='single_company'>
+		<div className='company'>
 			<nav>
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h3>Your Company Information</h3>
+			<h2>Your Company Information</h2>
 
-			<form>
+			<form onSubmit={handleSubmit}> 
 				<label>Company Name:</label><br/>
-				<input type='text' id='name' />
+				<input 
+					type='text' 
+					id='name'
+					name='name'
+					onChange={handleChange} 
+				/>
 				<br/>
+
+				<label>Percentage Above Cost:</label><br/>
+				<input 
+					type='text' 
+					id='cost_plus'
+					name='cost_plus'
+					onChange={handleChange} 
+				/>
+				<br/>
+
 				<label>Street:</label><br/>
-				<input type='text' id='street' />
+				<input 
+					type='text' 
+					id='street'
+					name='street'
+					onChange={handleChange} 
+				/>
 				<br/>
+
 				<label>City:</label><br/>
-				<input type='text' id='city' />
+				<input 
+					type='text' 
+					id='city'
+					name='city'
+					onChange={handleChange} 
+				/>
 				<br/>
+
 				<label>State:</label><br/>
-				<input type='text' id='city' />
+				<input 
+					type='text' 
+					id='state' 
+					name='state'
+					onChange={handleChange} 
+				/>
 				<br/>
+
 				<label>Zip Code:</label><br/>
-				<input type='number' id='city' />
+				<input 	
+					type='number' 
+					id='zip'
+					name='zip' 
+					onChange={handleChange} 
+				/>
 				<br/>
+
 				<label>Notes:</label><br/>
-				<textarea name='notes' id='notes'></textarea>
+				<textarea 
+					name='notes' 
+					id='notes'
+					onChange={handleChange} 
+				>
+
+				</textarea>
+
+				<button>Submit</button>
 			</form>
 
-			<h3>Primary Contact Information</h3>
+			<h2>Primary Contact Information</h2>
 			<form>
 				<br/>
 				<label>Email:</label><br/>
-				<input type='email' id='email' />
+				<input 
+					type='email' 
+					id='email' 
+					onChange={handleChange} 
+				/>
 				<br/>
+
 				<label>Phone Number:</label><br/>
-				<input type='text' id='phone' />
+				<input 
+					type='text' 
+					id='phone'
+					onChange={handleChange}  
+				/>
 			</form>
+
+			<button>Submit</button>
 		</div>
 	)
 }
