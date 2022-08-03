@@ -3,11 +3,13 @@
 ### Add restrictions to making duplicate companies etc
 ### Add process for an employee to set cost plus pricing per company.
 #### Add method for an employee to modify all company data
+### Restrict company delettion process
 
 ### Create process for employee to send add company info to a client.
 
 ### Add textarea for notes in company profiles / pages
 ### Company users list creation etc...
+### Redirect after company creation and company delete
 
 
 # Questions for Brett

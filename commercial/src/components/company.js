@@ -5,7 +5,6 @@ import { Link, useParams } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState({})
-	// console.log('Company Data', companyData)
 
 	let { id } = useParams();
 	// console.log('Id ---', id) 
@@ -21,6 +20,14 @@ function SingleCompany(props) {
 				console.log('Error, error, error', error)
 			})
 	},[]);
+
+	const deleteItem = (event, item) => {
+	    event.preventDefault();
+	    	axios.delete('http://localhost:5080/companies/' + id)
+	      		.then(res => {
+	        		console.log('This Company has been deleted', companyData)
+	      })
+  	}
 
 	return (
 		<div className='company'>
@@ -41,6 +48,8 @@ function SingleCompany(props) {
 			<blockquote>{companyData.cost_plus}%</blockquote>
 			<h4>Annual Revenue:</h4> 
 			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
+
+			<button onClick={deleteItem}>Delete Company</button>
 		</div>
 	)
 }

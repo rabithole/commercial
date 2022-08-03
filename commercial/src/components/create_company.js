@@ -12,22 +12,17 @@ function CreateCompany(props) {
 		state: '',
 		zip: ''
 	})
-	console.log('The New Company', newCompany)
 
 	const handleSubmit = event => {
 		event.preventDefault();
-
-		// useEffect(() => {
-			axios
-				.post('http://localhost:5080/companies', newCompany)
-				.then(function(response) {
-					console.log('Response', response.data)
-					// setCompanyData(response.data)x
-				})
-				.catch(error => {
-					console.log('Error, error, error', error)
-				})
-		// },[]);
+		axios
+			.post('http://localhost:5080/companies', newCompany)
+			.then(function(res) {
+				console.log('Response', res.data)
+			})
+			.catch(error => {
+				console.log('Error, error, error', error)
+			})
 	}
 
 	const handleChange = (event) => {

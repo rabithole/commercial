@@ -7,28 +7,19 @@ function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
 	const [singleCompany, setSingleCompany] = useState([])
 
+	// Full list of companies
 	useEffect( () => {
 		axios
 			.get('http://localhost:5080/companies')
 			.then(function (response) {
 				setCompanyList(response.data)
-				// var companiesList = response.data;
-				console.log('Response Yes', response.data[0].name);
 			})
 			.catch(function (error) {
 				console.log('Error happened here ---', error);
 			})
 	},[]);
 
-	const deleteItem = (event, item) => {
-    event.preventDefault();
-    axios.delete(`http://localhost:5000/friends/${item.id}`)
-      .then(res => {
-        this.setState({ friends: res.data });
-        this.props.history.push('/');
-      })
-  }
-
+	// Search bar from list of companies
 	function getCompanyName(event) {
 		let inputValue = event.target.value;
 		setSingleCompany(inputValue);
@@ -43,6 +34,7 @@ function CompaniesList(props) {
 					<input type='text' id='name' name='name' onChange={getCompanyName}></input>
 				</form>
 
+				{/* Filters list of Companies */}
 				{companiesList.filter((company) => {
 					if(singleCompany == '') {
 						return company;
@@ -64,7 +56,6 @@ function CompaniesList(props) {
 								<p>List of users to come...</p>
 							</div>
 							</Link>
-							<button>Delete Company</button>
 						</div>
 					
 				))}

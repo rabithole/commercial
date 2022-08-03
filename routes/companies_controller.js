@@ -5,45 +5,54 @@ const router = express.Router();
 
 router.use(express.json());
 
+// Full list of companies
 router.get('/', (req, res) => {
     Company.query()
     .then(data => {
         res.status(200).json(data);
     })
     .catch(error => {
-        res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
+        res.status(500).json({message: 'Internal Server Error:' + error })
     });
 })
 
+// Grab single company from companies page
 router.get('/company/:id', async (req, res) => {
     let id = req.params.id;
 
-    let data = await Company.query().findOne({
-        id: id
-    });
-    res.send(data);
+    await Company.query().findOne({ id: id })
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Internal Server Error:' + error })
+        })
 })
 
 
 // Add restrictions to making a duplicate company
-router.post('/', (req, res) => {
-    console.log(req.body)
-    Company.query().insert(req.body)
+// Creates new company
+router.post('/', async (req, res) => {
+    await Company.query().insert(req.body)
     .then(data => {
         res.status(200).json(data);
     })
     .catch(error => {
-        res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
+        res.status(500).json({message: 'Internal Server Error:' + error })
     });
 })
 
-router.delete('/company/:id', async (req, res) => {
+// Deletes a company
+router.delete('/:id', async (req, res) => {
     let id = req.params.id;
 
-    let data = await Company.query().findOne({
-        id: id
-    });
-    res.send(data);
+    await Company.query().deleteById(id)
+        .then(data => {
+            res.status(200).json(data);
+        })
+        .catch(error => {
+            res.status(500).json({message: 'Internal Server Error:' + error })
+        })
 })
 
 module.exports = router;
