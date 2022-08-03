@@ -88,6 +88,7 @@ blockquote {
 	background-color: #23453D;
 	padding: 8px 15px;
 	border-radius: 5px;
+	box-shadow: 5px 5px 8px lightblue;
 }
 
 
@@ -134,5 +135,9 @@ button {
 .company hr {
 	height: 5px;
 	background-color: black;
+}
 
+/* Add employee page. This is linked to from the company page. */
+#employee_button {
+	margin-left: 2%;
 }

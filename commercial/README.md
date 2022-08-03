@@ -9,7 +9,9 @@
 
 ### Add textarea for notes in company profiles / pages
 ### Company users list creation etc...
-### Redirect after company creation and company delete
+
+### Add checks to stop accidental deletions
+#### Redirect after company creation and company delete
 
 
 # Questions for Brett

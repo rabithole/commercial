@@ -50,6 +50,7 @@ function SingleCompany(props) {
 			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
 
 			<button onClick={deleteItem}>Delete Company</button>
+			<button id='employee_button'>Add Employee Placeholder</button>
 		</div>
 	)
 }

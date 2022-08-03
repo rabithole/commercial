@@ -5,6 +5,7 @@ import axios from 'axios';
 import CompanyList from './components/companies_list';
 import SingleCompany from './components/company';
 import CreateCompany from './components/create_company';
+import Employees from './components/employees';
 
 function App() {
   // let { companyId } = useParams();
@@ -22,6 +23,7 @@ function App() {
           <Route path='/' exact element={<CompanyList />} />
           <Route path='companies/company:id' element={<SingleCompany />} />
           <Route path='companies/create_company' element={<CreateCompany />} />
+          <Route path='employees' element={<Employees />} />
         </Routes>
       </div>
     </BrowserRouter>
