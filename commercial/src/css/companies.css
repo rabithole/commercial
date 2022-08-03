@@ -140,4 +140,12 @@ button {
 /* Add employee page. This is linked to from the company page. */
 #employee_button {
 	margin-left: 2%;
+	text-decoration: none;
+	color: white;
+	font-size: large;
+	font-weight: bold;
+	background-color: #23453D;
+	padding: 8px 15px;
+	border-radius: 5px;
+	box-shadow: 5px 5px 8px lightblue;
 }

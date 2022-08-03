@@ -27,7 +27,7 @@ function CompaniesList(props) {
 
 	return (
 		<div>
-			<Link to={'companies/create_company'} id='create_company_button'>Create Company</Link>
+			<Link to={'create_company'} id='create_company_button'>Create Company</Link>
 			<section className='company-cards-container'>
 				<form>
 					<h3>Search for Company by Name</h3>

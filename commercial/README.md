@@ -13,6 +13,11 @@
 ### Add checks to stop accidental deletions
 #### Redirect after company creation and company delete
 
+// Employee / Employees
+### Password is in employee table. Need to reconfigure
+### Format phone numbers, emails etc...
+### Add validation for employee creation form
+
 
 # Questions for Brett
 
