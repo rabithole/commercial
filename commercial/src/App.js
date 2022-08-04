@@ -17,7 +17,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>
-            The Header Man
+            DIG Dashboard
           </h1>
         </header>    
         

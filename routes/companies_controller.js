@@ -5,8 +5,16 @@ const router = express.Router();
 
 router.use(express.json());
 
+router.get('/employees', (req, res) => {
+    console.log('List of employees')
+    Company.query().withGraphFetched('employees').then(company => {
+        res.json({ company });
+    })
+})
+
 // Full list of companies
 router.get('/', (req, res) => {
+    console.log('Companies here')
     Company.query()
     .then(data => {
         res.status(200).json(data);

@@ -1,5 +1,6 @@
 const { Model } = require('objection');
 const db = require('../../db/testDb.js')
+const Employee = require('./employees_model');
 
 Model.knex(db)
 
@@ -8,18 +9,18 @@ class Company extends Model {
     return 'companies';
   };
 
-  // static get idColumn() {
-  //   return 'id';
-  // }
-
-  // static get virtualAttributes() {
-  //   return ['address'];
-  // }
-
-  // address() {
-  //   return this.street + ' ' + this.city + ' ' + this.state + ' ' + this.zip;
-  //   // console.log('Address function')
-  // }
+  static get relationMappings() {
+    return {
+      employees: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Employee,
+        join: {
+          from: 'companies.id',
+          to: 'employees.id'
+        } 
+      }
+    }
+  }
 }
 
 module.exports = Company;
