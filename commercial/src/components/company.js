@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState({})
+	console.log('Company data', companyData.user_id)
 
 	let { id } = useParams();
 	// console.log('Id ---', id) 
@@ -13,7 +14,7 @@ function SingleCompany(props) {
 		axios
 			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
-				// console.log('Response', response.data)
+				console.log('Response', response.data)
 				setCompanyData(response.data)
 			})
 			.catch(error => {

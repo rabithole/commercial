@@ -12,10 +12,10 @@ class Company extends Model {
   static get relationMappings() {
     return {
       employees: {
-        relation: Model.BelongsToOneRelation,
+        relation: Model.HasManyRelation,
         modelClass: Employee,
         join: {
-          from: 'companies.id',
+          from: 'companies.user_id',
           to: 'employees.id'
         } 
       }

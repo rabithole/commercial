@@ -6,6 +6,8 @@ import '../css/companies.css';
 function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
 	const [singleCompany, setSingleCompany] = useState([])
+	const [employees, setEmployees] = useState([]);
+	console.log('employees', employees);
 
 	// Full list of companies
 	useEffect( () => {
@@ -13,9 +15,16 @@ function CompaniesList(props) {
 			.get('http://localhost:5080/companies')
 			.then(function (response) {
 				setCompanyList(response.data)
+				console.log('Company', response.data)
 			})
 			.catch(function (error) {
 				console.log('Error happened here ---', error);
+			});
+
+		axios
+			.get('http://localhost:5080/companies/employees')
+			.then(function (response) {
+				setEmployees(response.data.company)
 			})
 	},[]);
 

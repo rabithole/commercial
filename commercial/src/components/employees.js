@@ -5,6 +5,7 @@ import '../css/companies.css';
 
 function CompaniesList(props) {
 	const [employees, setEmployees] = useState([]);
+	console.log('employees', employees)
 
 	useEffect( () => {
 		axios

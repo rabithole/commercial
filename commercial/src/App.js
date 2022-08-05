@@ -23,9 +23,9 @@ function App() {
         
         <Routes>
           <Route path='/' exact element={<CompanyList />} />
-          <Route path='companies/company:id' element={<SingleCompany />} />
+          <Route path='/companies/company:id' element={<SingleCompany />} />
           <Route path='create_company' element={<CreateCompany />} />
-          <Route path='employees' element={<Employees />} />
+          <Route path='/employees' element={<Employees />} />
           <Route path='employees/create_employee' element={<CreateEmployee />} />
           <Route path='employees/employee/:id' element={<Employee />} />
         </Routes>

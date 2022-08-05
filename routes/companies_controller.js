@@ -6,10 +6,12 @@ const router = express.Router();
 router.use(express.json());
 
 router.get('/employees', (req, res) => {
-    console.log('List of employees')
-    Company.query().withGraphFetched('employees').then(company => {
-        res.json({ company });
-    })
+    console.log('List of employees does not exist')
+    Company.query().withGraphFetched('employees')
+        .then(company => {
+            console.log('Company', company)
+            res.json({ company });
+        })
 })
 
 // Full list of companies
