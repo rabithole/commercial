@@ -5,32 +5,37 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get('/employees', (req, res) => {
+// List of companies with employees
+router.get('/', (req, res) => {
     console.log('List of employees does not exist')
     Company.query().withGraphFetched('employees')
         .then(company => {
+            res.status(200).json(company);
             console.log('Company', company)
-            res.json({ company });
         })
+        .catch(error => {
+            res.status(500).json({message: 'Internal Server Error:' + error
+        })
+    });
 })
 
 // Full list of companies
-router.get('/', (req, res) => {
-    console.log('Companies here')
-    Company.query()
-    .then(data => {
-        res.status(200).json(data);
-    })
-    .catch(error => {
-        res.status(500).json({message: 'Internal Server Error:' + error })
-    });
-})
+// router.get('/', (req, res) => {
+//     console.log('Companies here')
+//     Company.query()
+//     .then(data => {
+//         res.status(200).json(data);
+//     })
+//     .catch(error => {
+//         res.status(500).json({message: 'Internal Server Error:' + error })
+//     });
+// })
 
 // Grab single company from companies page
 router.get('/company/:id', async (req, res) => {
     let id = req.params.id;
 
-    await Company.query().findOne({ id: id })
+    await Company.query().findOne({ id: id }).withGraphFetched('employees')
         .then(data => {
             res.status(200).json(data)
         })

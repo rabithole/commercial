@@ -13,14 +13,10 @@ class Company extends Model {
   static get relationMappings() {
     return {
       employees: {
-        relation: Model.ManyToManyRelation,
+        relation: Model.HasManyRelation,
         modelClass: Employee,
         join: {
-          from: 'companies.id',
-            through: {
-              from: 'memberships.company_id',
-              to: 'memberships.user_id'
-            },
+          from: 'companies.user_id',
           to: 'employees.id'
         } 
       }
