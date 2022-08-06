@@ -165,3 +165,9 @@ button {
 	border-radius: 5px;
 	box-shadow: 5px 5px 8px lightblue;
 }
+
+#create_employee_button {
+	margin-left: 30px;
+	position:  relative;
+	top: 2px;
+}

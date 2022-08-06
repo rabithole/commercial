@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function CreateCompany(props) {
+	// Pulling in company ID to set in the memberships table
+	const location = useLocation();
+	const state = location.state;
+	console.log("State / company ID", state)
+
 	const [newEmployee, setEmployeeInfo] = useState({
 		first_name: '',
 		last_name: '',
@@ -13,16 +18,47 @@ function CreateCompany(props) {
 		password: ''
 	})
 
+	const [newMambership, setEmployeeMembership] = useState({
+		company_id: state,
+		user_id: 0,
+		status: 't'
+	}) 
+	console.log('New Membership', newMambership)
+
+	function setMemberships() {
+		axios.post('http://localhost:5080/memberships', newMambership)
+			.then(function(res) {
+				console.log('Membership Response', res)
+			})
+			.catch(error => {
+				console.log('Membership Error', error)
+			})
+	}
+
 	const handleSubmit = event => {
 		event.preventDefault();
 		axios
 			.post('http://localhost:5080/employees', newEmployee)
 			.then(function(res) {
+				setEmployeeMembership({
+					company_id: Number(state), 
+					user_id: res.data.id,
+					status: 'y'
+				})
+				setMemberships();
 				console.log('Response', res.data)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
+
+		// axios.post('http://localhost:5080/memberships', newMambership)
+		// 	.then(function(res) {
+		// 		console.log('Membership Response', res)
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('Membership Error', error)
+		// 	})
 	}
 
 	const handleChange = (event) => {
@@ -35,10 +71,11 @@ function CreateCompany(props) {
 	return (
 		<div className='company'>
 			<nav>
-				<Link to='/employees'>Back to Employees</Link>
+				<Link to='/companies/company'>Back to Company</Link>
 			</nav>
 		
 			<h2>Add An Employee</h2>
+			{/*<p>Company ID: {state}</p>*/}
 
 			<form onSubmit={handleSubmit}> 
 				<label>First Name:</label><br/>

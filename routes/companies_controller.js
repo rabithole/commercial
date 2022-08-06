@@ -7,7 +7,6 @@ router.use(express.json());
 
 // List of companies with employees
 router.get('/', (req, res) => {
-    console.log('List of employees does not exist')
     Company.query().withGraphFetched('employees')
         .then(company => {
             res.status(200).json(company);

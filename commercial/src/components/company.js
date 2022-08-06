@@ -9,6 +9,7 @@ function SingleCompany(props) {
 	console.log('Company', companyData)
 
 	let { id } = useParams();
+	console.log('ID from params', id)
 
 	useEffect(() => {
 		axios
@@ -50,6 +51,7 @@ function SingleCompany(props) {
 			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
 
 			<h2>Employees</h2>
+
 			<section>
 				{companyData.employees && companyData.employees.map((company) => (
 					<div className='employee_list' key={id}>
@@ -62,7 +64,12 @@ function SingleCompany(props) {
 			</section>
 
 			<button onClick={deleteItem}>Delete Company</button>
-			{/*<Link to='/employees' id='employee_button'>Employees</Link>*/}
+			<Link 
+				to='/employees/create_employee'
+				id='create_employee_button'
+				state={id}
+				>Add Employee
+			</Link>
 		</div>
 	)
 }
