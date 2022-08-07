@@ -24,13 +24,16 @@ function CreateCompany(props) {
 		status: 't'
 	}) 
 	console.log('New Membership', newMambership)
+	console.log('New Employee', newEmployee)
 
-	function setMemberships() {
+	function setMemberships(newMambership) {
 		axios.post('http://localhost:5080/memberships', newMambership)
 			.then(function(res) {
+				console.log('New membershipt from set Membership function', newMambership)
 				console.log('Membership Response', res)
 			})
 			.catch(error => {
+				console.log('Set Memberships function', newMambership)
 				console.log('Membership Error', error)
 			})
 	}
