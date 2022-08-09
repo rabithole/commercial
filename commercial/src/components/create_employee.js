@@ -18,22 +18,22 @@ function CreateCompany(props) {
 		password: ''
 	})
 
-	const [newMambership, setEmployeeMembership] = useState({
-		company_id: state,
-		user_id: 0,
-		status: 't'
-	}) 
-	console.log('New Membership', newMambership)
+	// const [newMembership, setEmployeeMembership] = useState({
+	// 	company_id: state,
+	// 	user_id: 0,
+	// 	status: 't'
+	// }) 
+	// console.log('New Membership', newMembership)
 	console.log('New Employee', newEmployee)
 
-	function setMemberships(newMambership) {
-		axios.post('http://localhost:5080/memberships', newMambership)
+	function setMemberships(newMembership) {
+		axios.post('http://localhost:5080/memberships', newMembership)
 			.then(function(res) {
-				console.log('New membershipt from set Membership function', newMambership)
+				console.log('New membershipt from set Membership function', newMembership)
 				console.log('Membership Response', res)
 			})
 			.catch(error => {
-				console.log('Set Memberships function', newMambership)
+				console.log('Set Memberships function', newMembership)
 				console.log('Membership Error', error)
 			})
 	}
@@ -43,19 +43,24 @@ function CreateCompany(props) {
 		axios
 			.post('http://localhost:5080/employees', newEmployee)
 			.then(function(res) {
-				setEmployeeMembership({
+				// console.log('Membership', newMembership)
+				// setEmployeeMembership({
+				// 	company_id: Number(state), 
+				// 	user_id: res.data.id,
+				// 	status: 'y'
+				// })
+				setMemberships({
 					company_id: Number(state), 
 					user_id: res.data.id,
 					status: 'y'
-				})
-				setMemberships();
+				});
 				console.log('Response', res.data)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
 
-		// axios.post('http://localhost:5080/memberships', newMambership)
+		// axios.post('http://localhost:5080/memberships', newMembership)
 		// 	.then(function(res) {
 		// 		console.log('Membership Response', res)
 		// 	})
