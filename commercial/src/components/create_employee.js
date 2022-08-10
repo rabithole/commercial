@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function CreateCompany(props) {
 	// Pulling in company ID to set in the memberships table
 	const location = useLocation();
-	const state = location.state;
-	console.log("State / company ID", state)
+	const companyId = location.state;
+	const history = useNavigate();
 
 	const [newEmployee, setEmployeeInfo] = useState({
 		first_name: '',
@@ -18,18 +18,9 @@ function CreateCompany(props) {
 		password: ''
 	})
 
-	// const [newMembership, setEmployeeMembership] = useState({
-	// 	company_id: state,
-	// 	user_id: 0,
-	// 	status: 't'
-	// }) 
-	// console.log('New Membership', newMembership)
-	console.log('New Employee', newEmployee)
-
 	function setMemberships(newMembership) {
 		axios.post('http://localhost:5080/memberships', newMembership)
 			.then(function(res) {
-				console.log('New membershipt from set Membership function', newMembership)
 				console.log('Membership Response', res)
 			})
 			.catch(error => {
@@ -43,14 +34,8 @@ function CreateCompany(props) {
 		axios
 			.post('http://localhost:5080/employees', newEmployee)
 			.then(function(res) {
-				// console.log('Membership', newMembership)
-				// setEmployeeMembership({
-				// 	company_id: Number(state), 
-				// 	user_id: res.data.id,
-				// 	status: 'y'
-				// })
 				setMemberships({
-					company_id: Number(state), 
+					company_id: Number(companyId), 
 					user_id: res.data.id,
 					status: 'y'
 				});
@@ -59,14 +44,6 @@ function CreateCompany(props) {
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
-
-		// axios.post('http://localhost:5080/memberships', newMembership)
-		// 	.then(function(res) {
-		// 		console.log('Membership Response', res)
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('Membership Error', error)
-		// 	})
 	}
 
 	const handleChange = (event) => {
@@ -79,11 +56,11 @@ function CreateCompany(props) {
 	return (
 		<div className='company'>
 			<nav>
-				<Link to='/companies/company'>Back to Company</Link>
+				<button onClick={() => history(-1)}>Back to Company</button>
 			</nav>
 		
 			<h2>Add An Employee</h2>
-			{/*<p>Company ID: {state}</p>*/}
+			{/*<p>Company ID: {companyId}</p>*/}
 
 			<form onSubmit={handleSubmit}> 
 				<label>First Name:</label><br/>

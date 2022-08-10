@@ -67,6 +67,7 @@ function SingleCompany(props) {
 			<Link 
 				to='/employees/create_employee'
 				id='create_employee_button'
+				// state is passing the id of the company a new employee is being created for 
 				state={id}
 				>Add Employee
 			</Link>
