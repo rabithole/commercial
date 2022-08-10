@@ -20,7 +20,8 @@
 
 
 # Questions for Brett
-
+### Errors to adding employee and memberships tables on first try after running rollback miagrations.
+### Deletes company if last employee is deleted. 
 
 
 
