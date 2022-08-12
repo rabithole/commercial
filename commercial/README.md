@@ -16,8 +16,8 @@
 
 // Employee / Employees
 ### Password is in employee table. Need to reconfigure
-### Format phone numbers, emails etc...
 ### Add validation for employee creation form
+### Format phone numbers in input feilds while the number is being inputted. 
 
 
 # Questions for Brett

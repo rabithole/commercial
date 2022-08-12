@@ -47,6 +47,7 @@ router.get('/company/:id', async (req, res) => {
 // Add restrictions to making a duplicate company
 // Creates new company
 router.post('/', async (req, res) => {
+    console.log('New Company', req.body)
     await Company.query().insert(req.body)
     .then(data => {
         res.status(200).json(data);

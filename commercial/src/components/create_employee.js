@@ -3,10 +3,11 @@ import axios from 'axios';
 import '../css/companies.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-function CreateCompany(props) {
+function CreateEmployee(props) {
 	// Pulling in company ID to set in the memberships table
 	const location = useLocation();
-	const companyId = location.state;
+	const companyId = location.state.id;
+	const companyName = location.state.companyName;
 	const history = useNavigate();
 
 	const [newEmployee, setEmployeeInfo] = useState({
@@ -18,19 +19,21 @@ function CreateCompany(props) {
 		password: ''
 	})
 
+	console.log('New Employee', newEmployee)
+
 	function setMemberships(newMembership) {
 		axios.post('http://localhost:5080/memberships', newMembership)
 			.then(function(res) {
 				console.log('Membership Response', res)
 			})
 			.catch(error => {
-				console.log('Set Memberships function', newMembership)
+				// console.log('Set Memberships function', newMembership)
 				console.log('Membership Error', error)
 			})
 	}
 
 	const handleSubmit = event => {
-		console.log('new Employee', newEmployee)
+		// console.log('new Employee', newEmployee)
 		event.preventDefault();
 		axios
 			.post('http://localhost:5080/employees', newEmployee)
@@ -54,11 +57,30 @@ function CreateCompany(props) {
 		})
 	}
 
+	function formatPhoneNumber(value) {
+		if(!value) return value;
+		const phoneNumber = value.replace(/[^\d]/g, '');
+		const phoneNumberLength = phoneNumber.length;
+		if(phoneNumberLength < 4) return phoneNumber;
+		if(phoneNumberLength < 7) {
+			return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
+		};
+		return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3,6,)}-${phoneNumber.slice(6,9)}`;
+	}
+
+	function phoneNumberFormatter() {
+		const phoneInput = document.getElementById('phone');
+		const formattedInputValue = formatPhoneNumber(phoneInput.value );
+		phoneInput.value = formattedInputValue;
+	}
+
 	return (
 		<div className='company'>
 			<nav>
 				<button onClick={() => history(-1)}>Back to Company</button>
 			</nav>
+
+			<h1>{companyName}</h1>
 		
 			<h2>Add An Employee</h2>
 			{/*<p>Company ID: {companyId}</p>*/}
@@ -97,6 +119,7 @@ function CreateCompany(props) {
 					id='phone'
 					name='phone'
 					onChange={handleChange} 
+					onKeyDown={phoneNumberFormatter}
 				/>
 				<br/>
 
@@ -126,4 +149,4 @@ function CreateCompany(props) {
 	)
 }
 
-export default CreateCompany;
+export default CreateEmployee;
