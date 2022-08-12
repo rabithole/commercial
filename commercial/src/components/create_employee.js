@@ -30,6 +30,7 @@ function CreateCompany(props) {
 	}
 
 	const handleSubmit = event => {
+		console.log('new Employee', newEmployee)
 		event.preventDefault();
 		axios
 			.post('http://localhost:5080/employees', newEmployee)

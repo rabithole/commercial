@@ -4,6 +4,7 @@
 ### Add process for an employee to set cost plus pricing per company.
 #### Add method for an employee to modify all company data
 ### Restrict company delettion process
+### Link up notes in all forms to db.
 
 ### Create process for employee to send add company info to a client.
 
@@ -21,7 +22,11 @@
 
 # Questions for Brett
 ### Errors to adding employee and memberships tables on first try after running rollback miagrations.
-### Deletes company if last employee is deleted. 
+### Deletes company if last employee is deleted. ( This is just one behavior ) 
+### Inconsistent behavior. 
+##### Duplicate employee when create new one. Duplicate in the front end only. Backend only shows one created. Restarted servers and duplicate still exists. 
+##### Deletes company when deleting an employee
+##### Db keeps track of emails from deleted employees. Unable to add same email after a deleted employee with the same email. 
 
 
 
