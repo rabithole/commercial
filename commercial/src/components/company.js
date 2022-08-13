@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useParams } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState([])
-	// console.log('Company Employees array', companyData.employees)
+	const ref = useRef(null);
 	console.log('Company', companyData)
 
 	let { id } = useParams();
-	console.log('ID from params', id, companyData.name)
+	console.log('ID from params', id, companyData)
 
 	useEffect(() => {
 		axios
@@ -22,11 +22,20 @@ function SingleCompany(props) {
 			})
 	},[]);
 
-	const deleteItem = (event, item) => {
+	const deleteItemCompany = (event, item) => {
 	    event.preventDefault();
 	    	axios.delete('http://localhost:5080/companies/' + id)
 	      		.then(res => {
 	        		console.log('This Company has been deleted', companyData)
+	      })
+  	}
+
+  	const deleteEmployee = (id, event, item) => {
+  		console.log('current target', companyData.employees[1], id)
+	    // event.preventDefault();
+	    	axios.delete('http://localhost:5080/employees/' + id)
+	      		.then(res => {
+	        		console.log('This employee has been deleted', companyData)
 	      })
   	}
 
@@ -65,9 +74,10 @@ function SingleCompany(props) {
 			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
 
 			<Link to='/'>Edit Company Info</Link>
+			<button onClick={deleteItemCompany}>Delete Company</button>
 
-			<h2>Employees</h2>
-			<button onClick={deleteItem}>Delete Company</button>
+			<h2 id='companyH2'>Employees</h2>
+			
 			<Link 
 				to='/employees/create_employee'
 				id='create_employee_button'
@@ -77,13 +87,15 @@ function SingleCompany(props) {
 			</Link>
 
 			<section>
-				{companyData.employees && companyData.employees.map((company) => (
-					<div className='employee_list' key={id}>
-						<p><b>Name:</b> { company.first_name } { company.last_name }</p>
-						<p><b>Phone:</b> {formatPhoneNumber(company.phone) }</p>
-						<p><b>Email:</b> { company.email }</p>
-						<p><b>Title:</b> { company.title }</p>
+				{companyData.employees && companyData.employees.map((employee) => (
+					<div className='employee_list' key={employee.id}>
+						<p><b>Name:</b> { employee.first_name } { employee.last_name }</p>
+						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
+						<p><b>Email:</b> { employee.email }</p>
+						<p><b>Title:</b> { employee.title }</p>
+						<p>ID: {employee.id}</p>
 						<Link to='/'>Edit Employee Info</Link>
+						<button onClick={ () => deleteEmployee(employee.id)}>Delete Employee</button>
 					</div>
 				))}
 			</section>

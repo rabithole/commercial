@@ -4,6 +4,8 @@ import '../css/companies.css';
 import { Link, useParams } from 'react-router-dom';
 
 function CreateCompany(props) {
+	console.log('Create Company Refresh')
+
 	const [newCompany, setCompanyData] = useState({
 		name: '',
 		cost_plus: '',
@@ -25,6 +27,8 @@ function CreateCompany(props) {
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
+
+		// window.location.reload(true)
 	}
 
 	const handleChange = (event) => {
@@ -49,6 +53,7 @@ function CreateCompany(props) {
 					id='name'
 					name='name'
 					onChange={handleChange} 
+					autoFocus
 				/>
 				<br/>
 
@@ -90,7 +95,8 @@ function CreateCompany(props) {
 
 				<label>Zip Code:</label><br/>
 				<input 	
-					type='number' 
+					type='text'
+					maxLength='5' 
 					id='zip'
 					name='zip' 
 					onChange={handleChange} 

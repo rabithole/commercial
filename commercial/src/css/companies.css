@@ -95,6 +95,7 @@ blockquote {
 	border: 2px solid black;
 	padding: 10px;
 	margin: 10px;
+	margin-top: 20px;
 }
 
 .employee_list p {
@@ -139,6 +140,7 @@ button {
 
 .company button {
 	margin-top: 20px;
+	margin-left: 20px;
 	box-shadow: 5px 5px 8px lightblue;
 }
 
@@ -170,4 +172,8 @@ button {
 	margin-left: 30px;
 	position:  relative;
 	top: 2px;
+}
+
+#companyH2 {
+	margin-bottom: 30px;
 }

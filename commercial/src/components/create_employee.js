@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useLocation, useNavigate, useRoutes } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 
 function CreateEmployee(props) {
 	// Pulling in company ID to set in the memberships table
@@ -9,9 +10,6 @@ function CreateEmployee(props) {
 	const companyId = location.state.id;
 	const companyName = location.state.companyName;
 	const history = useNavigate();
-
-	console.log(window.location.href)
-	let currentLocation = window.location.href;
 
 	const [newEmployee, setEmployeeInfo] = useState({
 		first_name: '',
@@ -42,6 +40,7 @@ function CreateEmployee(props) {
 		} 
 		
 		event.preventDefault();
+		
 		axios
 			.post('http://localhost:5080/employees', newEmployee)
 			.then(function(res) {
@@ -55,6 +54,8 @@ function CreateEmployee(props) {
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
+
+		window.location.reload(true)
 	}
 
 	const handleChange = (event) => {
@@ -64,24 +65,24 @@ function CreateEmployee(props) {
 		})
 	}
 
-	function formatPhoneNumber(value) {
-		if(!value) return value;
+	// function formatPhoneNumber(value) {
+	// 	if(!value) return value;
 
-		const phoneNumber = value.replace(/[^\d]/g, '');
-		const phoneNumberLength = phoneNumber.length;
+	// 	const phoneNumber = value.replace(/[^\d]/g, '');
+	// 	const phoneNumberLength = phoneNumber.length;
 
-		if(phoneNumberLength < 4) return phoneNumber;
-		if(phoneNumberLength < 7) {
-			return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
-		};
-		return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3,6,)}-${phoneNumber.slice(6,9)}`;
-	}
+	// 	if(phoneNumberLength < 4) return phoneNumber;
+	// 	if(phoneNumberLength < 7) {
+	// 		return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
+	// 	};
+	// 	return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3,6,)}-${phoneNumber.slice(6,9)}`;
+	// }
 
-	function phoneNumberFormatter() {
-		const phoneInput = document.getElementById('phone');
-		const formattedInputValue = formatPhoneNumber(phoneInput.value );
-		phoneInput.value = formattedInputValue;
-	}
+	// function phoneNumberFormatter() {
+	// 	const phoneInput = document.getElementById('phone');
+	// 	const formattedInputValue = formatPhoneNumber(phoneInput.value );
+	// 	phoneInput.value = formattedInputValue;
+	// }
 
 	return (
 		<div className='company'>
@@ -101,6 +102,7 @@ function CreateEmployee(props) {
 					id='first_name'
 					name='first_name'
 					onChange={handleChange} 
+					autoFocus
 				/>
 				<br/>
 
@@ -123,13 +125,21 @@ function CreateEmployee(props) {
 				<br/>
 
 				<label>Phone:</label><br/>
-				<input 
+				{/*<input 
 					type='text' 
 					id='phone'
 					name='phone'
 					onChange={handleChange} 
-					onKeyDown={phoneNumberFormatter}
-				/>
+					
+				/>*/}
+				<NumberFormat 
+					format='(###)###-####' 
+					mask="_"
+					type='text' 
+					id='phone'
+					name='phone'
+					onChange={handleChange} 
+				 />
 				<br/>
 
 				<label>Title:</label><br/>

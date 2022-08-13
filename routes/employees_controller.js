@@ -30,6 +30,7 @@ router.get('/employee/:id', async (req, res) => {
 // Deletes employee
 router.delete('/:id', async (req, res) => {
     let id = req.params.id;
+    console.log('ID', id)
 
     await Employee.query().deleteById(id)
         .then(data => {
@@ -40,7 +41,7 @@ router.delete('/:id', async (req, res) => {
         })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) => { 
     if(req.body.first_name == ''){
         console.log('undefined')
     } else {

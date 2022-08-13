@@ -5,14 +5,15 @@
 #### Add method for an employee to modify all company data
 ### Restrict company delettion process
 ### Link up notes in all forms to db.
+### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
+### Think about duplicate emails in regards to the possibility an employee could work for or move to a new company and want to use a personal email. Should email be unique? 
 
 ### Create process for employee to send add company info to a client.
 
 ### Add textarea for notes in company profiles / pages
-### Company users list creation etc...
 
 ### Add checks to stop accidental deletions
-#### Redirect after company creation and company delete
+#### Redirect after company deletions.
 
 // Employee / Employees
 ### Password is in employee table. Need to reconfigure
@@ -22,11 +23,10 @@
 
 # Questions for Brett
 ### Errors to adding employee and memberships tables on first try after running rollback miagrations.
+##### This problem doesn't seem to exist if seeds aren't used. Haven't re-seeded to test this theory. Company creation form seems to work without errors or weird behaviors. 
+
 ### Deletes company if last employee is deleted. ( This is just one behavior ) 
-### Inconsistent behavior. 
-##### Duplicate employee when create new one. Duplicate in the front end only. Backend only shows one created. Restarted servers and duplicate still exists. 
-##### Deletes company when deleting an employee
-##### Db keeps track of emails from deleted employees. Unable to add same email after a deleted employee with the same email. 
+### Inconsistent behavior. ( Behavior consistent at this time. 8/13/2022) 
 
 
 

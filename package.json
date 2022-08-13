@@ -17,6 +17,7 @@
     "knex": "^2.2.0",
     "objection": "^3.0.1",
     "pg": "^8.7.3",
+    "react-number-format": "^4.9.3",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
