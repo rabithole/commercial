@@ -41,17 +41,21 @@ router.delete('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    console.log('Request body', req.body)
+    if(req.body.first_name == ''){
+        console.log('undefined')
+    } else {
+        await Employee.query().insert(req.body)
+            .then(data => {
+                console.log('Response Body', res.body)
+                res.status(200).json(data);
+            })
+            .catch(error => {
+                console.log('Response Body', res.body)
+                res.status(500).json({ message: 'Internal Server Error'});
+            })
+    }
 
-    await Employee.query().insert(req.body)
-    .then(data => {
-        console.log('Response Body', res.body)
-        res.status(200).json(data);
-    })
-    .catch(error => {
-        console.log('Response Body', res.body)
-        res.status(500).json({ message: 'Internal Server Error'});
-    })
+    
 })
 
 module.exports = router;

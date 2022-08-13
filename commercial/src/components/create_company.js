@@ -13,7 +13,7 @@ function CreateCompany(props) {
 		zip: ''
 	})
 
-	console.log('New Company', newCompany)
+	// console.log('New Company', newCompany)
 
 	const handleSubmit = event => {
 		event.preventDefault();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useRoutes } from 'react-router-dom';
 
 function CreateEmployee(props) {
 	// Pulling in company ID to set in the memberships table
@@ -9,6 +9,9 @@ function CreateEmployee(props) {
 	const companyId = location.state.id;
 	const companyName = location.state.companyName;
 	const history = useNavigate();
+
+	console.log(window.location.href)
+	let currentLocation = window.location.href;
 
 	const [newEmployee, setEmployeeInfo] = useState({
 		first_name: '',
@@ -19,7 +22,7 @@ function CreateEmployee(props) {
 		password: ''
 	})
 
-	console.log('New Employee', newEmployee)
+	console.log('New Employee', newEmployee.first_name)
 
 	function setMemberships(newMembership) {
 		axios.post('http://localhost:5080/memberships', newMembership)
@@ -33,7 +36,11 @@ function CreateEmployee(props) {
 	}
 
 	const handleSubmit = event => {
-		// console.log('new Employee', newEmployee)
+		if(newEmployee.first_name == ''){
+			console.log('Must enter info')
+			alert('Must fill out form')
+		} 
+		
 		event.preventDefault();
 		axios
 			.post('http://localhost:5080/employees', newEmployee)
@@ -59,8 +66,10 @@ function CreateEmployee(props) {
 
 	function formatPhoneNumber(value) {
 		if(!value) return value;
+
 		const phoneNumber = value.replace(/[^\d]/g, '');
 		const phoneNumberLength = phoneNumber.length;
+
 		if(phoneNumberLength < 4) return phoneNumber;
 		if(phoneNumberLength < 7) {
 			return `(${phoneNumber.slice(0,3)}) ${phoneNumber.slice(3)}`;
