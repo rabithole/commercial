@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function CreateCompany(props) {
 	console.log('Create Company Refresh')
+	let history = useNavigate();
 
 	const [newCompany, setCompanyData] = useState({
 		name: '',
@@ -28,7 +29,9 @@ function CreateCompany(props) {
 				console.log('Error, error, error', error)
 			})
 
-		// window.location.reload(true)
+		setTimeout(() => {
+			window.location.reload(true)
+		}, '500');
 	}
 
 	const handleChange = (event) => {
@@ -112,7 +115,7 @@ function CreateCompany(props) {
 
 				</textarea>
 
-				<button>Submit</button>
+				<button>Create Company</button>
 			</form>
 
 			<hr/>

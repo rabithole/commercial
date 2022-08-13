@@ -37,6 +37,10 @@ function SingleCompany(props) {
 	      		.then(res => {
 	        		console.log('This employee has been deleted', companyData)
 	      })
+
+  		setTimeout(() => {
+			window.location.reload(true)
+		}, '500');
   	}
 
   	let formatPhoneNumber = (str) => {
