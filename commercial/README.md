@@ -23,12 +23,7 @@
 
 
 # Questions for Brett
-### Errors to adding employee and memberships tables on first try after running rollback miagrations.
-##### This problem doesn't seem to exist if seeds aren't used. Haven't re-seeded to test this theory. Company creation form seems to work without errors or weird behaviors. 
-
-### Deletes company if last employee is deleted. ( This is just one behavior ) 
-### Inconsistent behavior. ( Behavior consistent at this time. 8/13/2022) 
-
+### Same employee at multiple companies. Is this a problem? 
 
 
 

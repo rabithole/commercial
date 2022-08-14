@@ -94,6 +94,7 @@ function SingleCompany(props) {
 				>Add Employee
 			</Link>
 
+			{/* List of employees working for or with the company */}
 			<section>
 				{companyData.employees && companyData.employees.map((employee) => (
 					<div className='employee_list' key={employee.id}>

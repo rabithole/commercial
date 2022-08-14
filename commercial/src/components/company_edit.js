@@ -5,10 +5,10 @@ import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 function CompanyEdit(props) {
 	console.log('Create Company Refresh')
+	
 	const location = useLocation();
 	const history = useNavigate();
 	const companyData = location.state;
-	console.log('Company data', companyData.id);
 
 	const [newCompany, setCompanyData] = useState({
 		name: '',
@@ -19,9 +19,9 @@ function CompanyEdit(props) {
 		zip: ''
 	})
 
-	console.log('New Company', newCompany)
-
-	// console.log('New Company', newCompany)
+	useEffect(() => {
+		setCompanyData(companyData)		
+	},[])
 
 	const handleSubmit = event => {
 		event.preventDefault();
@@ -34,10 +34,6 @@ function CompanyEdit(props) {
 				console.log('Error, error, error', error)
 				return
 			})
-
-		// setTimeout(() => {
-		// 	window.location.reload(true)
-		// }, '500');
 	}
 
 	const handleChange = (event) => {
