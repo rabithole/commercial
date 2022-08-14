@@ -27,6 +27,24 @@ router.get('/employee/:id', async (req, res) => {
     })
 })
 
+// Employee Update info
+router.put('/:id', async (req, res) => {
+    let id = req.params.id;
+    let employeeUpdate = req.body;
+    console.log('id from req.params', id, employeeUpdate)
+
+    await Employee.query()
+        .update(employeeUpdate)
+        .where('id', id)
+        .then(data => {
+            console.log('Employee data', data)
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            console.log('Employee edit error')
+        })
+})
+
 // Deletes employee
 router.delete('/:id', async (req, res) => {
     let id = req.params.id;

@@ -103,7 +103,18 @@ function SingleCompany(props) {
 						<p><b>Email:</b> { employee.email }</p>
 						<p><b>Title:</b> { employee.title }</p>
 						<p>ID: {employee.id}</p>
-						<Link to='/'>Edit Employee Info</Link>
+						<Link 
+							to='/employee_edit'
+							state={{ 
+								firstName: employee.first_name,
+								lastName: employee.last_name,
+								phone: employee.phone,
+								email: employee.email,
+								title: employee.title,
+								employeeId: employee.id
+							 }}
+							>Edit Employee Info
+						</Link>
 						<button onClick={ () => deleteEmployee(employee.id)}>Delete Employee</button>
 					</div>
 				))}

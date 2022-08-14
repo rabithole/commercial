@@ -5,7 +5,7 @@ import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 function CompanyEdit(props) {
 	console.log('Create Company Refresh')
-	
+
 	const location = useLocation();
 	const history = useNavigate();
 	const companyData = location.state;
@@ -19,6 +19,7 @@ function CompanyEdit(props) {
 		zip: ''
 	})
 
+	// Sets state from default values that are set from company.js component
 	useEffect(() => {
 		setCompanyData(companyData)		
 	},[])
