@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState([])
@@ -77,7 +77,11 @@ function SingleCompany(props) {
 			<h4>Annual Revenue:</h4> 
 			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
 
-			<Link to='/'>Edit Company Info</Link>
+			<Link 
+				to={'/company_edit'}
+				state={companyData}
+				>Edit Company Info
+			</Link>
 			<button onClick={deleteItemCompany}>Delete Company</button>
 
 			<h2 id='companyH2'>Employees</h2>

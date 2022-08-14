@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
-function CreateCompany(props) {
+function CompanyEdit(props) {
 	console.log('Create Company Refresh')
-	let history = useNavigate();
+	const location = useLocation();
+	const history = useNavigate();
+	const companyData = location.state;
+	console.log('Company data', companyData.id);
 
 	const [newCompany, setCompanyData] = useState({
 		name: '',
@@ -16,12 +19,14 @@ function CreateCompany(props) {
 		zip: ''
 	})
 
+	console.log('New Company', newCompany)
+
 	// console.log('New Company', newCompany)
 
 	const handleSubmit = event => {
 		event.preventDefault();
 		axios
-			.post('http://localhost:5080/companies', newCompany)
+			.put('http://localhost:5080/companies/' + companyData.id, newCompany)
 			.then(function(res) {
 				console.log('Response', res.data)
 			})
@@ -30,9 +35,9 @@ function CreateCompany(props) {
 				return
 			})
 
-		setTimeout(() => {
-			window.location.reload(true)
-		}, '500');
+		// setTimeout(() => {
+		// 	window.location.reload(true)
+		// }, '500');
 	}
 
 	const handleChange = (event) => {
@@ -41,14 +46,17 @@ function CreateCompany(props) {
 			[event.target.name]: event.target.value,
 		})
 	}
+	
 
 	return (
 		<div className='company'>
+			<h1>Company Edit</h1>
+
 			<nav>
-				<Link to='/'>Back to List of Companies</Link>
+				<button onClick={ () => history(-1) }>Back to Company</button>
 			</nav>
 		
-			<h2>Input Your Company Information</h2>
+			<h2>Update Company Information</h2>
 
 			<form onSubmit={handleSubmit}> 
 				<label>Company Name:</label><br/>
@@ -58,6 +66,7 @@ function CreateCompany(props) {
 					name='name'
 					onChange={handleChange} 
 					autoFocus
+					defaultValue={companyData.name}
 				/>
 				<br/>
 
@@ -67,6 +76,7 @@ function CreateCompany(props) {
 					id='cost_plus'
 					name='cost_plus'
 					onChange={handleChange} 
+					defaultValue={companyData.cost_plus}
 				/>
 				<br/>
 
@@ -76,6 +86,7 @@ function CreateCompany(props) {
 					id='street'
 					name='street'
 					onChange={handleChange} 
+					defaultValue={companyData.street}
 				/>
 				<br/>
 
@@ -85,6 +96,7 @@ function CreateCompany(props) {
 					id='city'
 					name='city'
 					onChange={handleChange} 
+					defaultValue={companyData.city}
 				/>
 				<br/>
 
@@ -94,6 +106,7 @@ function CreateCompany(props) {
 					id='state' 
 					name='state'
 					onChange={handleChange} 
+					defaultValue={companyData.state}
 				/>
 				<br/>
 
@@ -104,6 +117,7 @@ function CreateCompany(props) {
 					id='zip'
 					name='zip' 
 					onChange={handleChange} 
+					defaultValue={companyData.zip}
 				/>
 				<br/>
 
@@ -116,7 +130,7 @@ function CreateCompany(props) {
 
 				</textarea>
 
-				<button>Create Company</button>
+				<button>Update Company</button>
 			</form>
 
 			<hr/>
@@ -141,8 +155,10 @@ function CreateCompany(props) {
 
 				<button>Submit</button>
 			</form>
+
+			
 		</div>
 	)
 }
 
-export default CreateCompany;
+export default CompanyEdit;

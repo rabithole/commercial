@@ -8,6 +8,7 @@ import CreateCompany from './components/create_company';
 import Employees from './components/employees';
 import CreateEmployee from './components/create_employee';
 import Employee from './components/employee';
+import CompanyEdit from './components/company_edit';
 
 function App() {
   // let { companyId } = useParams();
@@ -28,6 +29,7 @@ function App() {
           <Route path='/employees' element={<Employees />} />
           <Route path='employees/create_employee' element={<CreateEmployee />} />
           <Route path='employees/employee/:id' element={<Employee />} />
+          <Route path='/company_edit' element={<CompanyEdit />} />
         </Routes>
       </div>
     </BrowserRouter>

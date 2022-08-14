@@ -7,6 +7,7 @@
 ### Link up notes in all forms to db.
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
 ### Think about duplicate emails in regards to the possibility an employee could work for or move to a new company and want to use a personal email. Should email be unique? 
+### Casacade deletion of employees when their company is deleted.
 
 ### Create process for employee to send add company info to a client.
 
