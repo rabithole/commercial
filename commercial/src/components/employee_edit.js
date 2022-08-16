@@ -12,7 +12,8 @@ function EmployeeEdit(props) {
 			last_name: location.state.lastName,
 			email: location.state.email,
 			phone: location.state.phone,
-			title: location.state.title
+			title: location.state.title,
+			notes: location.state.employeeNotes
 		};
 	const history = useNavigate();
 
@@ -22,7 +23,8 @@ function EmployeeEdit(props) {
 		email: '',
 		phone: '',
 		title: '',
-		password: ''
+		password: '',
+		notes: ''
 	})
 
 	console.log('Update Employee', updateEmployee)
@@ -127,6 +129,7 @@ function EmployeeEdit(props) {
 					name='notes' 
 					id='notes'
 					onChange={handleChange} 
+					defaultValue={employeeInfo.notes}
 				>
 
 				</textarea>

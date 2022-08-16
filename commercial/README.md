@@ -1,10 +1,11 @@
 # To Do List
 ### Add env variables
+
 ### Add restrictions to making duplicate companies etc
-### Add process for an employee to set cost plus pricing per company.
-#### Add method for an employee to modify all company data
 ### Restrict company delettion process
 ### Link up notes in all forms to db.
+### Add primary contact process
+
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
 ### Think about duplicate emails in regards to the possibility an employee could work for or move to a new company and want to use a personal email. Should email be unique? 
 ### Casacade deletion of employees when their company is deleted.

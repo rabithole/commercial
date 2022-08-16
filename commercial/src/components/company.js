@@ -6,10 +6,10 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState([])
 	const ref = useRef(null);
-	console.log('Company', companyData)
+	// console.log('Company', companyData)
 
 	let { id } = useParams();
-	console.log('ID from params', id, companyData)
+	// console.log('ID from params', id, companyData)
 
 	useEffect(() => {
 		axios
@@ -32,7 +32,6 @@ function SingleCompany(props) {
 
   	const deleteEmployee = (id, event, item) => {
   		console.log('current target', companyData.employees[1], id)
-	    // event.preventDefault();
 	    	axios.delete('http://localhost:5080/employees/' + id)
 	      		.then(res => {
 	        		console.log('This employee has been deleted', companyData)
@@ -66,16 +65,24 @@ function SingleCompany(props) {
 			<h2>{companyData.name}</h2>
 			<h4>Street:</h4> 
 			<blockquote>{companyData.street}</blockquote>
+
 			<h4>City:</h4> 
 			<blockquote>{companyData.city}</blockquote>
+
 			<h4>State:</h4> 
 			<blockquote>{companyData.state}</blockquote>
+
 			<h4>Zip:</h4> 
 			<blockquote>{companyData.zip}</blockquote>
+
 			<h4>Cost Plus / Percentage above our cost</h4>
 			<blockquote>{companyData.cost_plus}%</blockquote>
+
 			<h4>Annual Revenue:</h4> 
 			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
+
+			<h4>Notes</h4>
+			<blockquote className='notes'>{companyData.notes}</blockquote>
 
 			<Link 
 				to={'/company_edit'}
@@ -102,7 +109,7 @@ function SingleCompany(props) {
 						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
 						<p><b>Email:</b> { employee.email }</p>
 						<p><b>Title:</b> { employee.title }</p>
-						<p>ID: {employee.id}</p>
+						<blockquote className='notes'>{ employee.notes }</blockquote>
 						<Link 
 							to='/employee_edit'
 							state={{ 
@@ -111,7 +118,8 @@ function SingleCompany(props) {
 								phone: employee.phone,
 								email: employee.email,
 								title: employee.title,
-								employeeId: employee.id
+								employeeId: employee.id,
+								employeeNotes: employee.notes
 							 }}
 							>Edit Employee Info
 						</Link>

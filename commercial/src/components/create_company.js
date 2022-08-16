@@ -4,7 +4,7 @@ import '../css/companies.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function CreateCompany(props) {
-	console.log('Create Company Refresh')
+	// console.log('Create Company Refresh')
 	let history = useNavigate();
 
 	const [newCompany, setCompanyData] = useState({
@@ -120,27 +120,6 @@ function CreateCompany(props) {
 			</form>
 
 			<hr/>
-
-			<h2>Primary Contact Information</h2>
-			<form>
-				<br/>
-				<label>Email:</label><br/>
-				<input 
-					type='email' 
-					id='email' 
-					onChange={handleChange} 
-				/>
-				<br/>
-
-				<label>Phone Number:</label><br/>
-				<input 
-					type='text' 
-					id='phone'
-					onChange={handleChange}  
-				/>
-
-				<button>Submit</button>
-			</form>
 		</div>
 	)
 }

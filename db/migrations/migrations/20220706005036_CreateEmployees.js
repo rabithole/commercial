@@ -11,6 +11,7 @@ exports.up = function(knex) {
         table.string('phone').notNullable();//.checkRegex('[0-9]{10}');
         table.string('password').notNullable();
         table.string('title');
+        table.string('notes', 1000);
         // add timestamps table? table.timestamps(true, true). referencing the "true, true" in the timestamps function (created at, updated at)
     })
 };

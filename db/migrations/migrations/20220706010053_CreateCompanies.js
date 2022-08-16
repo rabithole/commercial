@@ -15,6 +15,7 @@ exports.up = function(knex) {
         table.integer('zip', 5).notNullable();  
         table.float('annual_revenue').unsigned(); // Foreign key? 
         table.integer('user_id').references('id').inTable('employees').onUpdate('CASCADE').onDelete('CASCADE');
+        table.string('notes', 1000);
     })
 };
 

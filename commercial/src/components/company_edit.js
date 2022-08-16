@@ -4,7 +4,7 @@ import '../css/companies.css';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 function CompanyEdit(props) {
-	console.log('Create Company Refresh')
+	// console.log('Create Company Refresh')
 
 	const location = useLocation();
 	const history = useNavigate();
@@ -16,8 +16,10 @@ function CompanyEdit(props) {
 		street: '',
 		city: '',
 		state: '',
-		zip: ''
+		zip: '',
+		notes: ''
 	})
+	// console.log('Notes', newCompany.notes)
 
 	// Sets state from default values that are set from company.js component
 	useEffect(() => {
@@ -123,37 +125,14 @@ function CompanyEdit(props) {
 					name='notes' 
 					id='notes'
 					onChange={handleChange} 
+					defaultValue={companyData.notes}
 				>
-
 				</textarea>
 
 				<button>Update Company</button>
 			</form>
 
 			<hr/>
-
-			<h2>Primary Contact Information</h2>
-			<form>
-				<br/>
-				<label>Email:</label><br/>
-				<input 
-					type='email' 
-					id='email' 
-					onChange={handleChange} 
-				/>
-				<br/>
-
-				<label>Phone Number:</label><br/>
-				<input 
-					type='text' 
-					id='phone'
-					onChange={handleChange}  
-				/>
-
-				<button>Submit</button>
-			</form>
-
-			
 		</div>
 	)
 }
