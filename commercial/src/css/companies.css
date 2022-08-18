@@ -1,9 +1,15 @@
 /* Global */
 
 /* List of all companies page */
+.company-list-container {
+	text-align: center;
+}
+
 .company-cards-container {
 	margin: 15px 5px;
 	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 #create_company_button {
@@ -24,18 +30,20 @@
 }
 
 .company-card {
-	border: 1px solid black;
 	background-color: lightgrey;
+	text-align: left;
+	width: 350px;
+	border: 1px solid black;
 	margin: 15px;
 	padding: 5px;
-	display: flex;
-	flex-direction: column;
+	/*display: flex;
+	flex-wrap: wrap;*/
 }
 
 .company-card div {
-	display: flex;
+/*	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-around;*/
 }
 
 .company-card button {
@@ -57,6 +65,24 @@ input {
 	box-shadow: 5px 5px 5px black;
 	font-size: large;
 }
+
+.inside-card {
+	/*display: flex;
+	flex-direction: column;
+	padding: 5px;*/
+}
+
+.inside-card p {
+	/*margin: 0px;*/
+}
+
+#notes {
+	border: 2px solid black;
+	padding: 3px;
+	border-radius: 3px;
+	background-color: white;
+}
+
 
 
 
@@ -115,6 +141,14 @@ blockquote {
 	display: block;	
 	margin-bottom: 20px;
 }
+
+#primary-contact {
+	margin-left: 10px;
+	width: 20px;
+	height: 20px;
+
+}
+
 
 
 

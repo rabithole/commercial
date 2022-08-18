@@ -45,6 +45,24 @@ router.put('/:id', async (req, res) => {
         })
 })
 
+// Setting 'primary' contact as a boolean
+router.put('/primary/:id', async (req, res) => {
+    let id = req.params.id;
+    let checked = req.body
+    console.log('Data', id)
+    console.log('Checked', checked)
+
+    await Employee.query()
+        .update(checked)
+        .where('id', id)
+        .then(data => {
+            console.log('Data', data)
+        })
+        .catch(error => {
+            console.log('Error', error)
+        })
+}) 
+
 // Deletes employee
 router.delete('/:id', async (req, res) => {
     let id = req.params.id;

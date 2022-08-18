@@ -12,6 +12,7 @@ exports.up = function(knex) {
         table.string('password').notNullable();
         table.string('title');
         table.string('notes', 1000);
+        table.boolean('primary').default(false);
         // add timestamps table? table.timestamps(true, true). referencing the "true, true" in the timestamps function (created at, updated at)
     })
 };

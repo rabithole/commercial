@@ -4,12 +4,11 @@ import '../css/companies.css';
 import { Link, useParams, useLocation } from 'react-router-dom';
 
 function SingleCompany(props) {
-	const [companyData, setCompanyData] = useState([])
-	const ref = useRef(null);
-	// console.log('Company', companyData)
+	const [companyData, setCompanyData] = useState([]);
+	// const [checked, setChecked] = useState(false)
 
 	let { id } = useParams();
-	// console.log('ID from params', id, companyData)
+	console.log('company data', companyData)
 
 	useEffect(() => {
 		axios
@@ -34,15 +33,15 @@ function SingleCompany(props) {
   		console.log('current target', companyData.employees[1], id)
 	    	axios.delete('http://localhost:5080/employees/' + id)
 	      		.then(res => {
-	        		console.log('This employee has been deleted', companyData)
+	        		console.log('This employee has been deleted', companyData);
 	      })
 
   		setTimeout(() => {
-			window.location.reload(true)
+			window.location.reload(true);
 		}, '500');
   	}
 
-  	let formatPhoneNumber = (str) => {
+  	const formatPhoneNumber = (str) => {
 		//Filter only numbers from the input
 		let cleaned = ('' + str).replace(/\D/g, '');
 
@@ -54,6 +53,31 @@ function SingleCompany(props) {
 		};
 
 		return null
+	};
+
+	const checkForPrimaryContact = (event, id) => {
+		let primary = false;
+		console.log('Contact Id', id)
+
+		if(event.target.checked) {
+			console.log(true)
+			primary = {primary: true};
+			window.location.reload();
+			// setChecked(true)
+		} else {
+			console.log(false)
+			primary = {primary: false};
+			window.location.reload();
+			// setChecked(false)
+		}
+		axios
+			.put('http://localhost:5080/employees/primary/' + id, primary)
+			.then(function (response) {
+				console.log('Response', response);
+			})
+			.catch(error => {
+				console.log('Error', error);
+			})
 	};
 
 	return (
@@ -109,6 +133,18 @@ function SingleCompany(props) {
 						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
 						<p><b>Email:</b> { employee.email }</p>
 						<p><b>Title:</b> { employee.title }</p>
+						<p>{employee.id}</p>
+
+						<label>Check if primary contact</label>
+						<input 
+							type='checkbox' 
+							id='primary-contact' 
+							name='primary-contact'
+							onChange={event => checkForPrimaryContact(event, employee.id)}
+							checked={employee.primary}
+
+						>
+						</input>
 						<blockquote className='notes'>{ employee.notes }</blockquote>
 						<Link 
 							to='/employee_edit'
