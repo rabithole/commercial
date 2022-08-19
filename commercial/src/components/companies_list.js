@@ -60,11 +60,11 @@ function CompaniesList(props) {
 									<p>Annual Revenue: ${new  Intl.NumberFormat().format(annual_revenue)}</p>
 								</div>
 
-								<div className='inside-card'>
+								{/*<div className='inside-card'>
 									<p>Primary Contact</p>
 									<p>Phone:</p>
 									<p>Email:</p>
-								</div>
+								</div>*/}
 
 								<p id='notes'>{notes}</p>
 							</Link>

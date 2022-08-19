@@ -57,6 +57,7 @@ router.put('/primary/:id', async (req, res) => {
         .where('id', id)
         .then(data => {
             console.log('Data .then', data)
+            res.status(200).json(data);
         })
         .catch(error => {
             console.log('Error', error)

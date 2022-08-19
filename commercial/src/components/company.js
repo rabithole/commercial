@@ -9,7 +9,7 @@ function SingleCompany(props) {
 	console.log('primary employee', primaryEmployee);
 
 	let { id } = useParams();
-	console.log('company data', companyData)
+	// console.log('company data', companyData)
 
 	useEffect(() => {
 		axios
@@ -59,34 +59,33 @@ function SingleCompany(props) {
 
 	const checkForPrimaryContact = (event, id) => {
 		let primary = false;
-		let employeesArray = [];
+		// let employeesArray = [];
 
-		primaryEmployee.map(primary => {
-			employeesArray.push({...primary, primary: false})
-		})
-		console.log('employeesArray', employeesArray)
-		setPrimaryEmployeeList(employeesArray)
+		// primaryEmployee.map(primary => {
+		// 	employeesArray.push({...primary, primary: false})
+		// })
+		// console.log('employeesArray', employeesArray)
+		// setPrimaryEmployeeList(employeesArray)
 
 		if(event.target.checked) {
 			console.log(true)
 			primary = {primary: true};
-			// window.location.reload();
+			// console.log('Primary Target true', primary, id)
+			window.location.reload();
 			// setChecked(true)
 		} else {
 			console.log(false)
 			primary = {primary: false};
-			// window.location.reload();
+			console.log('Primary Target false', primary, id)
+			window.location.reload();
 			// setChecked(false)
 		}
-
-		
-			
 
 	axios
 		.put('http://localhost:5080/employees/primary/' + id, primary)
 		.then(function (response) {
 			console.log('Response', response);
-			window.location.reload();
+			// window.location.reload();
 		})
 		.catch(error => {
 			console.log('Error', error);
@@ -146,7 +145,7 @@ function SingleCompany(props) {
 						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
 						<p><b>Email:</b> { employee.email }</p>
 						<p><b>Title:</b> { employee.title }</p>
-						<p>{employee.id}</p>
+						{/*<p>{employee.id}</p>*/}
 
 						<label>Check if primary contact</label>
 						<input 
