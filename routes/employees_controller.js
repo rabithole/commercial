@@ -56,7 +56,7 @@ router.put('/primary/:id', async (req, res) => {
         .update(checked)
         .where('id', id)
         .then(data => {
-            console.log('Data', data)
+            console.log('Data .then', data)
         })
         .catch(error => {
             console.log('Error', error)

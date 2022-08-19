@@ -5,7 +5,8 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState([]);
-	// const [checked, setChecked] = useState(false)
+	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
+	console.log('primary employee', primaryEmployee);
 
 	let { id } = useParams();
 	console.log('company data', companyData)
@@ -14,7 +15,8 @@ function SingleCompany(props) {
 		axios
 			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
-				setCompanyData(response.data)
+				setCompanyData(response.data);
+				setPrimaryEmployeeList(response.data.employees);
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
@@ -57,27 +59,38 @@ function SingleCompany(props) {
 
 	const checkForPrimaryContact = (event, id) => {
 		let primary = false;
-		console.log('Contact Id', id)
+		let employeesArray = [];
+
+		primaryEmployee.map(primary => {
+			employeesArray.push({...primary, primary: false})
+		})
+		console.log('employeesArray', employeesArray)
+		setPrimaryEmployeeList(employeesArray)
 
 		if(event.target.checked) {
 			console.log(true)
 			primary = {primary: true};
-			window.location.reload();
+			// window.location.reload();
 			// setChecked(true)
 		} else {
 			console.log(false)
 			primary = {primary: false};
-			window.location.reload();
+			// window.location.reload();
 			// setChecked(false)
 		}
-		axios
-			.put('http://localhost:5080/employees/primary/' + id, primary)
-			.then(function (response) {
-				console.log('Response', response);
-			})
-			.catch(error => {
-				console.log('Error', error);
-			})
+
+		
+			
+
+	axios
+		.put('http://localhost:5080/employees/primary/' + id, primary)
+		.then(function (response) {
+			console.log('Response', response);
+			window.location.reload();
+		})
+		.catch(error => {
+			console.log('Error', error);
+		})
 	};
 
 	return (
@@ -127,8 +140,8 @@ function SingleCompany(props) {
 
 			{/* List of employees working for or with the company */}
 			<section>
-				{companyData.employees && companyData.employees.map((employee) => (
-					<div className='employee_list' key={employee.id}>
+				{primaryEmployee.map((employee) => (
+					<div className='employee_list' key={ employee.id }>
 						<p><b>Name:</b> { employee.first_name } { employee.last_name }</p>
 						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
 						<p><b>Email:</b> { employee.email }</p>
@@ -142,7 +155,6 @@ function SingleCompany(props) {
 							name='primary-contact'
 							onChange={event => checkForPrimaryContact(event, employee.id)}
 							checked={employee.primary}
-
 						>
 						</input>
 						<blockquote className='notes'>{ employee.notes }</blockquote>
