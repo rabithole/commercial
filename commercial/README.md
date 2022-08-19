@@ -3,8 +3,7 @@
 
 ### Add restrictions to making duplicate companies etc
 ### Restrict company delettion process
-### Link up notes in all forms to db.
-### Add primary contact process
+### Add primary contact process? Rethinking this process and the need for it. 
 
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
 ### Think about duplicate emails in regards to the possibility an employee could work for or move to a new company and want to use a personal email. Should email be unique? 
@@ -12,19 +11,16 @@
 
 ### Create process for employee to send add company info to a client.
 
-### Add textarea for notes in company profiles / pages
-
 ### Add checks to stop accidental deletions
 #### Redirect after company deletions.
 
 // Employee / Employees
 ### Password is in employee table. Need to reconfigure
 ### Add validation for employee creation form
-### Format phone numbers in input feilds while the number is being inputted. 
-
 
 # Questions for Brett
 ### Same employee at multiple companies. Is this a problem? 
+### Setting a primary employee
 
 
 

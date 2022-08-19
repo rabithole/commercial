@@ -2,14 +2,14 @@ import './App.css';
 import React, { useEffect} from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import axios from 'axios';
-import CompanyList from './components/companies_list';
-import SingleCompany from './components/company';
-import CreateCompany from './components/create_company';
-import Employees from './components/employees';
-import CreateEmployee from './components/create_employee';
-import Employee from './components/employee';
-import CompanyEdit from './components/company_edit';
-import EmployeeEdit from './components/employee_edit';
+import CompanyList from './dig_components/companies_list';
+import SingleCompany from './dig_components/company';
+import CreateCompany from './dig_components/create_company';
+import Employees from './dig_components/employees';
+import CreateEmployee from './dig_components/create_employee';
+import Employee from './dig_components/employee';
+import CompanyEdit from './dig_components/company_edit';
+import EmployeeEdit from './dig_components/employee_edit';
 
 function App() {
   // let { companyId } = useParams();
