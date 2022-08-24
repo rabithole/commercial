@@ -6,6 +6,7 @@ const invoicesController = require('./invoices_controller');
 const membershipsController = require('./memberships_controller');
 const orderLineItemsController = require('./order_line_items_controller');
 const ordersController = require('./orders_controller');
+const clientLanding = require('./shopify_api');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/invoices', invoicesController);
 app.use('/memberships', membershipsController);
 app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
+app.use('/client', clientLanding);
 
 app.get('/', (request, response) => {
     response.status(200).json({ server: 'Is Running'});

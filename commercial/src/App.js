@@ -10,6 +10,7 @@ import CreateEmployee from './dig_components/create_employee';
 import Employee from './dig_components/employee';
 import CompanyEdit from './dig_components/company_edit';
 import EmployeeEdit from './dig_components/employee_edit';
+import ClientLanding from './client_components/client_landing';
 
 function App() {
   // let { companyId } = useParams();
@@ -32,6 +33,7 @@ function App() {
           <Route path='employees/employee/:id' element={<Employee />} />
           <Route path='/company_edit' element={<CompanyEdit />} />
           <Route path='/employee_edit' element={<EmployeeEdit />} />
+          <Route path='/client_landing' element={<ClientLanding />} />
         </Routes>
       </div>
     </BrowserRouter>

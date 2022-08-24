@@ -7,6 +7,7 @@ router.use(express.json());
 
 // List of companies with employees
 router.get('/', (req, res) => {
+    console.log('req, res', req, res)
     Company.query().withGraphFetched('employees')
         .then(company => {
             res.status(200).json(company);
