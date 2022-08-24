@@ -1,5 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+
+const host = 'http://localhost';
+const port = process.env.PORT || 5080;
 
 const router = require('./routes');
 
@@ -9,5 +13,4 @@ server.use(cors());
 server.use(express.json());
 server.use(router);
 
-// Add .env file later
-server.listen(5080, () => console.log('listening - port 5080'));
+server.listen(port, () => console.log(`server running at ${host}:${port}`));

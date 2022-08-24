@@ -16,7 +16,6 @@ function CompaniesList(props) {
 			.get('http://localhost:5080/companies')
 			.then(function (response) {
 				setCompanyList(response.data)
-				console.log('Response', response.data)
 			})
 			.catch(function (error) {
 				console.log('Error happened here ---', error);

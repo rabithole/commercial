@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
     Company.query().withGraphFetched('employees')
         .then(company => {
             res.status(200).json(company);
-            console.log('Company', company)
+            console.log(process.env.SECRET_KEY);
         })
         .catch(error => {
             res.status(500).json({message: 'Internal Server Error:' + error

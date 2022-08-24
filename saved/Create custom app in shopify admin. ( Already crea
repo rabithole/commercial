@@ -1,0 +1,61 @@
+1. Create custom app in shopify admin. ( Already created, created Oauth credentials )
+2. Configure API scopes in shopify admin
+
+3. Grab Graphql URL aka POST 'https://{store_name}.myshopify.com/admin/api/2022-07/graphql.json'
+
+4. This is in the header:
+	a. X-Shopify-Access-Token: application/json
+	b. include access token as a header / Postman
+		'X-Shopify-Access-Token: -- ( access token goes here ) --'
+
+5. Create query for graphql
+	{
+		"query": "{ 
+			products(first: 10) 
+				{
+				edges {
+					node {
+						{ 
+							id title
+						}
+					}
+				}
+				}
+			}"
+	}
+
+Notes:
+All requests should use authenticated fetch function from app bridge utils
+NGROK must be installed, apparently...
+App created in admin needs the app URL to be the NGROK tunnel url
+Install dotenv
+SHopify node library
+
+Session tokens are created by app-bridge
+
+Site: JWT.io to test session tokens
+
+
+.env file example:
+
+SHOPIFY_API_KEY={api key}           # Your API key
+SHOPIFY_API_SECRET={api secret key} # Your API secret key
+SHOPIFY_API_SCOPES={scopes}                     # Your app's required scopes, comma-separated
+HOST={your app's host}              # Your app's host, without the protocol prefix
+
+Essential on the front end:
+	App-Bridge
+	App-Bridge React
+	App-Brighe Utils
+
+	Provider to encapsulate app. Raps the app in App.js, I believe. Need to cofirm this. 
+
+Backend Packages:
+	Shopify-api library 
+	import Shopify, { ApiVersion } from '@shopify/shopif-api';
+
+	koa = verify request includes verifyToken()
+
+------ restart video at 35 minutes
+
+refer to directory lambda/PT-Classes/Projects/authentication/Auth-Friends
