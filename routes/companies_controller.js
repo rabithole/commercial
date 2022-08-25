@@ -56,9 +56,11 @@ router.post('/', async (req, res) => {
     console.log('New Company', req.body)
     await Company.query().insert(req.body)
     .then(data => {
+        console.log(data)
         res.status(200).json(data);
     })
     .catch(error => {
+        console.log(error)
         res.status(500).json({message: 'Internal Server Error:' + error })
     });
 })
