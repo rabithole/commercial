@@ -5,11 +5,25 @@ import axios from 'axios';
 
 function ClientLanding() {
   
-  function callShopifyApi(){
+  function callAdminApi(){
     axios
-      .get('http://localhost:5080/client')
+      .get('http://localhost:5080/admin_api')
       .then(function(response) {
-        console.log('Response', response.data)
+        console.log('Response admin api', response.data.data)
+      })
+      .catch(error => {
+        console.log('Error', error)
+      })
+  }
+
+  function callStorefrontApi(){
+    axios
+      .get('http://localhost:5080/storefront_api')
+      .then(function(response) {
+        console.log('Response storefront api', response.data.data)
+      })
+      .catch(error => {
+        console.log('Error', error)
       })
   }
 
@@ -22,7 +36,8 @@ function ClientLanding() {
       <p>List of orders</p>
       <p>Add to order button for each product</p>
       <p>Orders Page</p>
-      <button onClick={callShopifyApi}>Testing API</button>
+      <button onClick={callAdminApi}>Admin API</button>
+      <button onClick={callStorefrontApi}>Store Front API</button>
     </div>
   );
 }
