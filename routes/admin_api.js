@@ -7,7 +7,7 @@ const BASE_URL = 'https://discount-indoor-gardening.myshopify.com';
 const API_PATH = '/admin/api/2022-07/graphql.json';
 const headers = {
 	'Content-Type': 'application/json',
-	'X-Shopify-Access-Token': "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"
+	'X-Shopify-Access-Token': "API_KEY"
 }
 const productQuery = `{
     inventoryItems(first: 5) {
