@@ -62,3 +62,17 @@ refer to directory lambda/PT-Classes/Projects/authentication/Auth-Friends
 
 
 Oauth - 
+
+Customer vs Company API data points.
+--- Shopify Customer Fields
+	addresses, amountSpent, averageOrderAmountV2, canDelete, companyContactProfiles, displayName, defaultAddress, email, firstName, image, lastName, lastOrder, note, numberOfOrders, state, tags, ( 'statistics', look into more ), validEmailAddress, verifiedEmail
+---- Shopify Customer Connections ?
+	events, orders, paymentMethods, subscriptionContracts, 
+
+--- Commercial Database
+	Street, city, state, zip = MailingAddress in Shopify Customer.addresses, phone, country, longitude, latitude, id, countryCodeV2, 
+
+	annual_revenue, notes, name
+
+	Can map company info fields in Shopify admin customer profile. 
+	Will need to add primary contact as customer name in the Shopify admin. 
