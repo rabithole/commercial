@@ -7,8 +7,8 @@
     "migrate": "knex migrate:latest --knexfile db/migrations/knexfile.js",
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "env:decrypt": "bash ~/scripts/env-decrypt.sh",
-    "env:encrypt": "bash ~/scripts/env-encrypt.sh"
+    "env:decrypt": "bash scripts/env-decrypt.sh",
+    "env:encrypt": "bash scripts/env-encrypt.sh"
   },
   "keywords": [],
   "author": "",

@@ -76,3 +76,12 @@ Customer vs Company API data points.
 
 	Can map company info fields in Shopify admin customer profile. 
 	Will need to add primary contact as customer name in the Shopify admin. 
+
+-- MAPPING COMPANY API TO SHOPIFY CUSTOMER API. ( Shoify company api endpoint is only available to Shopfiy plus devs. )
+--- Commercial Company: name, street, city, state, zip, notes
+---- Shopify customer: MailingAdress under "Common objects" in Shopify admin api:
+		MailingAddress.address1, MailingAddress.address2 ( typically used for apartment or suite info. ), MailingAddress.city, MailingAddress.company ( company employee works for. ), MailingAddress.firstName, MailingAddress.lastName, MailingAddress.latitude, MailingAddress.longitude, MailingAddress.name ( full name of customer ), MailingAddress.phone, MailingAddress.zip.
+		 Customer.note, customer.phone, customers.state, customer.tags, customer.validEmailAddress, customer.verifiedEmail
+
+--- Orders under Customer:
+	Customer.orders, 
