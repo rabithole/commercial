@@ -1,14 +1,5 @@
- addresses: [
-        {
-            address1: "450 Stoung Lane"
-            city: "La La Land"
-            company: "Dream Land"
-            phone: "4533224556"
-            zip: "87837"
-        }
-      ]
-
-
+// create a new customer
+// gid://shopify/Customer/5919707234340 is Bob Ross
 mutation {
   customerCreate (
     input: {
@@ -42,6 +33,23 @@ mutation {
       message
     }
   }
+}
+
+
+// customerUpdate
+mutation {
+    customerUpdate(
+        input: {
+            id: "gid://shopify/Customer/5919707234340"
+            firstName: "Jo Jo"
+        }
+    )
+    {
+        customer{
+            id
+            firstName
+        }
+    }
 }
 
 
@@ -85,3 +93,58 @@ const createCompanyQuery =`
       }
     }
 `
+
+// Get customer by id
+{
+    customer(id: "gid://shopify/Customer/5461486043172"){
+        id
+        displayName
+        amountSpent{
+            amount
+        }
+    }
+}
+
+
+// Get orders using query.
+{
+    orders(first: 100, query:"channelName:Online Store"){
+        edges{
+            node{
+                name
+                id
+                totalWeight
+                channelInformation{
+                    channelDefinition{
+                        channelName
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// Grabs list of customers with a query.
+{
+    customers(first: 60, reverse: true, query:"tag:commercial") {
+        nodes{
+            id
+            displayName
+            tags
+            orders(first: 10) {
+                nodes{
+                    name
+                    totalWeight
+                }
+            }
+            amountSpent{
+                amount
+            }
+            addresses{
+                address1
+            }
+            email
+        }
+    }
+}
