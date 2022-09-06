@@ -110,16 +110,16 @@ function CreateCompany(props) {
 						onChange={handleChange} 
 					/>
 				</div>
-
-				<div>
-					<label>First Name</label>
-					<input
-						type='text'
-						id='first_name'
-						name='first_name'
-						onChange={handleChange}
-					/>
-				</div>
+					<div>
+						<h3>Primary Contact</h3>
+						<label>First Name</label>
+						<input
+							type='text'
+							id='first_name'
+							name='first_name'
+							onChange={handleChange}
+						/>
+					</div>
 
 				<div>
 					<label>Last Name</label>
@@ -152,6 +152,7 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
+					<h3>Company Address</h3>
 					<label>Street:</label><br/>
 					<input 
 						type='text' 
