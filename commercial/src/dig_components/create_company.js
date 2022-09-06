@@ -7,14 +7,45 @@ function CreateCompany(props) {
 	// console.log('Create Company Refresh')
 	let history = useNavigate();
 
+	// const [newCompany, setCompanyData] = useState({
+	// 	name: '',
+	// 	cost_plus: '',
+	// 	street: '',
+	// 	city: '',
+	// 	state: '',
+	// 	zip: ''
+	// })
+
 	const [newCompany, setCompanyData] = useState({
-		name: '',
-		cost_plus: '',
-		street: '',
-		city: '',
-		state: '',
-		zip: ''
+		input: {
+			first_name: '',
+			last_name: '', 
+			email: '',
+			notes: ''
+			},
+		addresses: {
+			address1: '',
+			address2: '',
+			city: '',
+			zip: '',
+			country: '',
+			phone: '',
+			company: ''
+		}
 	})
+	console.log('New Company GraphQL', newCompany);
+
+
+	function callAdminApi(){
+	    axios
+	      .get('http://localhost:5080/admin_api')
+	      .then(function(response) {
+	        console.log('Response admin api', response.data.data)
+	      })
+	      .catch(error => {
+	        console.log('Error', error)
+	      })
+	  	}
 
 	// console.log('New Company', newCompany)
 
@@ -36,9 +67,17 @@ function CreateCompany(props) {
 	}
 
 	const handleChange = (event) => {
+
 		setCompanyData({
 			...newCompany,
-			[event.target.name]: event.target.value,
+			input: {
+				...newCompany.input,
+					[event.target.name]: event.target.value,
+				},
+			addresses: {
+				...newCompany.addresses,
+				[event.target.name]: event.target.value,
+			}
 		})
 	}
 
@@ -51,70 +90,127 @@ function CreateCompany(props) {
 			<h2>Input Your Company Information</h2>
 
 			<form onSubmit={handleSubmit}> 
-				<label>Company Name:</label><br/>
-				<input 
-					type='text' 
-					id='name'
-					name='name'
-					onChange={handleChange} 
-					autoFocus
-				/>
-				<br/>
+				<div>
+					<label>Company Name:</label><br/>
+					<input 
+						type='text' 
+						id='name'
+						name='company'
+						onChange={handleChange} 
+						autoFocus
+					/>
+				</div>
 
-				<label>Percentage Above Cost:</label><br/>
-				<input 
-					type='text' 
-					id='cost_plus'
-					name='cost_plus'
-					onChange={handleChange} 
-				/>
-				<br/>
+				<div>
+					<label>Percentage Above Cost:</label><br/>
+					<input 
+						type='text' 
+						id='cost_plus'
+						name='cost_plus'
+						onChange={handleChange} 
+					/>
+				</div>
 
-				<label>Street:</label><br/>
-				<input 
-					type='text' 
-					id='street'
-					name='street'
-					onChange={handleChange} 
-				/>
-				<br/>
+				<div>
+					<label>First Name</label>
+					<input
+						type='text'
+						id='first_name'
+						name='first_name'
+						onChange={handleChange}
+					/>
+				</div>
 
-				<label>City:</label><br/>
-				<input 
-					type='text' 
-					id='city'
-					name='city'
-					onChange={handleChange} 
-				/>
-				<br/>
+				<div>
+					<label>Last Name</label>
+					<input
+						type='text'
+						id='last_name'
+						name='last_name'
+						onChange={handleChange}
+					/>
+				</div>
 
-				<label>State:</label><br/>
-				<input 
-					type='text' 
-					id='state' 
-					name='state'
-					onChange={handleChange} 
-				/>
-				<br/>
+				<div>
+					<label>Phone:</label><br/>
+					<input 
+						type='text' 
+						id='phone'
+						name='phone'
+						onChange={handleChange} 
+					/>
+				</div>
 
-				<label>Zip Code:</label><br/>
-				<input 	
-					type='text'
-					maxLength='5' 
-					id='zip'
-					name='zip' 
-					onChange={handleChange} 
-				/>
-				<br/>
+				<div>
+					<label>Email:</label><br/>
+					<input 
+						type='text' 
+						id='email'
+						name='email'
+						onChange={handleChange} 
+					/>
+				</div>
 
-				<label>Notes:</label><br/>
-				<textarea 
-					name='notes' 
-					id='notes'
-					onChange={handleChange} 
-				>
+				<div>
+					<label>Street:</label><br/>
+					<input 
+						type='text' 
+						id='address1'
+						name='address1'
+						onChange={handleChange} 
+					/>
+				</div>
 
-				</textarea>
+				<div>
+					<label>Apartment or Suite:</label><br/>
+					<input 
+						type='text' 
+						id='address2'
+						name='address2'
+						onChange={handleChange} 
+					/>
+				</div>
+
+				<div>
+					<label>City:</label><br/>
+					<input 
+						type='text' 
+						id='city'
+						name='city'
+						onChange={handleChange} 
+					/>
+				</div>
+
+				<div>
+					<label>State:</label><br/>
+					<input 
+						type='text' 
+						id='state' 
+						name='state'
+						onChange={handleChange} 
+					/>
+				</div>
+
+				<div>
+					<label>Zip Code:</label><br/>
+					<input 	
+						type='text'
+						maxLength='5' 
+						id='zip'
+						name='zip' 
+						onChange={handleChange} 
+					/>
+				</div>
+
+				<div>
+					<label>Notes:</label><br/>
+					<textarea 
+						name='notes' 
+						id='notes'
+						onChange={handleChange} 
+					>
+					</textarea>
+				</div>
 
 				<button>Create Company</button>
 			</form>

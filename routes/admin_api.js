@@ -30,6 +30,10 @@ const productQuery = `{
     }
 }`;
 
+const createCompanyQuery = `{
+    
+}`
+
 router.use(express.json());
 
 router.get('/', async (request, response) => {

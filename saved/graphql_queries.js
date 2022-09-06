@@ -7,7 +7,7 @@ mutation {
       lastName: "Ross",
       email: "testCustomer@gmail.com"
       note: "This is a test customer created from Postman using GraphQL"
-      addresses: [
+      addresses: 
           {
               address1: "389 La La Land"
               address2: "Apartment 2"
@@ -18,7 +18,6 @@ mutation {
               provinceCode: "AL"
               countryCode: US
           }
-      ]
     }
   ) 
   {
@@ -147,4 +146,25 @@ const createCompanyQuery =`
             email
         }
     }
+}
+
+// List of first five products.
+{
+   products(first: 5) {
+       edges{
+           node{
+               id
+               title
+               variants(first: 5){
+                   edges{
+                       node{
+                           priceV2{
+                               amount
+                           }
+                       }
+                   }
+               }
+           }
+       }
+   }
 }
