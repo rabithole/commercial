@@ -68,21 +68,37 @@ mutation {
 
 router.use(express.json());
 
-router.get('/', async (request, response) => {
-    console.log('admi api response data', response.data)
+router.post('/', async (request, response) => {
+    console.log('Request body', request.body)
+    let newCompany = `
+        mutation {
+          customerCreate (
+            ${request.body}
+          ) 
+          {
+            customer {
+              id
+              firstName
+              lastName
+              email
+            }
+            userErrors {
+              field
+              message
+            }
+          }
+        }`
+
+    console.log('New Company', newCompany)
+
 	const ShopfyClient = axios.create({
 		baseURL: BASE_URL,
 		headers: headers
 	});
 
-	const res = await ShopfyClient.post(API_PATH, { query: createCompanyQuery });
+	const res = await ShopfyClient.post(API_PATH, { query: newCompany });
         response.status(200).json(res.data);
         console.log('Res.data', res.data)
-
-	
-	// console.log('Response data', res.data); // data
-	// console.log('proudcts edges', res.data.data.products.edges); // data
-	// console.log('Response errors', res.errors); // errors if any
 })
 
 module.exports = router;

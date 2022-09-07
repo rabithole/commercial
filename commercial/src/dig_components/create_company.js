@@ -2,43 +2,23 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 
 function CreateCompany(props) {
 	// console.log('Create Company Refresh')
 	let history = useNavigate();
 
-	// const [newCompany, setCompanyData] = useState({
-	// 	name: '',
-	// 	cost_plus: '',
-	// 	street: '',
-	// 	city: '',
-	// 	state: '',
-	// 	zip: ''
-	// })
-
-	const [newCompany, setCompanyData] = useState({
-		input: {
-			first_name: '',
-			last_name: '', 
-			email: '',
-			notes: ''
-			},
-		addresses: {
-			address1: '',
-			address2: '',
-			city: '',
-			zip: '',
-			country: '',
-			phone: '',
-			company: ''
-		}
-	})
-	console.log('New Company GraphQL', newCompany);
+	const [newCompany, setCompanyData] = useState({});
+	const [primaryContact, setPrimaryContact] = useState({});
+	const [company, setNewCompany] = useState();
+	console.log('Company Info', newCompany);
+	console.log('Primary Contact', primaryContact);
+	console.log('New Company', company);
 
 
-	function callAdminApi(){
+	function callAdminApi(event){
 	    axios
-	      .get('http://localhost:5080/admin_api')
+	      .post('http://localhost:5080/admin_api', company)
 	      .then(function(response) {
 	        console.log('Response admin api', response.data.data)
 	      })
@@ -51,36 +31,45 @@ function CreateCompany(props) {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		axios
-			.post('http://localhost:5080/companies', newCompany)
-			.then(function(res) {
-				console.log('Response', res.data)
-			})
-			.catch(error => {
-				console.log('Error, error, error', error)
-				return
-			})
+		callAdminApi();
+		// axios
+		// 	.post('http://localhost:5080/companies', newCompany)
+		// 	.then(function(res) {
+		// 		console.log('Response', res.data)
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('Error, error, error', error)
+		// 		return
+		// 	})
 
 		setTimeout(() => {
 			window.location.reload(true)
 		}, '500');
 	}
 
-	const handleChange = (event) => {
-
+	const companyChange = (event) => {
 		setCompanyData({
 			...newCompany,
+			[event.target.name]: event.target.value,
+		})
+		setNewCompany({
+			...company,
 			input: {
-				...newCompany.input,
-					[event.target.name]: event.target.value,
-				},
-			addresses: {
-				...newCompany.addresses,
-				[event.target.name]: event.target.value,
+				...primaryContact,
+				addresses: {
+					...newCompany
+				}
 			}
 		})
 	}
 
+	const contactChange = event => {
+		setPrimaryContact({
+			...primaryContact,
+			[event.target.name]: event.target.value,
+		})
+	}
+	
 	return (
 		<div className='company'>
 			<nav>
@@ -96,7 +85,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='name'
 						name='company'
-						onChange={handleChange} 
+						onChange={companyChange} 
 						autoFocus
 					/>
 				</div>
@@ -107,7 +96,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='cost_plus'
 						name='cost_plus'
-						onChange={handleChange} 
+						onChange={companyChange} 
 					/>
 				</div>
 					<div>
@@ -117,7 +106,7 @@ function CreateCompany(props) {
 							type='text'
 							id='first_name'
 							name='first_name'
-							onChange={handleChange}
+							onChange={contactChange}
 						/>
 					</div>
 
@@ -127,18 +116,18 @@ function CreateCompany(props) {
 						type='text'
 						id='last_name'
 						name='last_name'
-						onChange={handleChange}
+						onChange={contactChange}
 					/>
 				</div>
 
 				<div>
 					<label>Phone:</label><br/>
-					<input 
+					<input  
 						type='text' 
 						id='phone'
 						name='phone'
-						onChange={handleChange} 
-					/>
+						onChange={contactChange} 
+				 	/>
 				</div>
 
 				<div>
@@ -147,7 +136,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='email'
 						name='email'
-						onChange={handleChange} 
+						onChange={contactChange} 
 					/>
 				</div>
 
@@ -158,7 +147,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='address1'
 						name='address1'
-						onChange={handleChange} 
+						onChange={companyChange} 
 					/>
 				</div>
 
@@ -168,7 +157,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='address2'
 						name='address2'
-						onChange={handleChange} 
+						onChange={companyChange} 
 					/>
 				</div>
 
@@ -178,7 +167,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='city'
 						name='city'
-						onChange={handleChange} 
+						onChange={companyChange} 
 					/>
 				</div>
 
@@ -188,7 +177,7 @@ function CreateCompany(props) {
 						type='text' 
 						id='state' 
 						name='state'
-						onChange={handleChange} 
+						onChange={companyChange} 
 					/>
 				</div>
 
@@ -199,7 +188,7 @@ function CreateCompany(props) {
 						maxLength='5' 
 						id='zip'
 						name='zip' 
-						onChange={handleChange} 
+						onChange={companyChange} 
 					/>
 				</div>
 
@@ -208,7 +197,7 @@ function CreateCompany(props) {
 					<textarea 
 						name='notes' 
 						id='notes'
-						onChange={handleChange} 
+						onChange={companyChange} 
 					>
 					</textarea>
 				</div>

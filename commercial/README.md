@@ -23,6 +23,11 @@
 ### Setting a primary employee
 
 
+# Potential Bugs
+### There will be two state objects for company info due to no company graphql enpoint. 
+### Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
+
+
 
 
 
