@@ -70,24 +70,41 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     console.log('Request body', request.body)
-    let newCompany = `
-        mutation {
-          customerCreate (
-            ${request.body}
-          ) 
-          {
-            customer {
-              id
-              firstName
-              lastName
-              email
-            }
-            userErrors {
-              field
-              message
-            }
-          }
-        }`
+    let company = request.body;
+    let newCompany =` 
+            mutation {
+              customerCreate (
+                input: {
+                    firstName: ${JSON.stringify(company.input.first_name)},
+                    lastName: ${JSON.stringify(company.input.last_name)},
+                    email: ${JSON.stringify(company.input.email)},
+                    note: ${JSON.stringify(company.addresses.notes)}
+                    addresses: 
+                        {
+                            address1: ${JSON.stringify(company.addresses.address1)},
+                            address2: ${JSON.stringify(company.addresses.address2)},
+                            city: ${JSON.stringify(company.addresses.city)},
+                            company: ${JSON.stringify(company.addresses.company)},
+                            phone: ${JSON.stringify(company.input.phone)},
+                            zip: ${JSON.stringify(company.addresses.zip)},
+                            provinceCode: ${JSON.stringify(company.addresses.state)},
+                            countryCode: US
+                        }
+                    }
+                ) 
+              {
+                customer {
+                  id
+                  firstName
+                  lastName
+                  email
+                }
+                userErrors {
+                  field
+                  message
+                }
+              }
+            }`
 
     console.log('New Company', newCompany)
 

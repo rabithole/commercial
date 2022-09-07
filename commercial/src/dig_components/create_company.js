@@ -11,9 +11,9 @@ function CreateCompany(props) {
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	console.log('Company Info', newCompany);
+	console.log('New Company', newCompany);
 	console.log('Primary Contact', primaryContact);
-	console.log('New Company', company);
+	console.log('Final Company', company);
 
 
 	function callAdminApi(event){
@@ -54,13 +54,14 @@ function CreateCompany(props) {
 		})
 		setNewCompany({
 			...company,
-			input: {
-				...primaryContact,
+				input: {
+					...primaryContact
+				},
 				addresses: {
 					...newCompany
 				}
 			}
-		})
+		)
 	}
 
 	const contactChange = event => {
@@ -93,7 +94,7 @@ function CreateCompany(props) {
 				<div>
 					<label>Percentage Above Cost:</label><br/>
 					<input 
-						type='text' 
+						type='number' 
 						id='cost_plus'
 						name='cost_plus'
 						onChange={companyChange} 
@@ -122,7 +123,9 @@ function CreateCompany(props) {
 
 				<div>
 					<label>Phone:</label><br/>
-					<input  
+					<NumberFormat  
+						format='###-###-####'
+						mask="_"
 						type='text' 
 						id='phone'
 						name='phone'
