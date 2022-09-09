@@ -1,12 +1,8 @@
 # To Do List
-### Add env variables
-
 ### Add restrictions to making duplicate companies etc
 ### Restrict company delettion process
-### Add primary contact process? Rethinking this process and the need for it. 
 
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
-### Think about duplicate emails in regards to the possibility an employee could work for or move to a new company and want to use a personal email. Should email be unique? 
 ### Casacade deletion of employees when their company is deleted.
 
 ### Create process for employee to send add company info to a client.
@@ -24,7 +20,8 @@
 
 
 # Potential Bugs
-### There will be two state objects for company info due to no company graphql enpoint. 
+### There are two sources of data. Most stored on shopify db, but some stored in ours. Need to to keep company and primary contact info consistent between the two.
+ 
 ### Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
 
 
