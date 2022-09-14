@@ -19,6 +19,8 @@ app.use('/invoices', invoicesController);
 app.use('/memberships', membershipsController);
 app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
+
+// Shopify graphql API endpoints
 app.use('/admin_api', adminApi);
 app.use('/storefront_api', storefrontApi);
 

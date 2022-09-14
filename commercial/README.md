@@ -1,6 +1,8 @@
 # To Do List
 ### Add restrictions to making duplicate companies etc
 ### Restrict company delettion process
+### Error handling from graphql
+### Must add all info handling for the company creation page.
 
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
 ### Casacade deletion of employees when their company is deleted.
@@ -9,6 +11,7 @@
 
 ### Add checks to stop accidental deletions
 #### Redirect after company deletions.
+#### Pop up modal for deletions
 
 // Employee / Employees
 ### Password is in employee table. Need to reconfigure

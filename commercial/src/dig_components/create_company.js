@@ -11,41 +11,28 @@ function CreateCompany(props) {
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	console.log('New Company', newCompany);
-	console.log('Primary Contact', primaryContact);
-	console.log('Final Company', company);
+	const [error, setError] = useState();
+	// console.log('New Company', newCompany);
+	// console.log('Primary Contact', primaryContact);
+	// console.log('Final Company', company);
 
 
 	function callAdminApi(event){
+		event.preventDefault();
 	    axios
 	      .post('http://localhost:5080/admin_api', company)
 	      .then(function(response) {
 	        console.log('Response admin api', response.data.data)
+	        setError(response.data.data.customerCreate.userErrors[0].message)
 	      })
 	      .catch(error => {
-	        console.log('Error', error)
+	      	if(error == undefined){
+	      		return
+	      	}else {
+	      		console.log('Errorer', error)
+	      	}
 	      })
 	  	}
-
-	// console.log('New Company', newCompany)
-
-	const handleSubmit = event => {
-		event.preventDefault();
-		callAdminApi();
-		// axios
-		// 	.post('http://localhost:5080/companies', newCompany)
-		// 	.then(function(res) {
-		// 		console.log('Response', res.data)
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('Error, error, error', error)
-		// 		return
-		// 	})
-
-		setTimeout(() => {
-			window.location.reload(true)
-		}, '500');
-	}
 
 	const companyChange = (event) => {
 		setCompanyData({
@@ -78,8 +65,9 @@ function CreateCompany(props) {
 			</nav>
 		
 			<h2>Input Your Company Information</h2>
+			<h1 style={{backgroundColor: "red"}}>{error}</h1>
 
-			<form onSubmit={handleSubmit}> 
+			<form onSubmit={callAdminApi}> 
 				<div>
 					<label>Company Name:</label><br/>
 					<input 
@@ -175,7 +163,7 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
-					<label>State:</label><br/>
+					<label>State / Province:</label><br/>
 					<input 
 						type='text' 
 						id='state' 
