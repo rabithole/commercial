@@ -2,6 +2,7 @@
 ### Add restrictions to making duplicate companies etc
 ### Restrict company delettion process
 ### Error handling from graphql
+#### Inconsistent behavior from Shopify's GraphQL error messaging. Need to develop error handling at the front end level with the form and handle less errors coming from Shopify.  
 ### Must add all info handling for the company creation page.
 
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 

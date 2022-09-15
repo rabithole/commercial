@@ -22,8 +22,8 @@ function CreateCompany(props) {
 	    axios
 	      .post('http://localhost:5080/admin_api', company)
 	      .then(function(response) {
-	        console.log('Response admin api', response.data.data)
-	        setError(response.data.data.customerCreate.userErrors[0].message)
+	        console.log('Response admin api', response.data.errors[0])
+	        // setError(JSON.stringify(response.data.errors[0]))
 	      })
 	      .catch(error => {
 	      	if(error == undefined){
