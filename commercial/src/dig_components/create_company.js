@@ -11,28 +11,29 @@ function CreateCompany(props) {
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	const [error, setError] = useState();
-	// console.log('New Company', newCompany);
-	// console.log('Primary Contact', primaryContact);
-	// console.log('Final Company', company);
-
+	const [companyId, setCompanyId] = useState();
 
 	function callAdminApi(event){
 		event.preventDefault();
-	    axios
-	      .post('http://localhost:5080/admin_api', company)
-	      .then(function(response) {
-	        console.log('Response admin api', response.data.errors[0])
-	        // setError(JSON.stringify(response.data.errors[0]))
-	      })
-	      .catch(error => {
-	      	if(error == undefined){
-	      		return
-	      	}else {
-	      		console.log('Errorer', error)
-	      	}
+	    axios.post('http://localhost:5080/shopify_create_company', company)
+	      .then((response) => {
+	      	let companyId = response.data;
+	      	// setCompanyId(response.data);
+	        console.log('Response admin api', companyId);
+	      	// return companyId;
+	      	getCompanyId({id: companyId});
 	      })
 	  	}
+
+	function getCompanyId(companyId){
+		axios.post('http://localhost:5080/companies', companyId)
+        	.then((res) => {
+        		console.log('pass to local company state', res.data)
+        	})
+        	.catch(error => {
+        		console.log('error', error)
+        	})
+	}
 
 	const companyChange = (event) => {
 		setCompanyData({
@@ -65,7 +66,6 @@ function CreateCompany(props) {
 			</nav>
 		
 			<h2>Input Your Company Information</h2>
-			<h1 style={{backgroundColor: "red"}}>{error}</h1>
 
 			<form onSubmit={callAdminApi}> 
 				<div>

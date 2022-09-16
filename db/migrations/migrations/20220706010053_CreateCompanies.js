@@ -5,17 +5,21 @@
 exports.up = function(knex) {
   return knex.schema.createTable('companies', table => {
         table.increments(); 
-        table.string('name').notNullable();
+        table.string('company_name').notNullable();
+        table.string('first_name').notNullable();
+        table.string('last_name').notNullable();
         table.integer('cost_plus').notNullable().unsigned().defaultsTo(15); // unsigend means no negative numbers
-        table.string('street').notNullable();
-        table.string('city').notNullable();
-        table.string('state').notNullable();
+        table.string('street');
+        table.string('suite');
+        table.string('city');
+        table.string('state');// Province in Shopify
 
         // cannot specify integer length in postgres?
-        table.integer('zip', 5).notNullable();  
+        table.integer('zip', 5);  
         table.float('annual_revenue').unsigned(); // Foreign key? 
         table.integer('user_id').references('id').inTable('employees').onUpdate('CASCADE').onDelete('CASCADE');
         table.string('notes', 1000);
+        table.string('shopify_id')
     })
 };
 

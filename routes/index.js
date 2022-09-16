@@ -6,7 +6,7 @@ const invoicesController = require('./invoices_controller');
 const membershipsController = require('./memberships_controller');
 const orderLineItemsController = require('./order_line_items_controller');
 const ordersController = require('./orders_controller');
-const adminApi = require('./admin_api');
+const shopifyCreateCompany = require('./shopify_create_company');
 const storefrontApi = require('./storefront_api');
 
 const app = express();
@@ -21,7 +21,7 @@ app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
 
 // Shopify graphql API endpoints
-app.use('/admin_api', adminApi);
+app.use('/shopify_create_company', shopifyCreateCompany);
 app.use('/storefront_api', storefrontApi);
 
 app.get('/', (request, response) => {
