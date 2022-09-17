@@ -4,13 +4,16 @@ import '../css/companies.css';
 import { Link, useParams, useLocation } from 'react-router-dom';
 
 function SingleCompany(props) {
-	const [companyData, setCompanyData] = useState([]);
+	const [localCompanyData, setCompanyData] = useState([]);
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
-	console.log('primary employee', primaryEmployee);
-	console.log('Company Name', companyData)
+	const [shopifyData, setShopifyData] = useState([]);
+	const [shopifyAddressData, setAddressData] = useState([]);
+	// console.log('primary employee', primaryEmployee);
+	// console.log('Company Name', localCompanyData);
+	console.log('Shopify Data', shopifyData)
+	// console.log('Address Data', shopifyAddressData)
 
 	let { id } = useParams();
-	// console.log('company data', companyData)
 
 	useEffect(() => {
 		axios
@@ -25,7 +28,13 @@ function SingleCompany(props) {
 		axios
 			.post('http://localhost:5080/shopify_get_company')
 			.then((response) => {
-				console.log('Get company response from Shopify', response.data)
+				let shopifyResponseData = response.data.data.customer.addresses;
+
+				shopifyResponseData.map((address) => {
+					console.log('Address', address);
+					setAddressData(address);
+				})
+				setShopifyData(response.data.data.customer)
 			})
 			.catch((error) => {
 				console.log('Error', error)
@@ -36,15 +45,15 @@ function SingleCompany(props) {
 	    event.preventDefault();
 	    	axios.delete('http://localhost:5080/companies/' + id)
 	      		.then(res => {
-	        		console.log('This Company has been deleted', companyData)
+	        		console.log('This Company has been deleted', localCompanyData)
 	      })
   	}
 
   	const deleteEmployee = (id, event, item) => {
-  		console.log('current target', companyData.employees[1], id)
+  		console.log('current target', localCompanyData.employees[1], id)
 	    	axios.delete('http://localhost:5080/employees/' + id)
 	      		.then(res => {
-	        		console.log('This employee has been deleted', companyData);
+	        		console.log('This employee has been deleted', localCompanyData);
 	      })
 
   		setTimeout(() => {
@@ -72,43 +81,45 @@ function SingleCompany(props) {
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h2>{companyData.company_name}</h2>
-			<h4>Primary Contact</h4>
-			<blockquote>{companyData.first_name} {companyData.last_name}</blockquote>
+			<h1 style={{textAlign: 'center'}}>{localCompanyData.company_name}</h1>
+			<h2>Primary Contact</h2>
+			<blockquote>{shopifyData.displayName}</blockquote>
 
 			<h4>Phone:</h4>
-			<blockquote>{companyData.phone}</blockquote>
+			<blockquote>{shopifyAddressData.phone}</blockquote>
 
 			<h4>Email:</h4>
-			<blockquote>{companyData.email}</blockquote>
+			<blockquote>{localCompanyData.email}</blockquote>
 
+			<h2>{localCompanyData.company_name} Address</h2>
 			<h4>Street:</h4> 
-			<blockquote>{companyData.street}</blockquote>
+			<blockquote>{shopifyAddressData.address1} - Apt/Suite: {shopifyAddressData.address2}</blockquote>
 
 			<h4>City:</h4> 
-			<blockquote>{companyData.city}</blockquote>
+			<blockquote>{shopifyAddressData.city}</blockquote>
 
 			<h4>State:</h4> 
-			<blockquote>{companyData.state}</blockquote>
+			<blockquote>{shopifyAddressData.provinceCode}</blockquote>
 
 			<h4>Zip:</h4> 
-			<blockquote>{companyData.zip}</blockquote>
+			<blockquote>{shopifyAddressData.zip}</blockquote>
 
+			<h2>Basic Monetary Details</h2>
 			<h4>Cost Plus / Percentage above our cost</h4>
-			<blockquote>{companyData.cost_plus}%</blockquote>
+			<blockquote>{localCompanyData.cost_plus}%</blockquote>
 
 			<h4>Annual Revenue:</h4> 
-			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
+			<blockquote>${new  Intl.NumberFormat().format(localCompanyData.annual_revenue)}</blockquote>
 
 			<h4>Notes</h4>
-			<blockquote className='notes'>{companyData.notes}</blockquote>
+			<blockquote className='notes'>{shopifyData.note}</blockquote>
 
 			<h4>Shopify ID</h4>
-			<blockquote>{companyData.shopify_id}</blockquote>
+			<blockquote>{localCompanyData.shopify_id}</blockquote>
 
 			<Link 
 				to={'/company_edit'}
-				state={companyData}
+				state={localCompanyData}
 				>Edit Company Info
 			</Link>
 			<button onClick={deleteItemCompany}>Delete Company</button>
@@ -119,7 +130,7 @@ function SingleCompany(props) {
 				to='/employees/create_employee'
 				id='create_employee_button'
 				// state is passing the id of the company a new employee is being created for 
-				state={{id: id, companyName: companyData.name}}
+				state={{id: id, companyName: localCompanyData.name}}
 				>Add Employee
 			</Link>
 

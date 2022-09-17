@@ -21,6 +21,20 @@ router.post('/', async (request, response) => {
             customer(id: "gid://shopify/Customer/5935265742884"){
                 id
                 displayName
+                firstName
+                lastName
+                email
+                note
+                addresses {
+                    address1
+                    address2
+                    city
+                    company
+                    phone
+                    zip
+                    provinceCode
+                    countryCodeV2
+                }
             }
         }`
 
