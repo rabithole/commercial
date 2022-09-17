@@ -7,6 +7,7 @@ function SingleCompany(props) {
 	const [companyData, setCompanyData] = useState([]);
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
 	console.log('primary employee', primaryEmployee);
+	console.log('Company Name', companyData)
 
 	let { id } = useParams();
 	// console.log('company data', companyData)
@@ -20,6 +21,14 @@ function SingleCompany(props) {
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
+			})
+		axios
+			.post('http://localhost:5080/shopify_get_company')
+			.then((response) => {
+				console.log('Get company response from Shopify', response.data)
+			})
+			.catch((error) => {
+				console.log('Error', error)
 			})
 	},[]);
 
@@ -57,48 +66,22 @@ function SingleCompany(props) {
 		return null
 	};
 
-	const checkForPrimaryContact = (event, id) => {
-		let primary = false;
-		// let employeesArray = [];
-
-		// primaryEmployee.map(primary => {
-		// 	employeesArray.push({...primary, primary: false})
-		// })
-		// console.log('employeesArray', employeesArray)
-		// setPrimaryEmployeeList(employeesArray)
-
-		if(event.target.checked) {
-			console.log(true)
-			primary = {primary: true};
-			// console.log('Primary Target true', primary, id)
-			window.location.reload();
-			// setChecked(true)
-		} else {
-			console.log(false)
-			primary = {primary: false};
-			console.log('Primary Target false', primary, id)
-			window.location.reload();
-			// setChecked(false)
-		}
-
-	axios
-		.put('http://localhost:5080/employees/primary/' + id, primary)
-		.then(function (response) {
-			console.log('Response', response);
-			// window.location.reload();
-		})
-		.catch(error => {
-			console.log('Error', error);
-		})
-	};
-
 	return (
 		<div className='company'>
 			<nav>
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h2>{companyData.name}</h2>
+			<h2>{companyData.company_name}</h2>
+			<h4>Primary Contact</h4>
+			<blockquote>{companyData.first_name} {companyData.last_name}</blockquote>
+
+			<h4>Phone:</h4>
+			<blockquote>{companyData.phone}</blockquote>
+
+			<h4>Email:</h4>
+			<blockquote>{companyData.email}</blockquote>
+
 			<h4>Street:</h4> 
 			<blockquote>{companyData.street}</blockquote>
 
@@ -120,6 +103,9 @@ function SingleCompany(props) {
 			<h4>Notes</h4>
 			<blockquote className='notes'>{companyData.notes}</blockquote>
 
+			<h4>Shopify ID</h4>
+			<blockquote>{companyData.shopify_id}</blockquote>
+
 			<Link 
 				to={'/company_edit'}
 				state={companyData}
@@ -138,14 +124,14 @@ function SingleCompany(props) {
 			</Link>
 
 			{/* List of employees working for or with the company */}
-			<section>
+			{/*<section>
 				{primaryEmployee.map((employee) => (
 					<div className='employee_list' key={ employee.id }>
 						<p><b>Name:</b> { employee.first_name } { employee.last_name }</p>
 						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
 						<p><b>Email:</b> { employee.email }</p>
 						<p><b>Title:</b> { employee.title }</p>
-						{/*<p>{employee.id}</p>*/}
+						<p>{employee.id}</p>
 
 						<label>Check if primary contact</label>
 						<input 
@@ -173,7 +159,7 @@ function SingleCompany(props) {
 						<button onClick={ () => deleteEmployee(employee.id)}>Delete Employee</button>
 					</div>
 				))}
-			</section>
+			</section>*/}
 
 			
 		</div>

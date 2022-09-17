@@ -42,18 +42,21 @@ function CompaniesList(props) {
 				{companiesList.filter((company) => {
 					if(singleCompany == '') {
 						return company;
-					}else if(company.name.toLowerCase().includes(singleCompany.toLowerCase())) {
+					}else if(company.company_name.toLowerCase().includes(singleCompany.toLowerCase())) {
 						return company;
 					}
-				}).map(({ name, cost_plus, annual_revenue, id, notes}) => (
+				}).map(({ company_name, cost_plus, annual_revenue, id, notes, first_name, last_name, phone}) => (
 					
 						<div className='company-card' key={id}>
 							<Link to={`companies/company${id}`}>
-								<h3>{name}</h3>
+								<h3>{company_name}</h3>
 
 								<div className='inside-card'>
 									{/* Markup percentage to be entered from individual companies page */}
 									<p>Markup: {cost_plus}%</p>
+
+									<p>Primary Contact: {first_name} {last_name}</p>
+									<p>Phone: {phone}</p>
 
 									{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}
 									<p>Annual Revenue: ${new  Intl.NumberFormat().format(annual_revenue)}</p>

@@ -21,7 +21,16 @@ function CreateCompany(props) {
 	      	// setCompanyId(response.data);
 	        console.log('Response admin api', companyId);
 	      	// return companyId;
-	      	getCompanyId({id: companyId});
+	      	getCompanyId({
+	      		shopify_id: companyId,
+	      		company_name: newCompany.company,
+	      		first_name: primaryContact.first_name,
+	      		last_name: primaryContact.last_name,
+	      		cost_plus: newCompany.cost_plus, 
+	      		notes: newCompany.notes, 
+	      		phone: primaryContact.phone,
+	      		email: primaryContact.email
+	      	});
 	      })
 	  	}
 
@@ -88,16 +97,17 @@ function CreateCompany(props) {
 						onChange={companyChange} 
 					/>
 				</div>
-					<div>
-						<h3>Primary Contact</h3>
-						<label>First Name</label>
-						<input
-							type='text'
-							id='first_name'
-							name='first_name'
-							onChange={contactChange}
-						/>
-					</div>
+
+				<div>
+					<h3>Primary Contact</h3>
+					<label>First Name</label>
+					<input
+						type='text'
+						id='first_name'
+						name='first_name'
+						onChange={contactChange}
+					/>
+				</div>
 
 				<div>
 					<label>Last Name</label>

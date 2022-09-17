@@ -8,6 +8,8 @@ exports.up = function(knex) {
         table.string('company_name').notNullable();
         table.string('first_name').notNullable();
         table.string('last_name').notNullable();
+        table.string('phone').notNullable();
+        table.string('email');
         table.integer('cost_plus').notNullable().unsigned().defaultsTo(15); // unsigend means no negative numbers
         table.string('street');
         table.string('suite');
