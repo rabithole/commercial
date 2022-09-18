@@ -14,8 +14,6 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     let shopifId = JSON.stringify(request.body.id);
-    // shopifId = JSON.parse(shopifId);
-    // shopifId = shopifId.replace(/"id":/g, 'id: ');
     console.log('Request body, shopify_get_company.js', shopifId);
 
     let company = request.body;

@@ -24,6 +24,7 @@ router.post('/', async (request, response) => {
                     lastName: ${JSON.stringify(company.input.last_name)},
                     email: ${JSON.stringify(company.input.email)},
                     note: ${JSON.stringify(company.addresses.notes)}
+                    tags: ${JSON.stringify(company.input.tags)}
                     addresses: 
                         {
                             address1: ${JSON.stringify(company.addresses.address1)},
@@ -59,7 +60,7 @@ router.post('/', async (request, response) => {
     const res = await ShopfyClient.post(API_PATH, { query: newCompany });
     let customerId = res.data.data.customerCreate.customer.id;
     response.status(201).json(customerId);
-    console.log('Errors and customer ID on shopify_create_company.js', res.data.errors, customerId)
+    // console.log('Errors and customer ID on shopify_create_company.js', res.data.errors, customerId)
  //    try{
  //        const res = await ShopfyClient.post(API_PATH, { query: newCompany });
  //        let customerId = res.data.data.customerCreate.customer.id;

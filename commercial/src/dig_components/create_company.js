@@ -6,7 +6,10 @@ import NumberFormat from 'react-number-format';
 
 function CreateCompany(props) {
 	// console.log('Create Company Refresh')
-	let history = useNavigate();
+	const history = useNavigate();
+	const digDashboard = () => {
+		history.push("/")
+	}
 
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
@@ -199,7 +202,7 @@ function CreateCompany(props) {
 						type='text'
 						id='tags'
 						name='tags'
-						// onChange={companyChange}
+						onChange={contactChange}
 					/>
 				</div>
 
@@ -213,7 +216,7 @@ function CreateCompany(props) {
 					</textarea>
 				</div>
 
-				<button>Create Company</button>
+				<button onClick={() => history('/')}>Create Company</button>
 			</form>
 
 			<hr/>
