@@ -13,18 +13,21 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    
-    console.log('Request body', request.body)
+    let shopifId = JSON.stringify(request.body.id);
+    // shopifId = JSON.parse(shopifId);
+    // shopifId = shopifId.replace(/"id":/g, 'id: ');
+    console.log('Request body, shopify_get_company.js', shopifId);
 
     let company = request.body;
     let getCompany =`{
-            customer(id: "gid://shopify/Customer/5935265742884"){
+            customer(id: ${shopifId}){
                 id
                 displayName
                 firstName
                 lastName
                 email
                 note
+                tags
                 addresses {
                     address1
                     address2

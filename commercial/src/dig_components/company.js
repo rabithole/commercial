@@ -10,8 +10,8 @@ function SingleCompany(props) {
 	const [shopifyAddressData, setAddressData] = useState([]);
 	// console.log('primary employee', primaryEmployee);
 	// console.log('Company Name', localCompanyData);
-	console.log('Shopify Data', shopifyData)
-	// console.log('Address Data', shopifyAddressData)
+	console.log('Shopify Data', shopifyData);
+	console.log('Company shopify ID', localCompanyData.shopify_id);
 
 	let { id } = useParams();
 
@@ -21,12 +21,16 @@ function SingleCompany(props) {
 			.then(function(response) {
 				setCompanyData(response.data);
 				setPrimaryEmployeeList(response.data.employees);
+				console.log('Shopify ID', response.data.shopify_id)
+				callGetCompany(response.data.shopify_id)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
-		axios
-			.post('http://localhost:5080/shopify_get_company')
+
+		function callGetCompany(shopify_id){
+			axios
+			.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
 			.then((response) => {
 				let shopifyResponseData = response.data.data.customer.addresses;
 
@@ -39,6 +43,8 @@ function SingleCompany(props) {
 			.catch((error) => {
 				console.log('Error', error)
 			})
+		}
+		
 	},[]);
 
 	const deleteItemCompany = (event, item) => {
@@ -113,6 +119,9 @@ function SingleCompany(props) {
 
 			<h4>Notes</h4>
 			<blockquote className='notes'>{shopifyData.note}</blockquote>
+
+			<h4>Tracking Tags</h4>
+			<blockquote>{shopifyData.tags}</blockquote>
 
 			<h4>Shopify ID</h4>
 			<blockquote>{localCompanyData.shopify_id}</blockquote>

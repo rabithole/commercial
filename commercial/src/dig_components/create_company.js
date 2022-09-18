@@ -37,10 +37,10 @@ function CreateCompany(props) {
 	function getCompanyId(companyId){
 		axios.post('http://localhost:5080/companies', companyId)
         	.then((res) => {
-        		console.log('pass to local company state', res.data)
+        		console.log('pass to local company state in create_company.js', res.data)
         	})
         	.catch(error => {
-        		console.log('error', error)
+        		console.log('error in getCompanyId in create_company.js', error)
         	})
 	}
 
@@ -190,6 +190,16 @@ function CreateCompany(props) {
 						id='zip'
 						name='zip' 
 						onChange={companyChange} 
+					/>
+				</div>
+
+				<div>
+					<label>Tracking Tags</label>
+					<input
+						type='text'
+						id='tags'
+						name='tags'
+						// onChange={companyChange}
 					/>
 				</div>
 

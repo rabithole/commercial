@@ -13,9 +13,8 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    
     console.log('Request body', request.body)
-
+    
     let company = request.body;
     let newCompany =` 
             mutation {
@@ -60,7 +59,7 @@ router.post('/', async (request, response) => {
     const res = await ShopfyClient.post(API_PATH, { query: newCompany });
     let customerId = res.data.data.customerCreate.customer.id;
     response.status(201).json(customerId);
-    console.log('Errors and customer ID', res.data.errors, customerId)
+    console.log('Errors and customer ID on shopify_create_company.js', res.data.errors, customerId)
  //    try{
  //        const res = await ShopfyClient.post(API_PATH, { query: newCompany });
  //        let customerId = res.data.data.customerCreate.customer.id;
