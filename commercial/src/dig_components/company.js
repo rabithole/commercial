@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [localCompanyData, setCompanyData] = useState([]);
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
-	// console.log('primary employee', primaryEmployee);
-	// console.log('Company Name', localCompanyData);
-	console.log('Shopify Data', shopifyData);
-	console.log('Company shopify ID', localCompanyData.shopify_id);
 
+	const history = useNavigate();
+	const digDashboard = () => {
+		setTimeout(() => {
+			history("/");
+		}, 1000)
+	}
 	let { id } = useParams();
 
 	useEffect(() => {
@@ -53,6 +55,7 @@ function SingleCompany(props) {
 	      		.then(res => {
 	        		console.log('This Company has been deleted', localCompanyData)
 	      })
+	    digDashboard();
   	}
 
   	const deleteEmployee = (id, event, item) => {

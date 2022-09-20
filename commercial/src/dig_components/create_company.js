@@ -8,7 +8,9 @@ function CreateCompany(props) {
 	// console.log('Create Company Refresh')
 	const history = useNavigate();
 	const digDashboard = () => {
-		history.push("/")
+		setTimeout(() => {
+			history("/")
+		}, 1000)
 	}
 
 	const [newCompany, setCompanyData] = useState({});
@@ -216,7 +218,7 @@ function CreateCompany(props) {
 					</textarea>
 				</div>
 
-				<button onClick={() => history('/')}>Create Company</button>
+				<button onClick={digDashboard}>Create Company</button>
 			</form>
 
 			<hr/>
