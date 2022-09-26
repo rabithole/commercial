@@ -59,19 +59,7 @@ router.post('/', async (request, response) => {
 
     const res = await ShopfyClient.post(API_PATH, { query: newCompany });
     let customerId = res.data.data.customerCreate.customer.id;
-    response.status(201).json(customerId);
-    // console.log('Errors and customer ID on shopify_create_company.js', res.data.errors, customerId)
- //    try{
- //        const res = await ShopfyClient.post(API_PATH, { query: newCompany });
- //        let customerId = res.data.data.customerCreate.customer.id;
- //        console.log('Customer ID', customerId);
- //        response.status(201).json(res.data);    
- //        console.log('Errorororss', res.data.errors);
- //    }
-	// catch(error) {
- //        response.status(500).json(error); 
- //        console.log('Graphql Error response', error)
- //    }    
+    response.status(201).json(customerId);  
 })
 
 module.exports = router;

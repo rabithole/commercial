@@ -55,7 +55,7 @@ function CompaniesList(props) {
 									{/* Markup percentage to be entered from individual companies page */}
 									<p>Markup: {cost_plus}%</p>
 
-									<p>Primary Contact: {first_name} {last_name}</p>
+									<p><b>Primary Contact:</b> {first_name} {last_name}</p>
 									<p>Phone: {phone}</p>
 
 									{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}

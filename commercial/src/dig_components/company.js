@@ -1,52 +1,58 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+// Test
 
 function SingleCompany(props) {
-	const [localCompanyData, setCompanyData] = useState([]);
+	const [localCompanyData, setLocalCompanyData] = useState([]);
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
+		console.log('shopifyData', shopifyData)
+		console.log('Local Company Data', localCompanyData)
 
 	const history = useNavigate();
-	const digDashboard = () => {
-		setTimeout(() => {
-			history("/");
-		}, 1000)
-	}
 	let { id } = useParams();
 
 	useEffect(() => {
 		axios
 			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
-				setCompanyData(response.data);
-				setPrimaryEmployeeList(response.data.employees);
-				console.log('Shopify ID', response.data.shopify_id)
-				callGetCompany(response.data.shopify_id)
+				setLocalCompanyData(response.data);
+				// setPrimaryEmployeeList(response.data.employees);
+				// console.log('cost_plus', response.data.cost_plus)
+				callGetCompany(response.data.shopify_id, response.data.cost_plus)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
 
-		function callGetCompany(shopify_id){
+		function callGetCompany(shopify_id, cost_plus){
 			axios
 			.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
 			.then((response) => {
-				let shopifyResponseData = response.data.data.customer.addresses;
-
-				shopifyResponseData.map((address) => {
-					console.log('Address', address);
-					setAddressData(address);
+				let shopifyCustomerAddress = response.data.data.customer.addresses;
+				let shopifyCustomerData = response.data.data.customer;
+				let costPlus = {cost_plus: cost_plus};
+				let address = {};
+				shopifyCustomerAddress.map((companyAddress) => {
+					setAddressData(companyAddress);
+					address = companyAddress
+					return address;
 				})
-				setShopifyData(response.data.data.customer)
+
+				setShopifyData({
+					...shopifyData,
+						...shopifyCustomerData,
+						...costPlus,
+						...address
+				})
 			})
 			.catch((error) => {
 				console.log('Error', error)
 			})
 		}
-		
 	},[]);
 
 	const deleteItemCompany = (event, item) => {
@@ -55,7 +61,6 @@ function SingleCompany(props) {
 	      		.then(res => {
 	        		console.log('This Company has been deleted', localCompanyData)
 	      })
-	    digDashboard();
   	}
 
   	const deleteEmployee = (id, event, item) => {
@@ -65,9 +70,9 @@ function SingleCompany(props) {
 	        		console.log('This employee has been deleted', localCompanyData);
 	      })
 
-  		setTimeout(() => {
-			window.location.reload(true);
-		}, '500');
+  		// setTimeout(() => {
+			history(-1)
+		// }, '500');
   	}
 
   	const formatPhoneNumber = (str) => {
@@ -90,7 +95,7 @@ function SingleCompany(props) {
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h1 style={{textAlign: 'center'}}>{localCompanyData.company_name}</h1>
+			<h1 style={{textAlign: 'center'}}>{shopifyAddressData.company}</h1>
 			<h2>Primary Contact</h2>
 			<blockquote>{shopifyData.displayName}</blockquote>
 
@@ -100,7 +105,7 @@ function SingleCompany(props) {
 			<h4>Email:</h4>
 			<blockquote>{localCompanyData.email}</blockquote>
 
-			<h2>{localCompanyData.company_name} Address</h2>
+			<h2>{shopifyAddressData.company} Address</h2>
 			<h4>Street:</h4> 
 			<blockquote>{shopifyAddressData.address1} - Apt/Suite: {shopifyAddressData.address2}</blockquote>
 
@@ -108,7 +113,7 @@ function SingleCompany(props) {
 			<blockquote>{shopifyAddressData.city}</blockquote>
 
 			<h4>State:</h4> 
-			<blockquote>{shopifyAddressData.provinceCode}</blockquote>
+			<blockquote>{shopifyAddressData.province}</blockquote>
 
 			<h4>Zip:</h4> 
 			<blockquote>{shopifyAddressData.zip}</blockquote>
@@ -131,7 +136,7 @@ function SingleCompany(props) {
 
 			<Link 
 				to={'/company_edit'}
-				state={localCompanyData}
+				state={shopifyData}
 				>Edit Company Info
 			</Link>
 			<button onClick={deleteItemCompany}>Delete Company</button>

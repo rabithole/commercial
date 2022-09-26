@@ -16,7 +16,7 @@ function CreateCompany(props) {
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	const [companyId, setCompanyId] = useState();
+	// const [companyId, setCompanyId] = useState();
 
 	function callAdminApi(event){
 		event.preventDefault();
@@ -25,8 +25,7 @@ function CreateCompany(props) {
 	      	let companyId = response.data;
 	      	// setCompanyId(response.data);
 	        console.log('Response admin api', companyId);
-	      	// return companyId;
-	      	getCompanyId({
+	      	updateLocalCompanyData({
 	      		shopify_id: companyId,
 	      		company_name: newCompany.company,
 	      		first_name: primaryContact.first_name,
@@ -39,13 +38,13 @@ function CreateCompany(props) {
 	      })
 	  	}
 
-	function getCompanyId(companyId){
-		axios.post('http://localhost:5080/companies', companyId)
+	function updateLocalCompanyData(newCompanyData){
+		axios.post('http://localhost:5080/companies', newCompanyData)
         	.then((res) => {
         		console.log('pass to local company state in create_company.js', res.data)
         	})
         	.catch(error => {
-        		console.log('error in getCompanyId in create_company.js', error)
+        		console.log('error in getCompanyData in create_company.js', error)
         	})
 	}
 
@@ -88,7 +87,8 @@ function CreateCompany(props) {
 						type='text' 
 						id='name'
 						name='company'
-						onChange={companyChange} 
+						onChange={companyChange}
+						 
 						autoFocus
 					/>
 				</div>
@@ -199,7 +199,7 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
-					<label>Tracking Tags</label>
+					<label>Tracking Tags: The tag 'commercial' must be one of the tracking tags.</label>
 					<input
 						type='text'
 						id='tags'

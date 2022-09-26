@@ -14,7 +14,7 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     let shopifId = JSON.stringify(request.body.id);
-    console.log('Request body, shopify_get_company.js', shopifId);
+    console.log('The Requesting body, shopify_get_company.js', shopifId);
 
     let company = request.body;
     let getCompany =`{
@@ -33,7 +33,7 @@ router.post('/', async (request, response) => {
                     company
                     phone
                     zip
-                    provinceCode
+                    province
                     countryCodeV2
                 }
             }
@@ -47,5 +47,6 @@ router.post('/', async (request, response) => {
     const res = await ShopfyClient.post(API_PATH, { query: getCompany });
     response.status(200).json(res.data);
 })
+// Test
 
 module.exports = router;

@@ -4,9 +4,11 @@
 ### Error handling from graphql
 #### Inconsistent behavior from Shopify's GraphQL error messaging. Need to develop error handling at the front end level with the form and handle less errors coming from Shopify.  
 ### Must add all info handling for the company creation page.
+### Add "commercial" as a prepopulated tag
 
 ### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
 ### Casacade deletion of employees when their company is deleted.
+##### Customer cannot be deleted from Shopify if they have placed an order. 
 
 ### Create process for employee to send add company info to a client.
 
