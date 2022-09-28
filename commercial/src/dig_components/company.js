@@ -10,14 +10,13 @@ function SingleCompany(props) {
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
 		console.log('shopifyData', shopifyData)
-		console.log('Local Company Data', localCompanyData)
+		console.log('Local Company Data id', localCompanyData.id)
+	const localId = localCompanyData.id;
+	console.log('Local Id', localId)
 
 	const location = useNavigate();
 	let { id } = useParams();
 	let companyURL = {companyURL: window.location.pathname};
-
-	console.log('current URL', window.location.href)
-	console.log('path name', window.location.pathname)
 
 	useEffect(() => {
 		axios
@@ -25,37 +24,40 @@ function SingleCompany(props) {
 			.then(function(response) {
 				setLocalCompanyData(response.data);
 				// setPrimaryEmployeeList(response.data.employees);
-				getShopifyCompanyData(response.data.shopify_id, response.data.cost_plus)
+				getShopifyCompanyData(response.data.shopify_id, response.data.cost_plus, id)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
 
-		function getShopifyCompanyData(shopify_id, cost_plus){
+		function getShopifyCompanyData(shopify_id, cost_plus, localId){
+			console.log('Local Id', localId)
 			axios
-			.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
-			.then((response) => {
-				let shopifyCustomerAddress = response.data.data.customer.addresses;
-				let shopifyCustomerData = response.data.data.customer;
-				let costPlus = {cost_plus: cost_plus};
-				let address = {};
-				shopifyCustomerAddress.map((companyAddress) => {
-					setAddressData(companyAddress);
-					address = companyAddress
-					return address;
-				})
+				.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
+				.then((response) => {
+					let shopifyCustomerAddress = response.data.data.customer.addresses;
+					let shopifyCustomerData = response.data.data.customer;
+					let costPlus = {cost_plus: cost_plus};
+					let address = {};
+					let localCompanyId = {localCompanyId: localId};
+					shopifyCustomerAddress.map((companyAddress) => {
+						setAddressData(companyAddress);
+						address = companyAddress
+						return address;
+					})
 
-				setShopifyData({
-					...shopifyData,
-						...shopifyCustomerData,
-						...costPlus,
-						...address,
-						...companyURL
+					setShopifyData({
+						...shopifyData,
+							...shopifyCustomerData,
+							...costPlus,
+							...address,
+							...localCompanyId,
+							...companyURL
+					})
 				})
-			})
-			.catch((error) => {
-				console.log('Error', error)
-			})
+				.catch((error) => {
+					console.log('Error', error)
+				})
 		}
 	},[]);
 
@@ -109,7 +111,7 @@ function SingleCompany(props) {
 			<h4>Email:</h4>
 			<blockquote>{localCompanyData.email}</blockquote>
 
-			<h2>{shopifyAddressData.company} Address</h2>
+			<h2>Address</h2>
 			<h4>Street:</h4> 
 			<blockquote>{shopifyAddressData.address1} - Apt/Suite: {shopifyAddressData.address2}</blockquote>
 
@@ -147,13 +149,13 @@ function SingleCompany(props) {
 
 			<h2 id='companyH2'>Employees</h2>
 			
-			<Link 
+			{/*<Link 
 				to='/employees/create_employee'
 				id='create_employee_button'
 				// state is passing the id of the company a new employee is being created for 
 				state={{id: id, companyName: localCompanyData.name}}
 				>Add Employee
-			</Link>
+			</Link>*/}
 
 			{/* List of employees working for or with the company */}
 			{/*<section>

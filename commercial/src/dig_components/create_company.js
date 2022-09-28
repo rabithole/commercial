@@ -18,7 +18,7 @@ function CreateCompany(props) {
 	const [company, setNewCompany] = useState();
 	// const [companyId, setCompanyId] = useState();
 
-	function callAdminApi(event){
+	function createShopifyCompany(event){
 		event.preventDefault();
 	    axios.post('http://localhost:5080/shopify_create_company', company)
 	      .then((response) => {
@@ -80,7 +80,7 @@ function CreateCompany(props) {
 		
 			<h2>Input Your Company Information</h2>
 
-			<form onSubmit={callAdminApi}> 
+			<form onSubmit={createShopifyCompany}> 
 				<div>
 					<label>Company Name:</label><br/>
 					<input 

@@ -8,8 +8,8 @@ function CompanyEdit(props) {
 	const backToCompany = useNavigate();
 	const localCompanyData = useLocation();
 	const localData = localCompanyData.state;
-	 console.log('Local Data', localData.companyURL)
-	 console.log('formMethod', backToCompany.formMethod)
+	const localDbId = Number(localData.localCompanyId);
+	console.log('Local Data', localData)
 
 	const startingContact = { 
 		firstName: localData.firstName,
@@ -32,32 +32,31 @@ function CompanyEdit(props) {
 		countryCode: localData.countryCode
 	}
 
-	const localCompanyUpdate = {
-		shopify_id: localData.id,
-		company_name: localData.company,
-		first_name: localData.firstName,
-		last_name: localData.lastName,
-		cost_plus: localData.cost_plus,
-		notes: localData.note,
-		phone: localData.phone,
-		email: localData.email
-	}
-
 	const [companyAddress, setAddress] = useState({});
 	const [contact, setPrimaryContact] = useState();
 	const [updateAddress, setUpdateAddress] = useState(startingAddress);
 	const [updateContact, setUpdateContact] = useState(startingContact);
-	console.log('update Address', updateAddress)
+
+	const localCompanyUpdate = {
+		shopify_id: localData.id,
+		company_name: updateAddress.company,
+		first_name: updateContact.firstName,
+		last_name: updateContact.lastName,
+		cost_plus: updateContact.cost_plus,
+		notes: updateContact.note,
+		phone: updateAddress.phone,
+		email: updateContact.email
+	}
 
 	let updatedInfo = {
 		updateContact,
 		updateAddress
 	}
 
+	console.log('local data', localCompanyUpdate)
 	console.log('Updated Info', updatedInfo)
-	console.log('Company ID', localData.id)
 
-	async function updateCompanyData(event){
+	async function updateCompanyShopifyData(event){
 		event.preventDefault();
 		console.log('Updated Info', updatedInfo)
 	    await axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
@@ -69,10 +68,15 @@ function CompanyEdit(props) {
 			.catch((error) => {
 				console.log('error', error)
 			})
+		updateLocalCompanyData();
+  	}
 
-		axios.put('http://localhost:5080/companies', localCompanyUpdate)
+  	async function updateLocalCompanyData(event){
+  		event.preventDefault();
+  		await axios.put('http://localhost:5080/companies/' + localDbId, localCompanyUpdate)
         	.then((res) => {
-        		console.log('pass to local company state in create_company.js', res.data)
+        		console.log('pass to local company state in update_company.js', res.data)
+        		console.log('local company update', localCompanyUpdate)
         	})
         	.catch(error => {
         		console.log('error in update company_edit.js', error)
@@ -101,7 +105,7 @@ function CompanyEdit(props) {
 		
 			<h2>Input Your Company Information</h2>
 
-			<form onSubmit={updateCompanyData}> 
+			<form onSubmit={updateCompanyShopifyData}> 
 				<div>
 					<label>Company Name:</label><br/>
 					<input 

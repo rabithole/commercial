@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
     let companyUpdate = req.body;
-    // console.log('id from req.params', id, companyUpdate)
+    console.log('id from req.params', id, companyUpdate)
 
     await Company.query()
         .update(companyUpdate)
