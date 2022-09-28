@@ -33,7 +33,7 @@ router.post('/', async (request, response) => {
                             company: ${JSON.stringify(company.updateAddress.company)},
                             phone: ${JSON.stringify(company.updateAddress.phone)},
                             zip: ${JSON.stringify(company.updateAddress.zip)},
-                            province: ${JSON.stringify(company.updateAddress.state)},
+                            provinceCode: ${JSON.stringify(company.updateAddress.provinceCode)},
                             countryCode: US
                         }
                     })

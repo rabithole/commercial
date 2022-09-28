@@ -6,10 +6,10 @@ import NumberFormat from 'react-number-format';
 
 function CreateCompany(props) {
 	// console.log('Create Company Refresh')
-	const history = useNavigate();
+	const dashboard = useNavigate();
 	const digDashboard = () => {
 		setTimeout(() => {
-			history("/")
+			dashboard("/")
 		}, 1000)
 	}
 

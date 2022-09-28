@@ -12,8 +12,12 @@ function SingleCompany(props) {
 		console.log('shopifyData', shopifyData)
 		console.log('Local Company Data', localCompanyData)
 
-	const history = useNavigate();
+	const location = useNavigate();
 	let { id } = useParams();
+	let companyURL = {companyURL: window.location.pathname};
+
+	console.log('current URL', window.location.href)
+	console.log('path name', window.location.pathname)
 
 	useEffect(() => {
 		axios
@@ -21,14 +25,13 @@ function SingleCompany(props) {
 			.then(function(response) {
 				setLocalCompanyData(response.data);
 				// setPrimaryEmployeeList(response.data.employees);
-				// console.log('cost_plus', response.data.cost_plus)
-				callGetCompany(response.data.shopify_id, response.data.cost_plus)
+				getShopifyCompanyData(response.data.shopify_id, response.data.cost_plus)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
 
-		function callGetCompany(shopify_id, cost_plus){
+		function getShopifyCompanyData(shopify_id, cost_plus){
 			axios
 			.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
 			.then((response) => {
@@ -46,7 +49,8 @@ function SingleCompany(props) {
 					...shopifyData,
 						...shopifyCustomerData,
 						...costPlus,
-						...address
+						...address,
+						...companyURL
 				})
 			})
 			.catch((error) => {
@@ -71,7 +75,7 @@ function SingleCompany(props) {
 	      })
 
   		// setTimeout(() => {
-			history(-1)
+			location(-1)
 		// }, '500');
   	}
 

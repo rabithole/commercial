@@ -30,6 +30,7 @@
  
 ### Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
 
+### Consider how to share or not share a companies cost_plus markup for client facing pages. 
 
 
 

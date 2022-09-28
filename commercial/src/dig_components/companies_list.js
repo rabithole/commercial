@@ -5,7 +5,7 @@ import '../css/companies.css';
 
 function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
-	const [singleCompany, setSingleCompany] = useState([])
+	const [searchedForCompany, setCompanyFilter] = useState([])
 	const [employees, setEmployees] = useState([]);
 	console.log('Employee', employees)
 	console.log('List of companies', companiesList)
@@ -25,7 +25,7 @@ function CompaniesList(props) {
 	// Search bar from list of companies
 	function getCompanyName(event) {
 		let inputValue = event.target.value;
-		setSingleCompany(inputValue);
+		setCompanyFilter(inputValue);
 	}
 
 	return (
@@ -40,9 +40,9 @@ function CompaniesList(props) {
 
 				{/* Filters list of Companies */}
 				{companiesList.filter((company) => {
-					if(singleCompany == '') {
+					if(searchedForCompany == '') {
 						return company;
-					}else if(company.company_name.toLowerCase().includes(singleCompany.toLowerCase())) {
+					}else if(company.company_name.toLowerCase().includes(searchedForCompany.toLowerCase())) {
 						return company;
 					}
 				}).map(({ company_name, cost_plus, annual_revenue, id, notes, first_name, last_name, phone}) => (

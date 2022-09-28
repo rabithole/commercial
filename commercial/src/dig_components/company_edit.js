@@ -4,32 +4,33 @@ import '../css/companies.css';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
-function CreateCompany(props) {
-	const history = useNavigate();
+function CompanyEdit(props) {
+	const backToCompany = useNavigate();
 	const localCompanyData = useLocation();
 	const localData = localCompanyData.state;
-	 console.log('Local Data', localData)
+	 console.log('Local Data', localData.companyURL)
+	 console.log('formMethod', backToCompany.formMethod)
 
 	const startingContact = { 
-			firstName: localData.firstName,
-			lastName: localData.lastName,
-			email: localData.email,
-			note: localData.note,
-			tags: localData.tags,
-			shopify_id: localData.id,
-			cost_plus: localData.cost_plus
-		}
+		firstName: localData.firstName,
+		lastName: localData.lastName,
+		email: localData.email,
+		note: localData.note,
+		tags: localData.tags,
+		shopify_id: localData.id,
+		cost_plus: localData.cost_plus
+	}
 			
 	const startingAddress	=	{
-			address1: localData.address1,
-			address2: localData.address2,
-			city: localData.city,
-			company: localData.company,
-			phone: localData.phone,
-			zip: localData.zip,
-			province: localData.province,
-			countryCode: localData.countryCode
-		}
+		address1: localData.address1,
+		address2: localData.address2,
+		city: localData.city,
+		company: localData.company,
+		phone: localData.phone,
+		zip: localData.zip,
+		provinceCode: localData.province,
+		countryCode: localData.countryCode
+	}
 
 	const localCompanyUpdate = {
 		shopify_id: localData.id,
@@ -46,6 +47,7 @@ function CreateCompany(props) {
 	const [contact, setPrimaryContact] = useState();
 	const [updateAddress, setUpdateAddress] = useState(startingAddress);
 	const [updateContact, setUpdateContact] = useState(startingContact);
+	console.log('update Address', updateAddress)
 
 	let updatedInfo = {
 		updateContact,
@@ -55,13 +57,14 @@ function CreateCompany(props) {
 	console.log('Updated Info', updatedInfo)
 	console.log('Company ID', localData.id)
 
-	function callAdminApi(event){
+	async function updateCompanyData(event){
 		event.preventDefault();
 		console.log('Updated Info', updatedInfo)
-	    axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
+	    await axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
 			.then((response) => {
 				let companyId = response.data;
 			console.log('Response admin api', companyId);
+				backToCompany(localData.companyURL)
 			})
 			.catch((error) => {
 				console.log('error', error)
@@ -94,11 +97,11 @@ function CreateCompany(props) {
 
 	return (
 		<div className='company'>
-				<button onClick={() => history(-1)}>Back To Company</button>
+				<button onClick={() => backToCompany(-1)}>Back To Company</button>
 		
 			<h2>Input Your Company Information</h2>
 
-			<form onSubmit={callAdminApi}> 
+			<form onSubmit={updateCompanyData}> 
 				<div>
 					<label>Company Name:</label><br/>
 					<input 
@@ -208,7 +211,7 @@ function CreateCompany(props) {
 					<input 
 						type='text' 
 						id='state' 
-						name='state'
+						name='provinceCode'
 						onChange={addressChange} 
 						defaultValue={localData.province}
 					/>
@@ -260,5 +263,4 @@ function CreateCompany(props) {
 	)
 }
 
-export default CreateCompany;
-// onClick={() => history(-1)}
+export default CompanyEdit;
