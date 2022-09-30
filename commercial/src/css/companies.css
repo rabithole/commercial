@@ -93,12 +93,14 @@ input {
 	padding: 10px 30px;
 	text-align: left;
 	background-color: #7FB38E;
+	width: 70%;
 }
 
 blockquote {
 	background-color: lightgrey;
 	padding: 5px;
 	border: 1px solid black;
+	/*width: 60%;*/
 }
 
 .company nav {

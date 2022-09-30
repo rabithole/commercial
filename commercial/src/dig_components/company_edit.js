@@ -245,7 +245,7 @@ function CompanyEdit(props) {
 						// onChange={contactChange}
 						defaultValue={
 							localData.tags.map((tag) => {
-								return tag
+								return ` ${tag}`
 							})
 						}
 					/>
