@@ -31,7 +31,7 @@ function CreateCompany(props) {
 	      		first_name: primaryContact.first_name,
 	      		last_name: primaryContact.last_name,
 	      		cost_plus: newCompany.cost_plus, 
-	      		notes: newCompany.notes, 
+	      		note: newCompany.note, 
 	      		phone: primaryContact.phone,
 	      		email: primaryContact.email
 	      	});
@@ -211,8 +211,8 @@ function CreateCompany(props) {
 				<div>
 					<label>Notes:</label><br/>
 					<textarea 
-						name='notes' 
-						id='notes'
+						name='note' 
+						id='note'
 						onChange={companyChange} 
 					>
 					</textarea>

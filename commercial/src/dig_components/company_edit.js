@@ -29,13 +29,16 @@ function CompanyEdit(props) {
 		phone: localData.phone,
 		zip: localData.zip,
 		provinceCode: localData.province,
-		countryCode: localData.countryCode
+		countryCode: localData.countryCode,
+		note: localData.note
 	}
 
 	const [companyAddress, setAddress] = useState({});
 	const [contact, setPrimaryContact] = useState();
 	const [updateAddress, setUpdateAddress] = useState(startingAddress);
 	const [updateContact, setUpdateContact] = useState(startingContact);
+	console.log('updated Address', updateAddress)
+	console.log('updated contact info', updateContact)
 
 	const localCompanyUpdate = {
 		shopify_id: localData.id,
@@ -43,7 +46,7 @@ function CompanyEdit(props) {
 		first_name: updateContact.firstName,
 		last_name: updateContact.lastName,
 		cost_plus: updateContact.cost_plus,
-		notes: updateContact.note,
+		note: updateContact.note,
 		phone: updateAddress.phone,
 		email: updateContact.email
 	}
@@ -72,7 +75,7 @@ function CompanyEdit(props) {
   	}
 
   	async function updateLocalCompanyData(event){
-  		event.preventDefault();
+  		// event.preventDefault();
   		await axios.put('http://localhost:5080/companies/' + localDbId, localCompanyUpdate)
         	.then((res) => {
         		console.log('pass to local company state in update_company.js', res.data)
@@ -251,9 +254,9 @@ function CompanyEdit(props) {
 				<div>
 					<label>Notes:</label><br/>
 					<textarea 
-						name='notes' 
-						id='notes'
-						onChange={addressChange} 
+						name='note' 
+						id='note'
+						onChange={primaryContact} 
 						defaultValue={localData.note}
 					>
 					</textarea>

@@ -10,7 +10,7 @@ function SingleCompany(props) {
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
 		console.log('shopifyData', shopifyData)
-		console.log('Local Company Data id', localCompanyData.id)
+		console.log('Shopify Address Data', shopifyAddressData)
 	const localId = localCompanyData.id;
 	console.log('Local Id', localId)
 

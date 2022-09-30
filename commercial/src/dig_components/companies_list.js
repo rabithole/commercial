@@ -45,7 +45,7 @@ function CompaniesList(props) {
 					}else if(company.company_name.toLowerCase().includes(searchedForCompany.toLowerCase())) {
 						return company;
 					}
-				}).map(({ company_name, cost_plus, annual_revenue, id, notes, first_name, last_name, phone}) => (
+				}).map(({ company_name, cost_plus, annual_revenue, id, note, first_name, last_name, phone}) => (
 					
 						<div className='company-card' key={id}>
 							<Link to={`companies/company${id}`}>
@@ -68,7 +68,7 @@ function CompaniesList(props) {
 									<p>Email:</p>
 								</div>*/}
 
-								<p id='notes'>{notes}</p>
+								<p id='notes'>{note}</p>
 							</Link>
 						</div>
 					

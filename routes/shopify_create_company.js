@@ -23,7 +23,7 @@ router.post('/', async (request, response) => {
                     firstName: ${JSON.stringify(company.input.first_name)},
                     lastName: ${JSON.stringify(company.input.last_name)},
                     email: ${JSON.stringify(company.input.email)},
-                    note: ${JSON.stringify(company.addresses.notes)}
+                    note: ${JSON.stringify(company.addresses.note)}
                     tags: ${JSON.stringify(company.input.tags)}
                     addresses: 
                         {
