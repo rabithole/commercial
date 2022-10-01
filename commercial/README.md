@@ -1,39 +1,37 @@
 # To Do List
-### Add restrictions to making duplicate companies etc
-### Restrict company delettion process
-### Error handling from graphql
-#### Inconsistent behavior from Shopify's GraphQL error messaging. Need to develop error handling at the front end level with the form and handle less errors coming from Shopify.  
-### Must add all info handling for the company creation page.
-### Add "commercial" as a prepopulated tag
+- Add restrictions to making duplicate companies etc
 
-### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
-### Casacade deletion of employees when their company is deleted.
-##### Customer cannot be deleted from Shopify if they have placed an order. 
+- Soft deletes for companies. 
+--- Shopify does not allow deletions after an order has been placed.
+--- Will need to create a soft delete method for our api. Should include someway to exclude already created companies locally.
 
-### Create process for employee to send add company info to a client.
+- Error handling from graphql
 
-### Add checks to stop accidental deletions
-#### Redirect after company deletions.
-#### Pop up modal for deletions
+- Casacade deletion of employees when their company is deleted.
+
+- Create process for employee to send add company info to a client.
+
+- Redirect after company deletions.
+--- Pop up modal for deletions
 
 // Employee / Employees
-### Password is in employee table. Need to reconfigure
-### Add validation for employee creation form
+- Password is in employee table. Need to reconfigure
+- Add validation for employee creation form
 
 # Questions for Brett
-### Same employee at multiple companies. Is this a problem? 
-### Setting a primary employee
-
+- Same employee at multiple companies. Is this a problem? 
 
 # Potential Bugs
-### There are two sources of data. Most stored on shopify db, but some stored in ours. Need to to keep company and primary contact info consistent between the two.
- 
-### Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
+- There are two sources of data. Most stored on shopify db, but some stored in ours. Need to to keep company and primary contact info consistent between the two.
+- Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
 
-### Consider how to share or not share a companies cost_plus markup for client facing pages. 
-
+- Consider how to share or not share a companies cost_plus markup for client facing pages. 
 
 
+# Current Notes
+- Cutting off last character in notes in shopify when creating company.
+- Pre-set country code.
+- Last digit omittance in notes when creating new company.
 
 
 # Getting Started with Create React App

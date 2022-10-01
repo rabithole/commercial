@@ -24,7 +24,7 @@ router.post('/', async (request, response) => {
                     lastName: ${JSON.stringify(company.updateContact.lastName)},
                     email: ${JSON.stringify(company.updateContact.email)},
                     note: ${JSON.stringify(company.updateContact.note)},
-                    tags: [${JSON.stringify(company.updateContact.tags)}],
+                    tags: ${JSON.stringify(company.updateContact.tags)},
                     addresses: 
                         {
                             address1: ${JSON.stringify(company.updateAddress.address1)},

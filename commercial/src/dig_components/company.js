@@ -95,6 +95,15 @@ function SingleCompany(props) {
 		return null
 	};
 
+	let tag = false;
+	if(shopifyData.length == 0){
+		console.log('false')
+		tag = false;
+	} else {
+		console.log('true')
+		tag = true;
+	}
+
 	return (
 		<div className='company'>
 			<nav>
@@ -135,7 +144,10 @@ function SingleCompany(props) {
 			<blockquote className='notes'>{shopifyData.note}</blockquote>
 
 			<h4>Tracking Tags</h4>
-			<blockquote>{shopifyData.tags}</blockquote>
+			<blockquote>{tag ? shopifyData.tags.map((tag) => {
+							return ` ${tag},`
+						}) : 'false'}
+			</blockquote>
 
 			<h4>Shopify ID</h4>
 			<blockquote>{localCompanyData.shopify_id}</blockquote>

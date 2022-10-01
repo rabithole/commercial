@@ -9,8 +9,9 @@ function CompanyEdit(props) {
 	const localCompanyData = useLocation();
 	const localData = localCompanyData.state;
 	const localDbId = Number(localData.localCompanyId);
-	console.log('Local Data', localData)
+	console.log('Local Data line 12', localData)
 
+	// startingContact and startingAddress are organizing company info to be shaped in the Graphql query in shopify_update_company.js going to shopify. 
 	const startingContact = { 
 		firstName: localData.firstName,
 		lastName: localData.lastName,
@@ -40,6 +41,7 @@ function CompanyEdit(props) {
 	console.log('updated Address', updateAddress)
 	console.log('updated contact info', updateContact)
 
+	// To be send to our local db.
 	const localCompanyUpdate = {
 		shopify_id: localData.id,
 		company_name: updateAddress.company,
@@ -51,21 +53,21 @@ function CompanyEdit(props) {
 		email: updateContact.email
 	}
 
+	// Passed to shopify update route to be shaped in a Graphql query to Shopify.
 	let updatedInfo = {
 		updateContact,
 		updateAddress
 	}
 
-	console.log('local data', localCompanyUpdate)
-	console.log('Updated Info', updatedInfo)
+	console.log('local data line 62', localCompanyUpdate)
+	console.log('Updated Info before company update sent', updatedInfo)
 
 	async function updateCompanyShopifyData(event){
 		event.preventDefault();
-		console.log('Updated Info', updatedInfo)
+		console.log('Updated Info in graphql query', updatedInfo)
 	    await axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
 			.then((response) => {
 				let companyId = response.data;
-			console.log('Response admin api', companyId);
 				backToCompany(localData.companyURL)
 			})
 			.catch((error) => {
@@ -75,7 +77,6 @@ function CompanyEdit(props) {
   	}
 
   	async function updateLocalCompanyData(event){
-  		// event.preventDefault();
   		await axios.put('http://localhost:5080/companies/' + localDbId, localCompanyUpdate)
         	.then((res) => {
         		console.log('pass to local company state in update_company.js', res.data)
@@ -242,7 +243,7 @@ function CompanyEdit(props) {
 						type='text'
 						id='tags'
 						name='tags'
-						// onChange={contactChange}
+						onChange={primaryContact}
 						defaultValue={
 							localData.tags.map((tag) => {
 								return ` ${tag}`
