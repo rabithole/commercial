@@ -29,7 +29,6 @@
 
 
 # Current Notes
-- Cutting off last character in notes in shopify when creating company.
 - Pre-set country code.
 - Last digit omittance in notes when creating new company.
 

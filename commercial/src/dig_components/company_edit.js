@@ -30,7 +30,7 @@ function CompanyEdit(props) {
 		phone: localData.phone,
 		zip: localData.zip,
 		provinceCode: localData.province,
-		countryCode: localData.countryCode,
+		countryCode: localData.countryCodeV2,
 		note: localData.note
 	}
 
@@ -68,17 +68,17 @@ function CompanyEdit(props) {
 	    await axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
 			.then((response) => {
 				let companyId = response.data;
-				backToCompany(localData.companyURL)
 			})
 			.catch((error) => {
 				console.log('error', error)
 			})
-		updateLocalCompanyData();
+		await updateLocalCompanyData();
   	}
 
   	async function updateLocalCompanyData(event){
   		await axios.put('http://localhost:5080/companies/' + localDbId, localCompanyUpdate)
         	.then((res) => {
+        		backToCompany(localData.companyURL)
         		console.log('pass to local company state in update_company.js', res.data)
         		console.log('local company update', localCompanyUpdate)
         	})
