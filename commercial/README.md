@@ -1,5 +1,9 @@
 # To Do List
 - Add restrictions to making duplicate companies etc
+- Last digit omittance in notes when creating new company.
+--- Last digit is being excluded on the Shopify api. Corrected this by pulling from our API.
+- Still need form validation.
+- remove console logs and extraneus code
 
 - Soft deletes for companies. 
 --- Shopify does not allow deletions after an order has been placed.
@@ -29,8 +33,7 @@
 
 
 # Current Notes
-- Pre-set country code.
-- Last digit omittance in notes when creating new company.
+
 
 
 # Getting Started with Create React App

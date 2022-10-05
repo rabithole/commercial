@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -16,7 +16,9 @@ function CreateCompany(props) {
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	// const [companyId, setCompanyId] = useState();
+	console.log('New Company', newCompany);
+	console.log('Primary Contact', primaryContact);
+	console.log('Company', company);
 
 	function createShopifyCompany(event){
 		event.preventDefault();
@@ -35,8 +37,22 @@ function CreateCompany(props) {
 	      		phone: primaryContact.phone,
 	      		email: primaryContact.email
 	      	});
+	      	digDashboard();
 	      })
 	  	}
+
+	const companyData = useCallback(() => {
+		setNewCompany({
+			...company,
+				input: {
+					...primaryContact
+				},
+				addresses: {
+					...newCompany
+				}
+			}
+		)
+	},[company]);
 
 	function updateLocalCompanyData(newCompanyData){
 		axios.post('http://localhost:5080/companies', newCompanyData)
@@ -53,16 +69,7 @@ function CreateCompany(props) {
 			...newCompany,
 			[event.target.name]: event.target.value,
 		})
-		setNewCompany({
-			...company,
-				input: {
-					...primaryContact
-				},
-				addresses: {
-					...newCompany
-				}
-			}
-		)
+		companyData();
 	}
 
 	const contactChange = event => {
@@ -70,6 +77,7 @@ function CreateCompany(props) {
 			...primaryContact,
 			[event.target.name]: event.target.value,
 		})
+		companyData();
 	}
 	
 	return (
@@ -218,7 +226,7 @@ function CreateCompany(props) {
 					</textarea>
 				</div>
 
-				<button onClick={digDashboard}>Create Company</button>
+				<button>Create Company</button>
 			</form>
 
 			<hr/>

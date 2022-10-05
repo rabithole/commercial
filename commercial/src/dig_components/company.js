@@ -141,7 +141,7 @@ function SingleCompany(props) {
 			<blockquote>${new  Intl.NumberFormat().format(localCompanyData.annual_revenue)}</blockquote>
 
 			<h4>Notes</h4>
-			<blockquote className='notes'>{shopifyData.note}</blockquote>
+			<blockquote className='notes'>{localCompanyData.note}</blockquote>
 
 			<h4>Tracking Tags</h4>
 			<blockquote>{tag ? shopifyData.tags.map((tag) => {
