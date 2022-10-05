@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
 function CompanyEdit(props) {
@@ -9,7 +9,7 @@ function CompanyEdit(props) {
 	const localCompanyData = useLocation();
 	const localData = localCompanyData.state;
 	const localDbId = Number(localData.localCompanyId);
-	console.log('Local Data line 12', localData)
+	// console.log('Local Data line 12', localData)
 
 	// startingContact and startingAddress are organizing company info to be shaped in the Graphql query in shopify_update_company.js going to shopify. 
 	const startingContact = { 
@@ -34,12 +34,12 @@ function CompanyEdit(props) {
 		note: localData.note
 	}
 
-	const [companyAddress, setAddress] = useState({});
-	const [contact, setPrimaryContact] = useState();
+	// const [companyAddress, setAddress] = useState({});
+	// const [contact, setPrimaryContact] = useState();
 	const [updateAddress, setUpdateAddress] = useState(startingAddress);
 	const [updateContact, setUpdateContact] = useState(startingContact);
-	console.log('updated Address', updateAddress)
-	console.log('updated contact info', updateContact)
+	// console.log('updated Address', updateAddress)
+	// console.log('updated contact info', updateContact)
 
 	// To be send to our local db.
 	const localCompanyUpdate = {
@@ -59,27 +59,32 @@ function CompanyEdit(props) {
 		updateAddress
 	}
 
-	console.log('local data line 62', localCompanyUpdate)
-	console.log('Updated Info before company update sent', updatedInfo)
+	// console.log('local data line 62', localCompanyUpdate)
+	// console.log('Updated Info before company update sent', updatedInfo)
 
 	async function updateCompanyShopifyData(event){
 		event.preventDefault();
 		console.log('Updated Info in graphql query', updatedInfo)
 	    await axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
 			.then((response) => {
-				let companyId = response.data;
+				let error = response.data.data.customerUpdate.userErrors;
+				if(error == 0){
+					console.log('success');
+					console.log('shopify response', response.data)
+					updateLocalCompanyData();
+				} else {
+					console.log('There was an error')
+				}
 			})
 			.catch((error) => {
 				console.log('error', error)
 			})
-		await updateLocalCompanyData();
   	}
 
   	async function updateLocalCompanyData(event){
   		await axios.put('http://localhost:5080/companies/' + localDbId, localCompanyUpdate)
         	.then((res) => {
         		backToCompany(localData.companyURL)
-        		console.log('pass to local company state in update_company.js', res.data)
         		console.log('local company update', localCompanyUpdate)
         	})
         	.catch(error => {
