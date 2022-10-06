@@ -227,3 +227,16 @@ const productQuery = `{
         }
     }
 }`;
+
+
+// Collections 
+{
+   collections(first: 30) {
+       edges {
+           node {
+               id
+               title
+           }
+       }
+   }
+}

@@ -63,10 +63,10 @@ function ClientLanding() {
 
   return (
     <div>
-      <h1>Client Landing Page with list of client MVP's</h1>
-      <p>Company Name: {companyData ? companyAddressField.company : 'false'}</p>
-      <p>Welcome Back: {companyInfo ? companyInfo.displayName : false}</p>
-      <p>Product Pages</p>
+      <p>Client Landing Page with list of client MVP's</p>
+      <h1>{companyData ? companyAddressField.company : 'false'}</h1>
+      <p>Welcome Back: <b>{companyInfo ? companyInfo.displayName : false}</b></p>
+      <Link to='/all_products'>All Products</Link>
       <p>Balance Owed</p>
       <p>List of orders</p>
       <p>Add to order button for each product</p>
