@@ -11,9 +11,8 @@ function ClientLanding() {
 
   let shopify_id = 'gid://shopify/Customer/5949135880228';
 
-    function getShopifyCompanyData(){
-        // console.log('Local Id', localId)
-        axios
+  useEffect(() => {
+      axios
           .post('http://localhost:5080/shopify_get_company', {id: shopify_id})
           .then((response) => {
             console.log('response data admin', response.data.data.customer)
@@ -25,20 +24,11 @@ function ClientLanding() {
               console.log(company)
               setCompanyAddressField(company)
             })
-
-            // setShopifyData({
-            //   ...shopifyData,
-            //     ...shopifyCustomerData,
-            //     ...costPlus,
-            //     ...address,
-            //     ...localCompanyId,
-            //     ...companyURL
-            // })
           })
           .catch((error) => {
             console.log('Error', error)
           })
-      }
+  },[]);
 
   function callStorefrontApi(){
     axios
@@ -66,13 +56,11 @@ function ClientLanding() {
       <p>Client Landing Page with list of client MVP's</p>
       <h1>{companyData ? companyAddressField.company : 'false'}</h1>
       <p>Welcome Back: <b>{companyInfo ? companyInfo.displayName : false}</b></p>
-      <Link to='/all_products'>All Products</Link>
-      <p>Balance Owed</p>
-      <p>List of orders</p>
+      <Link to='/product_categories'>Product Categories</Link>
+      <p>Balance Owed:</p>
+      <p>List of orders:</p>
       <p>Add to order button for each product</p>
-      <p>Orders Page</p>
-      <button onClick={getShopifyCompanyData}>Admin API</button>
-      <button onClick={callStorefrontApi}>Store Front API</button>
+      <p>Orders Page:</p>
     </div>
   );
 }

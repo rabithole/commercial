@@ -12,6 +12,7 @@ import CompanyEdit from './dig_components/company_edit';
 import EmployeeEdit from './dig_components/employee_edit';
 import ClientLanding from './client_components/client_landing';
 import AllProducts from './client_components/all_products';
+import ProductCategories from './client_components/product_categories';
 
 function App() {
   // let { companyId } = useParams();
@@ -36,6 +37,7 @@ function App() {
           <Route path='/employee_edit' element={<EmployeeEdit />} />
           <Route path='/client_landing' element={<ClientLanding />} />
           <Route path='/all_products' element={<AllProducts />} />
+          <Route path='/product_categories' element={<ProductCategories />} />
         </Routes>
       </div>
     </BrowserRouter>

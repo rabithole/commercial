@@ -1,5 +1,7 @@
-// create a new customer
-// gid://shopify/Customer/5919707234340 is Bob Ross
+// To find total number of products in our store add this onto our base url. /admin/products/count.json
+// Right now we have 904 total products. 
+
+
 mutation {
   customerCreate (
     input: {
