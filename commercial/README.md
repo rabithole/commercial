@@ -1,6 +1,8 @@
 # To Do List
 - Add restrictions to making duplicate companies etc
 
+- Login and protected route emplementation
+
 - Last digit omittance in notes when creating new company.
 --- Last digit is being excluded on the Shopify api. Corrected this by pulling from our API.
 

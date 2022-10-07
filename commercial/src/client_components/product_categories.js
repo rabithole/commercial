@@ -6,17 +6,19 @@ import axios from 'axios';
 let shopify_id = 'gid://shopify/Customer/5949135880228';
 
 function ProductCategories() {
+  const [category, setCategories] = useState([]);
+  console.log('category', category);
+
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_get_product_categories', {id: shopify_id})
       .then((response) => {
-        console.log('response data product categories', response.data.data.collections.edges)
         let productCategories = response.data.data.collections.edges;
-        productCategories.map(category => {
-          let categories = category.node.title;
-          console.log('category', categories)
-        })
-
+        let categories = [];
+        for(let i = 0; i < productCategories.length; i++){
+          categories.push(productCategories[i].node)
+        }
+        setCategories(categories)
       })
       .catch((error) => {
         console.log('Error', error)
@@ -26,12 +28,18 @@ function ProductCategories() {
   return (
     <div>
       <h1>Product Categories</h1>
-      <Link to='/client_landing'>Main Page</Link>
-      
+      <nav>
+        <Link to='/client_landing'>Main Page</Link>
+      </nav>
+      <div className='product_categories'>{category.map((cat) => {
+        return  <Link 
+                  to={`/product_collection/${cat.id}`} 
+                  style={{display: 'block'}} 
+                  key={cat.id}>{cat.title}
+                </Link>;
+      })}</div>
     </div>
   );
 }
 
 export default ProductCategories;
-
-// onClick={getShopifyCompanyData}
