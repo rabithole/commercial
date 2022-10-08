@@ -9,10 +9,7 @@ function SingleCompany(props) {
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
-		// console.log('shopifyData', shopifyData)
-		// console.log('Shopify Address', shopifyAddressData)
 	const localId = localCompanyData.id;
-	// console.log('Local Id', localId)
 
 	const location = useNavigate();
 	let { id } = useParams();

@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-let shopify_id = 'gid://shopify/Customer/5949135880228';
+let shopify_customer_id = 'gid://shopify/Customer/5949135880228';
 
 function ProductCategories() {
   const [category, setCategories] = useState([]);
+  const [collectionShopifyId, setShopifyCollectionId] = useState();
   console.log('category', category);
 
   useEffect(() => {
     axios
-      .post('http://localhost:5080/shopify_get_product_categories', {id: shopify_id})
+      .post('http://localhost:5080/shopify_get_product_categories', {id: shopify_customer_id})
       .then((response) => {
         let productCategories = response.data.data.collections.edges;
         let categories = [];
@@ -33,9 +34,10 @@ function ProductCategories() {
       </nav>
       <div className='product_categories'>{category.map((cat) => {
         return  <Link 
-                  to={`/product_collection/${cat.id}`} 
+                  to={`/product_collection`} 
                   style={{display: 'block'}} 
                   key={cat.id}>{cat.title}
+                  {/*{setShopifyCollectionId(cat.id)}*/}
                 </Link>;
       })}</div>
     </div>

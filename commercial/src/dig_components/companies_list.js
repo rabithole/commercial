@@ -7,8 +7,6 @@ function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
 	const [searchedForCompany, setCompanyFilter] = useState([])
 	const [employees, setEmployees] = useState([]);
-	console.log('Employee', employees)
-	console.log('List of companies', companiesList)
 
 	// Full list of companies
 	useEffect( () => {
