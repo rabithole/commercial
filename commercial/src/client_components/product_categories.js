@@ -8,7 +8,7 @@ let shopify_customer_id = 'gid://shopify/Customer/5949135880228';
 function ProductCategories() {
   const [category, setCategories] = useState([]);
   const [collectionShopifyId, setShopifyCollectionId] = useState();
-  console.log('category', category);
+  // console.log('category', category);
 
   useEffect(() => {
     axios
@@ -30,14 +30,14 @@ function ProductCategories() {
     <div>
       <h1>Product Categories</h1>
       <nav>
-        <Link to='/client_landing'>Main Page</Link>
+        <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
       </nav>
       <div className='product_categories'>{category.map((cat) => {
         return  <Link 
+                  state={cat}
                   to={`/product_collection`} 
                   style={{display: 'block'}} 
                   key={cat.id}>{cat.title}
-                  {/*{setShopifyCollectionId(cat.id)}*/}
                 </Link>;
       })}</div>
     </div>
