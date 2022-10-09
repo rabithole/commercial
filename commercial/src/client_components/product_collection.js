@@ -10,15 +10,14 @@ function ProductCollection() {
   const [productTitle, setProductTitle] = useState([]);
 console.log('Product Title State', productTitle)
   const collection_id = useLocation().state;
-console.log(collection_id.id)
 
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id})
       .then((response) => {
   console.log('Response', response)
-        setProductTitle(response.data.data.collection.products.nodes)
-  console.log('productTitle', productTitle)
+        setProductTitle(response.data.data.collection.products.nodes);
+        console.log('image', response.data.data.collection.products.nodes[0].images.edges[0].node.url)
         return productTitle;
       })
       .catch((error) => {
@@ -28,15 +27,19 @@ console.log(collection_id.id)
  
   return (
     <div>
-      <h1>Product Categories</h1>
       <nav>
         <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
-        <Link to={'/product_categories'} className='collectionLinks'>Back To Prduct Categories</Link>
+        <Link to={'/product_categories'} className='collectionLinks'>Product Categories</Link>
       </nav>
       <h2>{collection_id.title}</h2>
       <div className='collectionProducts'>
         {productTitle.map((prodTitle) => {
-          return <p className='collectionProduct' key={prodTitle.id}>{prodTitle.title}</p>
+          return <div 
+                    className='collectionProduct' 
+                    key={prodTitle.id}>
+                    <p>{prodTitle.title}</p>
+                    <img src={prodTitle.images.edges[0].node.url}></img>
+                  </div>
         })}
       </div>
     </div>
