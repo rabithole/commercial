@@ -8,7 +8,8 @@ import axios from 'axios';
 function ProductCollection() {
   const [category, setCategories] = useState([]);
   const [productTitle, setProductTitle] = useState([]);
-console.log('Product Title State', productTitle)
+  // const [variants, setVariants] = useState([]);
+// console.log('Product Title State', variants)
   const collection_id = useLocation().state;
 
   useEffect(() => {
@@ -17,28 +18,44 @@ console.log('Product Title State', productTitle)
       .then((response) => {
   console.log('Response', response)
         setProductTitle(response.data.data.collection.products.nodes);
-        console.log('image', response.data.data.collection.products.nodes[0].images.edges[0].node.url)
-        return productTitle;
+        console.log('response data', response.data.data.collection.products.nodes)
+
+        // return productTitle;
       })
       .catch((error) => {
         console.log('Error', error)
       })
   },[]);
  
+  let variants = [];
+
+  function processVariants() {
+    productTitle.map((variant) => {
+      console.log('variants', variant.variants.nodes)
+      variants = variant.variants.nodes;
+      // console.log(variants.title)
+    })
+  }
+
+  processVariants();
+
   return (
     <div>
       <nav>
         <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
         <Link to={'/product_categories'} className='collectionLinks'>Product Categories</Link>
       </nav>
-      <h2>{collection_id.title}</h2>
+      <h1>{collection_id.title}</h1>
       <div className='collectionProducts'>
         {productTitle.map((prodTitle) => {
           return <div 
                     className='collectionProduct' 
                     key={prodTitle.id}>
                     <p>{prodTitle.title}</p>
-                    <img src={prodTitle.images.edges[0].node.url}></img>
+                    {prodTitle.variants.nodes.map((variant) => {
+                      return <p>Variant: {variant.title}</p>                      
+                    })}
+                    {/*<img src={prodTitle.images.edges[0].node.url}></img>*/}
                   </div>
         })}
       </div>
