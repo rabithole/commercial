@@ -51,9 +51,9 @@ function ProductCollection() {
           return <div 
                     className='collectionProduct' 
                     key={prodTitle.id}>
-                    <p>{prodTitle.title}</p>
+                    <h4>{prodTitle.title}</h4>
                     {prodTitle.variants.nodes.map((variant) => {
-                      return <p>Variant: {variant.title}</p>                      
+                      return <p>{variant.selectedOptions[0].name}: {variant.title}</p>                      
                     })}
                     {/*<img src={prodTitle.images.edges[0].node.url}></img>*/}
                   </div>

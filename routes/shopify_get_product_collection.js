@@ -33,11 +33,15 @@ router.post('/', async (request, response) => {
                                         }
                                     }
                                 }
-                                variants(first: 20){
+                                variants(first: 10){
                                     nodes{
                                         id
                                         title
                                         sku
+                                        selectedOptions {
+                                            name
+                                            value
+                                        }
                                     }
                                 }
                             }
