@@ -143,7 +143,7 @@ function CreateEmployee(props) {
 
 				</textarea>
 
-				<button>Submit</button>
+				<button onClick={() => history(-1)}>Submit</button>
 			</form>
 
 			<hr/>

@@ -1,46 +1,81 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+// Test
 
 function SingleCompany(props) {
-	const [companyData, setCompanyData] = useState([]);
+	const [localCompanyData, setLocalCompanyData] = useState([]);
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
-	console.log('primary employee', primaryEmployee);
+	const [shopifyData, setShopifyData] = useState([]);
+	const [shopifyAddressData, setAddressData] = useState([]);
+	const localId = localCompanyData.id;
 
+	const location = useNavigate();
 	let { id } = useParams();
-	// console.log('company data', companyData)
+	let companyURL = {companyURL: window.location.pathname};
 
 	useEffect(() => {
 		axios
 			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
-				setCompanyData(response.data);
-				setPrimaryEmployeeList(response.data.employees);
+				setLocalCompanyData(response.data);
+				// setPrimaryEmployeeList(response.data.employees);
+				getShopifyCompanyData(response.data.shopify_id, response.data.cost_plus, id)
 			})
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
+
+		function getShopifyCompanyData(shopify_id, cost_plus, localId){
+			// console.log('Local Id', localId)
+			axios
+				.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
+				.then((response) => {
+					let shopifyCustomerAddress = response.data.data.customer.addresses;
+					let shopifyCustomerData = response.data.data.customer;
+					let costPlus = {cost_plus: cost_plus};
+					let address = {};
+					let localCompanyId = {localCompanyId: localId};
+					shopifyCustomerAddress.map((companyAddress) => {
+						setAddressData(companyAddress);
+						address = companyAddress
+						return address;
+					})
+
+					setShopifyData({
+						...shopifyData,
+							...shopifyCustomerData,
+							...costPlus,
+							...address,
+							...localCompanyId,
+							...companyURL
+					})
+				})
+				.catch((error) => {
+					console.log('Error', error)
+				})
+		}
 	},[]);
 
 	const deleteItemCompany = (event, item) => {
 	    event.preventDefault();
 	    	axios.delete('http://localhost:5080/companies/' + id)
 	      		.then(res => {
-	        		console.log('This Company has been deleted', companyData)
+	        		console.log('This Company has been deleted', localCompanyData)
 	      })
   	}
 
   	const deleteEmployee = (id, event, item) => {
-  		console.log('current target', companyData.employees[1], id)
+  		console.log('current target', localCompanyData.employees[1], id)
 	    	axios.delete('http://localhost:5080/employees/' + id)
 	      		.then(res => {
-	        		console.log('This employee has been deleted', companyData);
+	        		console.log('This employee has been deleted', localCompanyData);
 	      })
 
-  		setTimeout(() => {
-			window.location.reload(true);
-		}, '500');
+  		// setTimeout(() => {
+			location(-1)
+		// }, '500');
   	}
 
   	const formatPhoneNumber = (str) => {
@@ -57,40 +92,14 @@ function SingleCompany(props) {
 		return null
 	};
 
-	const checkForPrimaryContact = (event, id) => {
-		let primary = false;
-		// let employeesArray = [];
-
-		// primaryEmployee.map(primary => {
-		// 	employeesArray.push({...primary, primary: false})
-		// })
-		// console.log('employeesArray', employeesArray)
-		// setPrimaryEmployeeList(employeesArray)
-
-		if(event.target.checked) {
-			console.log(true)
-			primary = {primary: true};
-			// console.log('Primary Target true', primary, id)
-			window.location.reload();
-			// setChecked(true)
-		} else {
-			console.log(false)
-			primary = {primary: false};
-			console.log('Primary Target false', primary, id)
-			window.location.reload();
-			// setChecked(false)
-		}
-
-	axios
-		.put('http://localhost:5080/employees/primary/' + id, primary)
-		.then(function (response) {
-			console.log('Response', response);
-			// window.location.reload();
-		})
-		.catch(error => {
-			console.log('Error', error);
-		})
-	};
+	let tag = false;
+	if(shopifyData.length == 0){
+		// console.log('false')
+		tag = false;
+	} else {
+		// console.log('true')
+		tag = true;
+	}
 
 	return (
 		<div className='company'>
@@ -98,54 +107,74 @@ function SingleCompany(props) {
 				<Link to='/'>Back to List of Companies</Link>
 			</nav>
 		
-			<h2>{companyData.name}</h2>
+			<h1 style={{textAlign: 'center'}}>{shopifyAddressData.company}</h1>
+			<h2>Primary Contact</h2>
+			<blockquote>{shopifyData.displayName}</blockquote>
+
+			<h4>Phone:</h4>
+			<blockquote>{shopifyAddressData.phone}</blockquote>
+
+			<h4>Email:</h4>
+			<blockquote>{localCompanyData.email}</blockquote>
+
+			<h2>Address</h2>
 			<h4>Street:</h4> 
-			<blockquote>{companyData.street}</blockquote>
+			<blockquote>{shopifyAddressData.address1} - Apt/Suite: {shopifyAddressData.address2}</blockquote>
 
 			<h4>City:</h4> 
-			<blockquote>{companyData.city}</blockquote>
+			<blockquote>{shopifyAddressData.city}</blockquote>
 
 			<h4>State:</h4> 
-			<blockquote>{companyData.state}</blockquote>
+			<blockquote>{shopifyAddressData.province}</blockquote>
 
 			<h4>Zip:</h4> 
-			<blockquote>{companyData.zip}</blockquote>
+			<blockquote>{shopifyAddressData.zip}</blockquote>
 
+			<h2>Basic Monetary Details</h2>
 			<h4>Cost Plus / Percentage above our cost</h4>
-			<blockquote>{companyData.cost_plus}%</blockquote>
+			<blockquote>{localCompanyData.cost_plus}%</blockquote>
 
 			<h4>Annual Revenue:</h4> 
-			<blockquote>${new  Intl.NumberFormat().format(companyData.annual_revenue)}</blockquote>
+			<blockquote>${new  Intl.NumberFormat().format(localCompanyData.annual_revenue)}</blockquote>
 
 			<h4>Notes</h4>
-			<blockquote className='notes'>{companyData.notes}</blockquote>
+			<blockquote className='notes'>{localCompanyData.note}</blockquote>
+
+			<h4>Tracking Tags</h4>
+			<blockquote>{tag ? shopifyData.tags.map((tag) => {
+							return ` ${tag},`
+						}) : 'false'}
+			</blockquote>
+
+			<h4>Shopify ID</h4>
+			<blockquote>{localCompanyData.shopify_id}</blockquote>
 
 			<Link 
 				to={'/company_edit'}
-				state={companyData}
+				state={shopifyData}
 				>Edit Company Info
 			</Link>
 			<button onClick={deleteItemCompany}>Delete Company</button>
 
 			<h2 id='companyH2'>Employees</h2>
 			
-			<Link 
+			{/*<Link 
 				to='/employees/create_employee'
 				id='create_employee_button'
 				// state is passing the id of the company a new employee is being created for 
-				state={{id: id, companyName: companyData.name}}
+				state={{id: id, companyName: localCompanyData.name}}
 				>Add Employee
-			</Link>
+			</Link>*/}
 
 			{/* List of employees working for or with the company */}
-			<section>
+			{/*<section>
 				{primaryEmployee.map((employee) => (
 					<div className='employee_list' key={ employee.id }>
 						<p><b>Name:</b> { employee.first_name } { employee.last_name }</p>
 						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
 						<p><b>Email:</b> { employee.email }</p>
 						<p><b>Title:</b> { employee.title }</p>
-						{/*<p>{employee.id}</p>*/}
+						<p>{employee.id}</p>
 
 						<label>Check if primary contact</label>
 						<input 
@@ -173,7 +202,7 @@ function SingleCompany(props) {
 						<button onClick={ () => deleteEmployee(employee.id)}>Delete Employee</button>
 					</div>
 				))}
-			</section>
+			</section>*/}
 
 			
 		</div>

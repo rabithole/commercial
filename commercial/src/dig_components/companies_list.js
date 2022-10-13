@@ -5,10 +5,8 @@ import '../css/companies.css';
 
 function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
-	const [singleCompany, setSingleCompany] = useState([])
+	const [searchedForCompany, setCompanyFilter] = useState([])
 	const [employees, setEmployees] = useState([]);
-	console.log('Employee', employees)
-	console.log('List of companies', companiesList)
 
 	// Full list of companies
 	useEffect( () => {
@@ -25,7 +23,7 @@ function CompaniesList(props) {
 	// Search bar from list of companies
 	function getCompanyName(event) {
 		let inputValue = event.target.value;
-		setSingleCompany(inputValue);
+		setCompanyFilter(inputValue);
 	}
 
 	return (
@@ -40,20 +38,23 @@ function CompaniesList(props) {
 
 				{/* Filters list of Companies */}
 				{companiesList.filter((company) => {
-					if(singleCompany == '') {
+					if(searchedForCompany == '') {
 						return company;
-					}else if(company.name.toLowerCase().includes(singleCompany.toLowerCase())) {
+					}else if(company.company_name.toLowerCase().includes(searchedForCompany.toLowerCase())) {
 						return company;
 					}
-				}).map(({ name, cost_plus, annual_revenue, id, notes}) => (
+				}).map(({ company_name, cost_plus, annual_revenue, id, note, first_name, last_name, phone}) => (
 					
 						<div className='company-card' key={id}>
 							<Link to={`companies/company${id}`}>
-								<h3>{name}</h3>
+								<h3>{company_name}</h3>
 
 								<div className='inside-card'>
 									{/* Markup percentage to be entered from individual companies page */}
 									<p>Markup: {cost_plus}%</p>
+
+									<p><b>Primary Contact:</b> {first_name} {last_name}</p>
+									<p>Phone: {phone}</p>
 
 									{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}
 									<p>Annual Revenue: ${new  Intl.NumberFormat().format(annual_revenue)}</p>
@@ -65,7 +66,7 @@ function CompaniesList(props) {
 									<p>Email:</p>
 								</div>*/}
 
-								<p id='notes'>{notes}</p>
+								<p id='notes'>{note}</p>
 							</Link>
 						</div>
 					

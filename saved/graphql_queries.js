@@ -1,5 +1,7 @@
-// create a new customer
-// gid://shopify/Customer/5919707234340 is Bob Ross
+// To find total number of products in our store add this onto our base url. /admin/products/count.json
+// Right now we have 904 total products. 
+
+
 mutation {
   customerCreate (
     input: {
@@ -33,6 +35,44 @@ mutation {
     }
   }
 }
+
+// Format to send through http
+const createCompanyQuery = `
+mutation {
+  customerCreate (
+    input: {
+      firstName: "Bob",
+      lastName: "Ross",
+      email: "testingCustomer@gmail.com"
+      note: "This is a test customer created from Postman using GraphQL"
+      addresses: 
+          {
+              address1: "389 La La Land"
+              address2: "Apartment 2"
+              city: "Portland"
+              company: "DIG"
+              phone: "3606005862"
+              zip: "98607"
+              provinceCode: "AL"
+              countryCode: US
+          }
+    }
+  ) 
+  {
+    customer {
+      id
+      firstName
+      lastName
+      email
+    }
+    userErrors {
+      field
+      message
+      
+    }
+  }
+}`
+
 
 
 // customerUpdate
@@ -164,6 +204,40 @@ const createCompanyQuery =`
                        }
                    }
                }
+           }
+       }
+   }
+}
+
+const productQuery = `{
+    inventoryItems(first: 5) {
+        edges{
+            node{
+                id,
+                tracked,
+                sku,
+                variant{
+                    title,
+                    displayName,
+                    price
+                }
+                unitCost{
+                    amount
+                    currencyCode
+                }
+            }
+        }
+    }
+}`;
+
+
+// Collections 
+{
+   collections(first: 30) {
+       edges {
+           node {
+               id
+               title
            }
        }
    }

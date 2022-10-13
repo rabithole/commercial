@@ -1,34 +1,44 @@
 # To Do List
-### Add env variables
+- Add restrictions to making duplicate companies etc
 
-### Add restrictions to making duplicate companies etc
-### Restrict company delettion process
-### Add primary contact process? Rethinking this process and the need for it. 
+- Login and protected route emplementation
+- Headers and footers per page context
 
-### Format zip code input to be number. Can't limit length with type='number'. maxLength only works with text. 
-### Think about duplicate emails in regards to the possibility an employee could work for or move to a new company and want to use a personal email. Should email be unique? 
-### Casacade deletion of employees when their company is deleted.
+- Last digit omittance in notes when creating new company.
+--- Last digit is being excluded on the Shopify api. Corrected this by pulling from our API.
 
-### Create process for employee to send add company info to a client.
+- Still need form validation.
+--- Need to handle duplicate email not allowed in shopify. These errors come back in .then response data under userErrors object.
+- remove console logs and extraneus code
 
-### Add checks to stop accidental deletions
-#### Redirect after company deletions.
+- Soft deletes for companies. 
+--- Shopify does not allow deletions after an order has been placed.
+--- Will need to create a soft delete method for our api. Should include someway to exclude already created companies locally.
+
+- Error handling from graphql
+
+- Casacade deletion of employees when their company is deleted.
+
+- Create process for employee to send add company info to a client.
+
+- Redirect after company deletions.
+--- Pop up modal for deletions
 
 // Employee / Employees
-### Password is in employee table. Need to reconfigure
-### Add validation for employee creation form
+- Password is in employee table. Need to reconfigure
+- Add validation for employee creation form
 
 # Questions for Brett
-### Same employee at multiple companies. Is this a problem? 
-### Setting a primary employee
-
+- Same employee at multiple companies. Is this a problem? 
 
 # Potential Bugs
-### There will be two state objects for company info due to no company graphql enpoint. 
-### Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
+- There are two sources of data. Most stored on shopify db, but some stored in ours. Need to to keep company and primary contact info consistent between the two.
+- Possible a DIG employee could modify a company from the Shopify admin and affect continuity between our API and Shopify's admin API. 
+
+- Consider how to share or not share a companies cost_plus markup for client facing pages. 
 
 
-
+# Current Notes
 
 
 

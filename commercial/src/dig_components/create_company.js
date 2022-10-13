@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -6,52 +6,42 @@ import NumberFormat from 'react-number-format';
 
 function CreateCompany(props) {
 	// console.log('Create Company Refresh')
-	let history = useNavigate();
+	const dashboard = useNavigate();
+	const digDashboard = () => {
+		setTimeout(() => {
+			dashboard("/")
+		}, 1000)
+	}
 
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
 	console.log('New Company', newCompany);
 	console.log('Primary Contact', primaryContact);
-	console.log('Final Company', company);
+	console.log('Company', company);
 
-
-	function callAdminApi(event){
-	    axios
-	      .post('http://localhost:5080/admin_api', company)
-	      .then(function(response) {
-	        console.log('Response admin api', response.data.data)
-	      })
-	      .catch(error => {
-	        console.log('Error', error)
+	function createShopifyCompany(event){
+		event.preventDefault();
+	    axios.post('http://localhost:5080/shopify_create_company', company)
+	      .then((response) => {
+	      	let companyId = response.data;
+	      	// setCompanyId(response.data);
+	        console.log('Response admin api', companyId);
+	      	updateLocalCompanyData({
+	      		shopify_id: companyId,
+	      		company_name: newCompany.company,
+	      		first_name: primaryContact.first_name,
+	      		last_name: primaryContact.last_name,
+	      		cost_plus: newCompany.cost_plus, 
+	      		note: newCompany.note, 
+	      		phone: primaryContact.phone,
+	      		email: primaryContact.email
+	      	});
+	      	digDashboard();
 	      })
 	  	}
 
-	// console.log('New Company', newCompany)
-
-	const handleSubmit = event => {
-		event.preventDefault();
-		callAdminApi();
-		// axios
-		// 	.post('http://localhost:5080/companies', newCompany)
-		// 	.then(function(res) {
-		// 		console.log('Response', res.data)
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('Error, error, error', error)
-		// 		return
-		// 	})
-
-		setTimeout(() => {
-			window.location.reload(true)
-		}, '500');
-	}
-
-	const companyChange = (event) => {
-		setCompanyData({
-			...newCompany,
-			[event.target.name]: event.target.value,
-		})
+	const companyData = useCallback(() => {
 		setNewCompany({
 			...company,
 				input: {
@@ -62,6 +52,24 @@ function CreateCompany(props) {
 				}
 			}
 		)
+	},[company]);
+
+	function updateLocalCompanyData(newCompanyData){
+		axios.post('http://localhost:5080/companies', newCompanyData)
+        	.then((res) => {
+        		console.log('pass to local company state in create_company.js', res.data)
+        	})
+        	.catch(error => {
+        		console.log('error in getCompanyData in create_company.js', error)
+        	})
+	}
+
+	const companyChange = (event) => {
+		setCompanyData({
+			...newCompany,
+			[event.target.name]: event.target.value,
+		})
+		companyData();
 	}
 
 	const contactChange = event => {
@@ -69,6 +77,7 @@ function CreateCompany(props) {
 			...primaryContact,
 			[event.target.name]: event.target.value,
 		})
+		companyData();
 	}
 	
 	return (
@@ -79,14 +88,15 @@ function CreateCompany(props) {
 		
 			<h2>Input Your Company Information</h2>
 
-			<form onSubmit={handleSubmit}> 
+			<form onSubmit={createShopifyCompany}> 
 				<div>
 					<label>Company Name:</label><br/>
 					<input 
 						type='text' 
 						id='name'
 						name='company'
-						onChange={companyChange} 
+						onChange={companyChange}
+						 
 						autoFocus
 					/>
 				</div>
@@ -100,16 +110,17 @@ function CreateCompany(props) {
 						onChange={companyChange} 
 					/>
 				</div>
-					<div>
-						<h3>Primary Contact</h3>
-						<label>First Name</label>
-						<input
-							type='text'
-							id='first_name'
-							name='first_name'
-							onChange={contactChange}
-						/>
-					</div>
+
+				<div>
+					<h3>Primary Contact</h3>
+					<label>First Name</label>
+					<input
+						type='text'
+						id='first_name'
+						name='first_name'
+						onChange={contactChange}
+					/>
+				</div>
 
 				<div>
 					<label>Last Name</label>
@@ -175,7 +186,7 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
-					<label>State:</label><br/>
+					<label>State / Province:</label><br/>
 					<input 
 						type='text' 
 						id='state' 
@@ -196,10 +207,20 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
+					<label>Tracking Tags: The tag 'commercial' must be one of the tracking tags.</label>
+					<input
+						type='text'
+						id='tags'
+						name='tags'
+						onChange={contactChange}
+					/>
+				</div>
+
+				<div>
 					<label>Notes:</label><br/>
 					<textarea 
-						name='notes' 
-						id='notes'
+						name='note' 
+						id='note'
 						onChange={companyChange} 
 					>
 					</textarea>

@@ -6,8 +6,12 @@ const invoicesController = require('./invoices_controller');
 const membershipsController = require('./memberships_controller');
 const orderLineItemsController = require('./order_line_items_controller');
 const ordersController = require('./orders_controller');
-const adminApi = require('./admin_api');
+const shopifyCreateCompany = require('./shopify_create_company');
 const storefrontApi = require('./storefront_api');
+const shopifyGetCompany = require('./shopify_get_company');
+const companyUpdate = require('./shopify_update_company');
+const productCategories = require('./shopify_get_product_categories');
+const productCollection = require('./shopify_get_product_collection');
 
 const app = express();
 
@@ -19,8 +23,14 @@ app.use('/invoices', invoicesController);
 app.use('/memberships', membershipsController);
 app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
-app.use('/admin_api', adminApi);
+
+// Shopify graphql API endpoints
+app.use('/shopify_create_company', shopifyCreateCompany);
+app.use('/shopify_get_company', shopifyGetCompany)
 app.use('/storefront_api', storefrontApi);
+app.use('/shopify_update_company', companyUpdate)
+app.use('/shopify_get_product_categories', productCategories)
+app.use('/shopify_get_product_collection', productCollection)
 
 app.get('/', (request, response) => {
     response.status(200).json({ server: 'Is Running'});
