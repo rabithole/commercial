@@ -13,13 +13,13 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    let shopifId = JSON.stringify(request.body.updateContact.shopify_id);
+    let shopifyId = JSON.stringify(request.body.updateContact.shopify_id);
     console.log('Request body, shopify_update_company.js', request.body);
-    console.log('Shopify ID', shopifId)
+    console.log('Shopify ID', shopifyId)
     let company = request.body;
     let updateCompany =`
         mutation {
-            customerUpdate(input: {id: ${shopifId}, 
+            customerUpdate(input: {id: ${shopifyId}, 
                     firstName: ${JSON.stringify(company.updateContact.firstName)},
                     lastName: ${JSON.stringify(company.updateContact.lastName)},
                     email: ${JSON.stringify(company.updateContact.email)},

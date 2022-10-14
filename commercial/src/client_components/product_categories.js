@@ -40,6 +40,11 @@ function ProductCategories() {
                   key={cat.id}>{cat.title}
                 </Link>;
       })}</div>
+
+      <form className='product_search'>
+        <label for='searchAllProducts'>Search for products</label>
+        <input type='text' id='product_search' name='productSearch'></input>
+      </form>
     </div>
   );
 }

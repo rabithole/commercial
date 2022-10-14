@@ -16,9 +16,9 @@ function ProductCollection() {
     axios
       .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id})
       .then((response) => {
-  console.log('Response', response)
+console.log('Response', response) 
         setProductTitle(response.data.data.collection.products.nodes);
-        console.log('response data', response.data.data.collection.products.nodes)
+console.log('response data', response.data.data.collection.products.nodes)
 
         // return productTitle;
       })
@@ -29,15 +29,15 @@ function ProductCollection() {
  
   let variants = [];
 
-  function processVariants() {
-    productTitle.map((variant) => {
-      console.log('variants', variant.variants.nodes)
-      variants = variant.variants.nodes;
-      // console.log(variants.title)
-    })
-  }
+//   function processVariants() {
+//     productTitle.map((variant) => {
+// console.log('variants', variant.variants.nodes)
+//       variants = variant.variants.nodes;
+//       // console.log(variants.title)
+//     })
+//   }
 
-  processVariants();
+//   processVariants();
 
   return (
     <div>
@@ -48,14 +48,9 @@ function ProductCollection() {
       <h1>{collection_id.title}</h1>
       <div className='collectionProducts'>
         {productTitle.map((prodTitle) => {
-          return <div 
-                    className='collectionProduct' 
-                    key={prodTitle.id}>
+          return <div className='collectionProduct' key={prodTitle.id}>
                     <h4>{prodTitle.title}</h4>
-                    {prodTitle.variants.nodes.map((variant) => {
-                      return <p>{variant.selectedOptions[0].name}: {variant.title}</p>                      
-                    })}
-                    {/*<img src={prodTitle.images.edges[0].node.url}></img>*/}
+                    <img src={prodTitle.images.edges[0].node.url}></img>
                   </div>
         })}
       </div>
