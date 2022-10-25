@@ -5,14 +5,14 @@ import axios from 'axios';
 
 let shopify_customer_id = 'gid://shopify/Customer/5949135880228';
 
-function ProductCategories() {
+function ProductCollections() {
   const [category, setCategories] = useState([]);
   const [collectionShopifyId, setShopifyCollectionId] = useState();
   // console.log('category', category);
 
   useEffect(() => {
     axios
-      .post('http://localhost:5080/shopify_get_product_categories', {id: shopify_customer_id})
+      .post('http://localhost:5080/shopify_get_product_collections', {id: shopify_customer_id})
       .then((response) => {
         let productCategories = response.data.data.collections.edges;
         let categories = [];
@@ -28,25 +28,25 @@ function ProductCategories() {
  
   return (
     <div>
-      <h1>Product Categories</h1>
+      <h1>Product Collections</h1>
       <nav>
         <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
       </nav>
-      <div className='product_categories'>{category.map((cat) => {
+      <div className='product_collections'>{category.map((collection) => {
         return  <Link 
-                  state={cat}
+                  state={collection}
                   to={`/product_collection`} 
                   style={{display: 'block'}} 
-                  key={cat.id}>{cat.title}
+                  key={collection.id}>{collection.title}
                 </Link>;
       })}</div>
 
       <form className='product_search'>
-        <label for='searchAllProducts'>Search for products</label>
+        <label >Search for products</label>
         <input type='text' id='product_search' name='productSearch'></input>
       </form>
     </div>
   );
 }
 
-export default ProductCategories;
+export default ProductCollections;

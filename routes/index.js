@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 // const Company = require('../db/models/companies_model');
 const companyController = require('./companies_controller');
 const employeesController = require('./employees_controller');
@@ -10,8 +11,10 @@ const shopifyCreateCompany = require('./shopify_create_company');
 const storefrontApi = require('./storefront_api');
 const shopifyGetCompany = require('./shopify_get_company');
 const companyUpdate = require('./shopify_update_company');
-const productCategories = require('./shopify_get_product_categories');
+const productCategories = require('./shopify_get_product_collections');
 const productCollection = require('./shopify_get_product_collection');
+const product = require('./shopify_get_product');
+const getAllUnitCosts = require('./shopify_get_all_unit_costs'); 
 
 const app = express();
 
@@ -29,12 +32,38 @@ app.use('/shopify_create_company', shopifyCreateCompany);
 app.use('/shopify_get_company', shopifyGetCompany)
 app.use('/storefront_api', storefrontApi);
 app.use('/shopify_update_company', companyUpdate)
-app.use('/shopify_get_product_categories', productCategories)
+app.use('/shopify_get_product_collections', productCategories)
 app.use('/shopify_get_product_collection', productCollection)
+app.use('/shopify_get_product', product);
+app.use('/shopify_get_all_unit_costs', getAllUnitCosts);
 
-app.get('/', (request, response) => {
-    response.status(200).json({ server: 'Is Running'});
-});
+let hasNextPage = false;
+let cursor = null;
+function getUnitCosts(){
+    console.log('has nex page before request', hasNextPage)
+    console.log('cursor before request', cursor)
+
+    axios
+        .post('http://localhost:5080/shopify_get_all_unit_costs', {firstProducts: 250, after: cursor})
+        .then((response) => {
+            hasNextPage = response.data.data.inventoryItems.pageInfo.hasNextPage;     
+            cursor = response.data.data.inventoryItems.pageInfo.endCursor;
+            console.log('response data', response.data.data)
+            if(hasNextPage == true){
+                console.log('Yes there is another page', hasNextPage)
+                getUnitCosts();
+            }else{
+                console.log('There is not another page')
+            }
+        })
+        .then((respoonse) => {
+            console.log('.then 2')
+        })
+}
+
+getUnitCosts();
+
+console.log('end of index.js')
 
 module.exports = app;
 

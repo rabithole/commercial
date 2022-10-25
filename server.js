@@ -7,10 +7,10 @@ const port = process.env.PORT;
 
 const router = require('./routes');
 
-const server = express();
+const app = express();
 
-server.use(cors());
-server.use(express.json());
-server.use(router);
+app.use(cors());
+app.use(express.json());
+app.use(router);
 
-server.listen(port, () => console.log(`server running at ${host}:${port}`));
+app.listen(port, () => console.log(`app running at localhost:${port}`));

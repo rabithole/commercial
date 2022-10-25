@@ -13,17 +13,21 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    let shopifId = JSON.stringify(request.body.id);
-    console.log('The Requesting body, shopify_get_product_categories.js', shopifId);
+    let product_id = JSON.stringify(request.body.id);
+    console.log('The Requesting body, shopify_get_product.js', product_id);
 
-    let company = request.body;
-    let getProductCategories =`{
-           collections(first: 30) {
-               edges {
-                   node {
-                       id
-                       title
-                   }
+    let getProduct =`{
+           product(id: ${product_id}) {
+               id 
+               title
+               variants(first: 30){
+                edges{
+                    node{
+                        id 
+                        title
+                        sku
+                    }
+                }
                }
            }
         }`
@@ -33,7 +37,7 @@ router.post('/', async (request, response) => {
 		headers: headers
 	});
 
-    const res = await ShopfyClient.post(API_PATH, { query: getProductCategories });
+    const res = await ShopfyClient.post(API_PATH, { query: getProduct });
     response.status(200).json(res.data);
   });
 
