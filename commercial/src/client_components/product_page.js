@@ -17,13 +17,13 @@ function ProductPage() {
         setProduct(response.data.data.product)
       })
 
-    // axios
-    //     .post('http://localhost:5080/shopify_get_all_unit_costs')
-    //     .then((response) => {
-    //         console.log('Inventory Items response', response)
-    //         console.log('Has Next Page', response.data.data.inventoryItems.pageInfo.hasNextPage)
+    axios
+        .post('http://localhost:5080/shopify_get_all_unit_costs')
+        .then((response) => {
+            console.log('Inventory Items response', response)
+            console.log('Has Next Page', response.data.data.inventoryItems.pageInfo.hasNextPage)
 
-    //     })
+        })
   },[]);
 
   return (
