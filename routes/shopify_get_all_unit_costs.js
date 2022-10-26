@@ -13,9 +13,9 @@ const headers = {
 app.use(express.json());
 
 app.post('/', async (request, response) => {
-    // let first = request.body.firstProducts;
     let cursor = request.body.after;
-    console.log('cursor in query', cursor)
+    console.log('cursor from query body ---', cursor)
+    console.log('space -------------')
 
     let getAllUnitCosts =`{
            inventoryItems(first: 250, after: ${cursor}){

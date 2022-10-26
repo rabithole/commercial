@@ -39,31 +39,33 @@ app.use('/shopify_get_all_unit_costs', getAllUnitCosts);
 
 let hasNextPage = false;
 let cursor = null;
-function getUnitCosts(){
-    console.log('has nex page before request', hasNextPage)
-    console.log('cursor before request', cursor)
+let unitCosts = [];
+
+function getUnitCosts() {
+    // console.log('has nex page before request ----------------------------------------------------------', hasNextPage)
+    // console.log('cursor before request ---', cursor)
+    // console.log('Space -------------')
 
     axios
         .post('http://localhost:5080/shopify_get_all_unit_costs', {firstProducts: 250, after: cursor})
         .then((response) => {
             hasNextPage = response.data.data.inventoryItems.pageInfo.hasNextPage;     
-            cursor = response.data.data.inventoryItems.pageInfo.endCursor;
-            console.log('response data', response.data.data)
+            cursor = JSON.stringify(response.data.data.inventoryItems.pageInfo.endCursor);
+            // console.log('response inventory items', response.data.data.inventoryItems.edges)
+            let unitCostsData = response.data.data.inventoryItems.edges;
+            unitCosts.push(...unitCostsData)
             if(hasNextPage == true){
-                console.log('Yes there is another page', hasNextPage)
-                getUnitCosts();
+                console.log('Yes there is another page ---------------------------------------------------------------------------', hasNextPage)
+                setTimeout(getUnitCosts, 20000);
             }else{
-                console.log('There is not another page')
+                console.log('There is not another page ---', hasNextPage)
+                console.log('Unit Costs array', unitCosts)
+                return 
             }
-        })
-        .then((respoonse) => {
-            console.log('.then 2')
         })
 }
 
 getUnitCosts();
-
-console.log('end of index.js')
 
 module.exports = app;
 
