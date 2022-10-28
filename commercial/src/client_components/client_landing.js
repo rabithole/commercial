@@ -9,7 +9,7 @@ function ClientLanding() {
   const [companyAddressField, setCompanyAddressField] = useState([]);
   console.log('companyInfo', companyInfo)
 
-  let shopify_id = 'gid://shopify/Customer/5949135880228';
+  let shopify_id = 'gid://shopify/Customer/5973979234340';
 
   useEffect(() => {
       axios

@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const fs = require('fs');
+let parsingCosts = require('./unitCost.json');
 // const Company = require('../db/models/companies_model');
 const companyController = require('./companies_controller');
 const employeesController = require('./employees_controller');
@@ -59,20 +60,45 @@ function getUnitCosts() {
             if(hasNextPage == true){
                 console.log('Yes there is another page ---------------------------------------------------------------------------', hasNextPage)
                 setTimeout(getUnitCosts, 10000);
+                // console.log('unit costs', unitCosts)
             }else{
                 console.log('There is not another page ---', hasNextPage)
                 console.log('Unit Costs array', unitCosts)
-                fs.writeFile("unitCost.json", JSON.stringify(unitCosts));
+                fs.writeFile("unitCost.json", JSON.stringify(unitCosts), function(err){
+                    console.log('json file creation')
+                })
                 return 
             }
         })
 }
 
-getUnitCosts();
+// getUnitCosts();
+console.log('what is it', typeof(parsingCosts))
 
+let parsingArray = [];
 function processUnitCostsArray() {
+    parsingCosts.map((parsed) => {
+        let nulling = parsed.node.unitCost;
+        // console.log('nulling', nulling)
+       
+        if(nulling == null){
+            console.log('null');
+        }else{
+            parsingArray.push({
+                shopify_id: parsed.node.variant.id,
+                sku: parsed.node.variant.sku,
+                unit_cost: parsed.node.unitCost.amount
+            })
+        }
+    })
+    console.log('array length', parsingCosts.length)
+    console.log('parsed array', parsingArray)
 
+    // fs.writeFile("unitCost.json", JSON.stringify(parsingArray), function(err){
+    //     console.log('json file creation')
+    // })
 }
+processUnitCostsArray()
 
 function postUnitCostsToCommercialApi(){
     axios

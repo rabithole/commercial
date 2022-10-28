@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-
+ 
 function ProductPage() {
   const [product, setProduct] = useState([]);
-  // console.log('product', product)
+  console.log('product', product)
   const product_id = useLocation().state;
   // console.log('product ID', product_id)
 
@@ -16,14 +16,6 @@ function ProductPage() {
         // console.log('response', response)
         setProduct(response.data.data.product)
       })
-
-    axios
-        .post('http://localhost:5080/shopify_get_all_unit_costs')
-        .then((response) => {
-            console.log('Inventory Items response', response)
-            console.log('Has Next Page', response.data.data.inventoryItems.pageInfo.hasNextPage)
-
-        })
   },[]);
 
   return (
@@ -33,7 +25,13 @@ function ProductPage() {
         <Link to={'/product_collections'} className='collectionLinks'>Product Collections</Link>
       </nav>
       <h1>{product.title}</h1>
-      {/*<button onClick={getUnitCosts}>Get Unit Costs</button>*/}
+      <p>{product.id}</p>
+      <div>
+        {product ? product.variants.edges.map((title) => {
+        <p>title.node.title</p>
+      }): 'nothing'}
+      </div>
+      {}
     </div>
   );
 }
