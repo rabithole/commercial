@@ -3,6 +3,7 @@
 
 - Login and protected route emplementation
 - Headers and footers per page context
+- Place a link to each Graphql endpoint in their perspective route file. 
 
 - Last digit omittance in notes when creating new company.
 --- Last digit is being excluded on the Shopify api. Corrected this by pulling from our API.
