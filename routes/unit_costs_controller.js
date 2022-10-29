@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     console.log('New UnitCosts here', req.body)
     await UnitCosts.query().insert(req.body)
     .then(data => {
-        console.log(data)
+        console.log('data controller', data)
         res.status(200).json(data);
     })
     .catch(error => {

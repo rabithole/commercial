@@ -27,9 +27,7 @@ function ProductPage() {
       <h1>{product.title}</h1>
       <p>{product.id}</p>
       <div>
-        {product ? product.variants.edges.map((title) => {
-        <p>title.node.title</p>
-      }): 'nothing'}
+        {product ? <h1>'Something'</h1> : 'nothing'}
       </div>
       {}
     </div>
