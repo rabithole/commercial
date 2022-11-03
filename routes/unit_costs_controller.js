@@ -30,4 +30,33 @@ router.post('/', async (req, res) => {
     });
 })
 
+// router.put('/', async (req, res) => {
+//     console.log('New UnitCosts here', req.body)
+//     await UnitCosts.query().insert(req.body)
+//     .then(data => {
+//         console.log('data controller', data)
+//         res.status(200).json(data);
+//     })
+//     .catch(error => {
+//         console.log(error)
+//         res.status(500).json({message: 'Internal Server Error:' + error })
+//     });
+// })
+
+router.put('/', async (req, res) => {
+    console.log('New UnitCosts here', req.body.sku)
+    let sku = req.body.sku;
+    await UnitCosts.query()
+    .update(req.body)
+    .where('sku', sku)
+    .then(data => {
+        console.log('data controller', data)
+        res.status(200).json(data);
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({message: 'Internal Server Error:' + error })
+    });
+})
+
 module.exports = router;

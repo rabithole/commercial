@@ -47,8 +47,11 @@ app.use('/shopify_get_all_unit_costs', getAllUnitCosts);
 let hasNextPage = false;
 let cursor = null;
 let unitCosts = [];
-// console.log('unit costs array', unitCosts)
 
+// Queries unit_cost, sku and Shopify gid id's.
+// Logs data to a json file in the root directory.
+// The following processes will utlizie this json file.
+// Json file will be overwritten if it already exists.
 function getUnitCosts() {
     axios
         .post('http://localhost:5080/shopify_get_all_unit_costs', {firstProducts: 250, after: cursor})
@@ -65,26 +68,59 @@ function getUnitCosts() {
             }else{
                 console.log('There is not another page ---', hasNextPage)
                 console.log('Unit Costs array', unitCosts)
-                fs.writeFile("unitCost.json", JSON.stringify(unitCosts), function(err){
+                fs.writeFile("routes/unitCost.json", JSON.stringify(unitCosts), function(err){
                     console.log('json file creation')
                 })
+                processUnitCostsArray(unitCosts);
+                // clearTimeout(getUnitCosts);
                 return 
             }
         })
 }
-
+// setInterval(getUnitCosts, 300000);
+// setTimeout(getUnitCosts, 900000)
 // getUnitCosts();
-// console.log('shapedArray', shapedArray)
+// ---------------------------------------------------------------------------------------------------------
+
+
+// Shape data form Shopify raw query.
+let parsingArray = [];
+function processUnitCostsArray(unitCosts) {
+    unitCosts.map((parsed) => {
+        let nulling = parsed.node.unitCost;
+        // console.log('nulling', nulling)
+       
+        if(nulling == null){
+            console.log('null');
+        }else{
+            parsingArray.push({
+                shopify_id: parsed.node.variant.id,
+                sku: parsed.node.variant.sku,
+                unit_cost: parsed.node.unitCost.amount
+            })
+        }
+    })
+    console.log('array length', unitCosts.length)
+    console.log('parsed array', parsingArray)
+
+    fs.writeFile("routes/shapedArray.json", JSON.stringify(parsingArray), function(err){
+        console.log('json file creation')
+    })
+
+    slowProcessCostsJsonFile(parsingArray);
+}
+// processUnitCostsArray();
+// -----------------------------------------------------------------------------------------------------------
 
 let testArray = [{
     "shopify_id": "gid://shopify/ProductVariant/31527349846052",
-    "sku": "100001",
-    "unit_cost": "13.54"
+    "sku": "111101",
+    "unit_cost": "20.00"
 },
 {
     "shopify_id": "gid://shopify/ProductVariant/31527349878820",
     "sku": "100002",
-    "unit_cost": "47.44"
+    "unit_cost": "1000.99"
 },
 {
     "shopify_id": "gid://shopify/ProductVariant/31527349911588",
@@ -198,43 +234,24 @@ let testArray = [{
 {
     "shopify_id": "gid://shopify/ProductVariant/40482668150820",
     "sku": "720497",
-    "unit_cost": "1150.0"
+    "unit_cost": "11500.99"
 },
 {
     "shopify_id": "gid://shopify/ProductVariant/40484142415908",
     "sku": "720498",
     "unit_cost": "258.77"
+},
+{
+    "shopify_id": "gid://product_variant_test",
+    "sku": "900000",
+    "unit_cost": "500.00"
 }]
 
-let parsingArray = [];
-function processUnitCostsArray() {
-    parsingCosts.map((parsed) => {
-        let nulling = parsed.node.unitCost;
-        // console.log('nulling', nulling)
-       
-        if(nulling == null){
-            console.log('null');
-        }else{
-            parsingArray.push({
-                shopify_id: parsed.node.variant.id,
-                sku: parsed.node.variant.sku,
-                unit_cost: parsed.node.unitCost.amount
-            })
-        }
-    })
-    console.log('array length', parsingCosts.length)
-    console.log('parsed array', parsingArray)
-
-    // fs.writeFile("unitCost.json", JSON.stringify(parsingArray), function(err){
-    //     console.log('json file creation')
-    // })
-}
-// processUnitCostsArray()
-
+// Post or put request to local commercial database
 function postUnitCostsToCommercialApi(array){
     console.log('post unit controller')
     axios
-        .post('http://localhost:5080/unit_costs_controller', array)
+        .put('http://localhost:5080/unit_costs_controller', array)
         .then((response) => {
             console.log('response', response.data)
         })
@@ -243,12 +260,14 @@ function postUnitCostsToCommercialApi(array){
         })
 }
 // postUnitCostsToCommercialApi()
+// -------------------------------------------------------------------------------------------------
 
 
+// Incrementally post data to local commercial database.
 let array = 0; // Length of shaped data.
 let i = 0;
 let iPlusTen = 20;
-function slowProcessCostsJsonFile(){
+function slowProcessCostsJsonFile(parsingArray){
     while(i < testArray.length){ 
         while(i < iPlusTen){
             if(testArray[i] == undefined){
@@ -266,11 +285,12 @@ function slowProcessCostsJsonFile(){
         array = array + 1;
         iPlusTen = i + 20;
         console.log('New Line ----------------------------------------------------------------------------------------------------')
-        console.log('I:', i, 'array:', array, 'I Plus Ten:', iPlusTen)  
+        // console.log('I:', i, 'array:', array, 'I Plus Ten:', iPlusTen)  
         console.log('shaped array lenth', testArray.length);  
     }
 }
 slowProcessCostsJsonFile()
+// ---------------------------------------------------------------------------------------------------------
 
 module.exports = app;
 
