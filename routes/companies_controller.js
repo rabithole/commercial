@@ -19,23 +19,6 @@ router.get('/', (req, res) => {
     });
 })
 
-router.put('/:id', async (req, res) => {
-    let id = req.params.id;
-    let companyUpdate = req.body;
-    console.log('id from req.params', id, companyUpdate)
-
-    await Company.query()
-        .update(companyUpdate)
-        .where('id', id)
-        .then(data => {
-            // console.log('Company data', data)
-            res.status(200).json(data)
-        })
-        .catch(error => {
-            console.log('Company edit error')
-        })
-})
-
 // Grab single company from companies page
 router.get('/company/:id', async (req, res) => {
     let id = req.params.id;
@@ -63,6 +46,23 @@ router.post('/', async (req, res) => {
         console.log(error)
         res.status(500).json({message: 'Internal Server Error:' + error })
     });
+})
+
+router.put('/:id', async (req, res) => {
+    let id = req.params.id;
+    let companyUpdate = req.body;
+    console.log('id from req.params', id, companyUpdate)
+
+    await Company.query()
+        .update(companyUpdate)
+        .where('id', id)
+        .then(data => {
+            // console.log('Company data', data)
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            console.log('Company edit error')
+        })
 })
 
 // Deletes a company

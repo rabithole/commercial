@@ -1,8 +1,9 @@
 const express = require('express');
-const axios = require('axios');
-const fs = require('fs');
+
 let parsingCosts = require('./unitCost.json');
-// const Company = require('../db/models/companies_model');
+let shapedArray = require('./shapedArray.json');
+let getUnitCosts = require('./update_unit_costs_process.js');
+
 const companyController = require('./companies_controller');
 const employeesController = require('./employees_controller');
 const invoicesController = require('./invoices_controller');
@@ -20,9 +21,7 @@ const getAllUnitCosts = require('./shopify_get_all_unit_costs');
 const setUnitCosts = require('./unit_costs_controller');
 
 const { response } = require('express');
-
 const app = express();
-
 app.use(express.json());
 
 app.use('/companies', companyController);
@@ -31,7 +30,7 @@ app.use('/invoices', invoicesController);
 app.use('/memberships', membershipsController);
 app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
-app.use('/post_unit_costs', setUnitCosts);
+app.use('/unit_costs_controller', setUnitCosts);
 
 // Shopify graphql API endpoints
 app.use('/shopify_create_company', shopifyCreateCompany);
@@ -43,73 +42,7 @@ app.use('/shopify_get_product_collection', productCollection)
 app.use('/shopify_get_product', product);
 app.use('/shopify_get_all_unit_costs', getAllUnitCosts);
 
-let hasNextPage = false;
-let cursor = null;
-let unitCosts = [];
-// console.log('unit costs array', unitCosts)
-
-function getUnitCosts() {
-    axios
-        .post('http://localhost:5080/shopify_get_all_unit_costs', {firstProducts: 250, after: cursor})
-        .then((response) => {
-            hasNextPage = response.data.data.inventoryItems.pageInfo.hasNextPage;     
-            cursor = JSON.stringify(response.data.data.inventoryItems.pageInfo.endCursor);
-            // console.log('response inventory items', response.data.data.inventoryItems.edges)
-            let unitCostsData = response.data.data.inventoryItems.edges;
-            unitCosts.push(...unitCostsData)
-            if(hasNextPage == true){
-                console.log('Yes there is another page ---------------------------------------------------------------------------', hasNextPage)
-                setTimeout(getUnitCosts, 10000);
-                // console.log('unit costs', unitCosts)
-            }else{
-                console.log('There is not another page ---', hasNextPage)
-                console.log('Unit Costs array', unitCosts)
-                fs.writeFile("unitCost.json", JSON.stringify(unitCosts), function(err){
-                    console.log('json file creation')
-                })
-                return 
-            }
-        })
-}
-
-// getUnitCosts();
-console.log('what is it', typeof(parsingCosts))
-
-let parsingArray = [];
-function processUnitCostsArray() {
-    parsingCosts.map((parsed) => {
-        let nulling = parsed.node.unitCost;
-        // console.log('nulling', nulling)
-       
-        if(nulling == null){
-            console.log('null');
-        }else{
-            parsingArray.push({
-                shopify_id: parsed.node.variant.id,
-                sku: parsed.node.variant.sku,
-                unit_cost: parsed.node.unitCost.amount
-            })
-        }
-    })
-    console.log('array length', parsingCosts.length)
-    console.log('parsed array', parsingArray)
-
-    // fs.writeFile("unitCost.json", JSON.stringify(parsingArray), function(err){
-    //     console.log('json file creation')
-    // })
-}
-processUnitCostsArray()
-
-function postUnitCostsToCommercialApi(){
-    axios
-        .post('http://localhost:5080/post_unit_costs', testCosts)
-        .then((response) => {
-            console.log('response', response)
-        })
-        .catch(err => {
-            console.log('error', err)
-        })
-}
+getUnitCosts();
 
 module.exports = app;
 
