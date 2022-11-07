@@ -18,6 +18,13 @@ function ProductPage() {
       })
   },[]);
 
+  let productData = false;
+  if(product.length == 0){
+    productData = false;
+  }else{
+    productData = true;
+  }
+
   return (
     <div>
       <nav>
@@ -25,9 +32,14 @@ function ProductPage() {
         <Link to={'/product_collections'} className='collectionLinks'>Product Collections</Link>
       </nav>
       <h1>{product.title}</h1>
-      <p>{product.id}</p>
+      {/* <p>{product.id}</p> */}
       <div>
-        {product ? <h1>'Something'</h1> : 'nothing'}
+        {productData ? 
+          <div>
+            <img src={product.featuredImage.url}></img>
+            <p>{product.description}</p>
+          </div>
+        : <h2>...loading</h2>}
       </div>
       {}
     </div>

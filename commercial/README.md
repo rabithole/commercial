@@ -1,5 +1,6 @@
 # To Do List
 - Add restrictions to making duplicate companies etc
+- Set unit cost query process to a regular schedule when deployed.
 
 - Login and protected route emplementation
 - Headers and footers per page context

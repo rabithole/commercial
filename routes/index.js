@@ -42,7 +42,8 @@ app.use('/shopify_get_product_collection', productCollection)
 app.use('/shopify_get_product', product);
 app.use('/shopify_get_all_unit_costs', getAllUnitCosts);
 
-getUnitCosts();
+// Process to query unit cost data from Shopify and store it in our database.
+// getUnitCosts();
 
 module.exports = app;
 

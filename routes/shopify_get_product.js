@@ -20,6 +20,10 @@ router.post('/', async (request, response) => {
            product(id: ${product_id}) {
                id 
                title
+               description
+               featuredImage{
+                url
+               }
                variants(first: 30){
                 edges{
                     node{
