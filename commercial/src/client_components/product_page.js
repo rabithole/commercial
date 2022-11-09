@@ -5,34 +5,38 @@ import axios from 'axios';
  
 function ProductPage() {
   const [product, setProduct] = useState([]);
-  // const [variants, setVariants] = useState([]);
-  const [productCost, setUnitCost] = useState([]);
-  // console.log('product', product)
-  console.log('unitCost here', productCost)
+  const [productCost, setProductCost] = useState([]);
+  const [loading, setLoading] = useState(true);
+  let clientMarkup = .1;
+  // console.log('loading', loading)
+  // console.log('product variants', product.variants)
+  // console.log('Product Cost', productCost)
   const product_id = useLocation().state;
-  // console.log('product ID', product_id)
-
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_get_product', {id: product_id})
       .then((response) => {
-        // console.log('variant sku', response.data.data.product.variants.edges[0].node.sku)
+        // console.log('variant length', response.data.data.product.variants.edges.length)
         setProduct(response.data.data.product)
-        // setVariants(response.data.data.product.variants.edges)
+        let variantArrayLength = response.data.data.product.variants.edges.length;
         let variants = response.data.data.product.variants.edges;
         let array = [];
         variants.map(cost => {
-          // console.log('title', cost.node)
           let sku = cost.node.sku;
           let requestSku = cost.node.sku;
           let title = cost.node.title;
           axios
             .get('http://localhost:5080/costs_by_sku/' + requestSku)
             .then(function(response) {
-              // console.log('response', response.data.unit_cost)
               let product_cost = response.data.unit_cost;
               array.push({sku, title, product_cost})
-              setUnitCost(array)
+              setProductCost(array)
+              if(array.length == variantArrayLength){
+                setLoading(false);
+              }else{
+                setLoading(true);
+              }
+              
             })
             .catch((err) => {
               console.log('error', err)
@@ -42,7 +46,7 @@ function ProductPage() {
   },[]);
 
   let productData = false;
-  if(product.length == 0){
+  if(loading){
     productData = false;
   }else{
     productData = true;
@@ -62,7 +66,8 @@ function ProductPage() {
             <img src={product.featuredImage.url}></img>
             <p>Variants and pricing:</p>
               {productCost.map((variant, index) => {
-                return  <p key={index}>{variant.title}: {variant.product_cost}</p>
+                console.log('product cost map', variant.title, +variant.product_cost)
+                return  <p key={index}>{variant.title}: Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }</p>
               })}
             <p>{product.description}</p>
           </div>
