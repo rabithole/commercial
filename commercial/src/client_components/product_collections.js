@@ -37,7 +37,8 @@ function ProductCollections() {
                   state={collection}
                   to={`/product_collection`} 
                   style={{display: 'block'}} 
-                  key={collection.id}>{collection.title}
+                  key={collection.id}>
+                  {collection.title}
                 </Link>;
       })}</div>
 

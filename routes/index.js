@@ -19,6 +19,7 @@ const productCollection = require('./shopify_get_product_collection');
 const product = require('./shopify_get_product');
 const getAllUnitCosts = require('./shopify_get_all_unit_costs'); 
 const setUnitCosts = require('./unit_costs_controller');
+const getUnitCostBySku = require('./get_unit_cost_by_sku');
 
 const { response } = require('express');
 const app = express();
@@ -31,6 +32,7 @@ app.use('/memberships', membershipsController);
 app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
 app.use('/unit_costs_controller', setUnitCosts);
+app.use('/costs_by_sku', getUnitCostBySku);
 
 // Shopify graphql API endpoints
 app.use('/shopify_create_company', shopifyCreateCompany);
