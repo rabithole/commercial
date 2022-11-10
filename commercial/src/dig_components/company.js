@@ -6,6 +6,7 @@ import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [localCompanyData, setLocalCompanyData] = useState([]);
+	console.log('local company data', localCompanyData)
 	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
@@ -13,6 +14,8 @@ function SingleCompany(props) {
 
 	const location = useNavigate();
 	let { id } = useParams();
+	console.log('id from params', id)
+
 	let companyURL = {companyURL: window.location.pathname};
 
 	useEffect(() => {

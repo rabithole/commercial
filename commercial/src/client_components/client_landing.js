@@ -30,18 +30,6 @@ function ClientLanding() {
           })
   },[]);
 
-  function callStorefrontApi(){
-    axios
-      .get('http://localhost:5080/storefront_api')
-      .then(function(response) {
-        console.log('Response storefront api', response.data.data)
-      })
-      .catch(error => {
-        console.log('Error', error)
-      })
-  }
-  console.log('companyData', companyAddressField.length, companyAddressField.company)
-
   let companyData = false;
   if(companyAddressField.length == 0){
     console.log('false');
