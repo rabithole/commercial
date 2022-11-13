@@ -1,18 +1,20 @@
 // import './App.css';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-
-let shopify_customer_id = 'gid://shopify/Customer/5949135880228';
+import { CompanyContext } from '../context/company_shopify_id';
+import ProductCollection from './product_collection';
 
 function ProductCollections() {
+  const { company_shopify_id } = useContext(CompanyContext);
+  console.log('shopify customer id:', company_shopify_id)
+
   const [category, setCategories] = useState([]);
   const [collectionShopifyId, setShopifyCollectionId] = useState();
-  // console.log('category', category);
 
   useEffect(() => {
     axios
-      .post('http://localhost:5080/shopify_get_product_collections', {id: shopify_customer_id})
+      .post('http://localhost:5080/shopify_get_product_collections', {id: company_shopify_id})
       .then((response) => {
         let productCategories = response.data.data.collections.edges;
         let categories = [];
@@ -25,22 +27,28 @@ function ProductCollections() {
         console.log('Error', error)
       })
   },[]);
+
+  let categoryData = false;
+  if(category.length == 0){
+    categoryData = false;
+  }else{
+    categoryData = true;
+  }
  
   return (
     <div>
       <h1>Product Collections</h1>
-      <nav>
-        <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
-      </nav>
-      <div className='product_collections'>{category.map((collection) => {
+      <div className='product_collections'>{categoryData ? category.map((collection) => {
         return  <Link 
                   state={collection}
-                  to={`/product_collection`} 
+                  to={`/client_landing/product_collection`} 
                   style={{display: 'block'}} 
                   key={collection.id}>
                   {collection.title}
                 </Link>;
-      })}</div>
+      }) : <h2>...loading</h2>}</div>
+
+      <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
 
       <form className='product_search'>
         <label >Search for products</label>

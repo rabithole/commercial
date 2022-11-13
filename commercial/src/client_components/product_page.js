@@ -1,17 +1,20 @@
 // import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { CompanyContext } from '../context/company_shopify_id.js';
  
 function ProductPage() {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { company_shopify_id } = useContext(CompanyContext);
   let clientMarkup = .1;
   // console.log('loading', loading)
   // console.log('product variants', product.variants)
   // console.log('Product Cost', productCost)
   const product_id = useLocation().state;
+  console.log('product id from state', product_id)
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_get_product', {id: product_id})
@@ -43,6 +46,15 @@ function ProductPage() {
             })
           })
       })
+
+      // axios
+      //     .get(`http://localhost:5080/companies/company_by_shopify_id?key=${shopify_id}` )
+      //     .then((response) => {
+      //       console.log('response', response)
+      //     })
+      //     .catch((err) => {
+      //       console.log('error', err)
+      //     })
   },[]);
 
   let productData = false;
@@ -54,11 +66,8 @@ function ProductPage() {
 
   return (
     <div>
-      <nav>
-        <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
-        <Link to={'/product_collections'} className='collectionLinks'>Product Collections</Link>
-      </nav>
       <h1>{product.title}</h1>
+      <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
       {/* <p>{product.id}</p> */}
       <div>
         {productData ? 

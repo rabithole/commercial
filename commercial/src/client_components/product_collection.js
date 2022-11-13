@@ -23,18 +23,21 @@ function ProductCollection() {
         console.log('Error', error)
       })
   },[]);
+
+  let productData = false;
+  if(product.length == 0){
+    productData = false;
+  }else{
+    productData = true;
+  }
  
   return (
     <div>
-      <nav>
-        <Link to='/client_landing' className='collectionLinks'>Main Page</Link>
-        <Link to={'/product_collections'} className='collectionLinks'>Product Collections</Link>
-      </nav>
       <h1>{collection_id.title}</h1>
-      <div className='collectionProducts'>
+      {productData ? <div className='collectionProducts'>
         {product.map((singleProduct) => {
           return <div className='collectionProduct' key={singleProduct.id}>
-                    <Link to={'/product_page'} state={singleProduct.id}>
+                    <Link to='/client_landing/product_page' state={singleProduct.id}>
                       <h4>{singleProduct.title}</h4>
                       <img src={singleProduct.images.edges[0].node.url}></img>
                       <p>{singleProduct.id}</p>
@@ -42,7 +45,7 @@ function ProductCollection() {
                     </Link>
                   </div>
         })}
-      </div>
+      </div>: <h2>...loading</h2>}
     </div>
   );
 }

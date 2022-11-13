@@ -12,9 +12,9 @@ import CompanyEdit from './dig_components/company_edit';
 import EmployeeEdit from './dig_components/employee_edit';
 import ClientLanding from './client_components/client_landing';
 import AllProducts from './client_components/all_products';
-import ProductCollections from './client_components/product_collections';
-import ProductCollection from './client_components/product_collection';
-import ProductPage from './client_components/product_page';
+// import ProductCollections from './client_components/product_collections';
+// import ProductCollection from './client_components/product_collection';
+// import ProductPage from './client_components/product_page';
 
 function App() {
   // let { companyId } = useParams();
@@ -29,7 +29,7 @@ function App() {
         </header>    
         
         <Routes>
-          <Route path='/' exact element={<CompanyList />} />
+          <Route path='/' element={<CompanyList />} />
           <Route path='/companies/company:id' element={<SingleCompany />} />
           <Route path='create_company' element={<CreateCompany />} />
           <Route path='/employees' element={<Employees />} />
@@ -37,11 +37,11 @@ function App() {
           <Route path='employees/employee/:id' element={<Employee />} />
           <Route path='/company_edit' element={<CompanyEdit />} />
           <Route path='/employee_edit' element={<EmployeeEdit />} />
-          <Route path='/client_landing' element={<ClientLanding />} />
+          <Route path='/client_landing/*' element={<ClientLanding />} />
           <Route path='/all_products' element={<AllProducts />} />
-          <Route path='/product_collections' element={<ProductCollections />} />
-          <Route path='/product_collection' element={<ProductCollection />} />
-          <Route path='/product_page' element={<ProductPage />} />
+          {/* <Route path='/product_collections' element={<ProductCollections />} /> */}
+          {/* <Route path='/product_collection' element={<ProductCollection />} /> */}
+          {/* <Route path='/product_page' element={<ProductPage />} /> */}
         </Routes>
       </div>
     </BrowserRouter>

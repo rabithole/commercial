@@ -3,12 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import ProductCollections from './product_collections';
-import ClientVitals from './client_vitals';
 import { CompanyContext } from '../context/company_shopify_id';
-import ProductCollection from './product_collection';
-import ProductPage from './product_page';
 
-function ClientLanding() {
+function ClientVitals() {
   //company_shopify_id, cost_plus, localId
   const [companyInfo, setCompanyInfo] = useState();
   const [companyAddressField, setCompanyAddressField] = useState([]);
@@ -37,37 +34,24 @@ function ClientLanding() {
 
   let companyData = false;
   if(companyAddressField.length == 0){
+    console.log('false');
     companyData = false;
   } else {
+    console.log('true');
     companyData = true;
   }
 
   return (
     <div>
-      <nav>
-        <Link 
-          to='client_vitals' 
-          className='collectionLinks'>
-            Main Page
-        </Link>
-        <Link 
-            to='product_collections'
-            className='collectionLinks'
-            state={company_shopify_id}>
-              Product Collections
-        </Link>
-      </nav>
-
-      <CompanyContext.Provider value={{ company_shopify_id}}>
-        <Routes>
-          <Route path='product_collections/*' element={<ProductCollections />} />
-          <Route path='client_vitals' element={<ClientVitals />} />
-          <Route path='/product_collection' element={<ProductCollection />} />
-          <Route path='/product_page' element={<ProductPage />} />
-        </Routes>
-      </CompanyContext.Provider>
+      <h1>{companyData ? companyAddressField.company : '...loading'}</h1>
+      <p>Welcome Back: <b>{companyInfo ? companyInfo.displayName : '...loading'}</b></p>
+      <p>Balance Owed:</p>
+      <p>List of orders:</p>
+      <p>Add to order button for each product</p>
+      <p>Orders Page:</p>
+      <h3>Shopify Company ID: {company_shopify_id}</h3>
     </div>
   );
 }
 
-export default ClientLanding;
+export default ClientVitals;
