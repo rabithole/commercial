@@ -12,7 +12,8 @@ function ClientLanding() {
   //company_shopify_id, cost_plus, localId
   const [companyInfo, setCompanyInfo] = useState();
   const [companyAddressField, setCompanyAddressField] = useState([]);
-  console.log('companyInfo', companyInfo)
+  const [cost_plus, setCostPlus] = useState([]);
+  // console.log('companyInfo', companyInfo)
 
   let company_shopify_id = 'gid://shopify/Customer/5973979234340';
 
@@ -20,19 +21,29 @@ function ClientLanding() {
       axios
           .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
           .then((response) => {
-            console.log('response data admin', response.data.data.customer)
+            // console.log('response data admin', response.data.data.customer)
             let companyInfo = response.data.data.customer;
             setCompanyInfo(companyInfo);
             // let localCompanyId = {localCompanyId: localId};
             companyInfo.addresses.map((company) => {
               // setAddressData(company);
-              console.log(company)
+              // console.log(company)
               setCompanyAddressField(company)
             })
           })
           .catch((error) => {
             console.log('Error', error)
           })
+
+          axios
+              .get(`http://localhost:5080/companies/company_by_shopify_id?key=${company_shopify_id}` )
+              .then((response) => {
+                // console.log('response in client landing', response.data.cost_plus)
+                setCostPlus(response.data.cost_plus)
+              })
+              .catch((err) => {
+                console.log('error', err)
+              })
   },[]);
 
   let companyData = false;
@@ -58,7 +69,7 @@ function ClientLanding() {
         </Link>
       </nav>
 
-      <CompanyContext.Provider value={{ company_shopify_id}}>
+      <CompanyContext.Provider value={{ company_shopify_id, cost_plus}}>
         <Routes>
           <Route path='product_collections/*' element={<ProductCollections />} />
           <Route path='client_vitals' element={<ClientVitals />} />

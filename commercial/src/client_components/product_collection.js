@@ -1,13 +1,15 @@
 // import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { CompanyContext } from '../context/company_shopify_id.js';
 
 // let collection_id = 'gid://shopify/Collection/159766282276';
 
 function ProductCollection() {
   const [category, setCategories] = useState([]);
   const [product, setProductTitle] = useState([]);
+  const { company_shopify_id } = useContext(CompanyContext);
 // console.log('Product Title State', variants)
   const collection_id = useLocation().state;
 
@@ -34,6 +36,7 @@ function ProductCollection() {
   return (
     <div>
       <h1>{collection_id.title}</h1>
+      <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
       {productData ? <div className='collectionProducts'>
         {product.map((singleProduct) => {
           return <div className='collectionProduct' key={singleProduct.id}>

@@ -40,7 +40,7 @@ router.get('/company_by_shopify_id', async (req, res) => {
     await Company.query().findOne({shopify_id: query})
         .then(data => {
             console.log('query', query)
-            res.status(200).json(data.cost_plus)
+            res.status(200).json(data)
         })
         .catch(error => {
             res.status(500).json({ message: 'Internal Server Error:' + error })

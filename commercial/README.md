@@ -3,6 +3,7 @@
 - Set unit cost query process to a regular schedule when deployed.
 
 - Login and protected route emplementation
+--- This will set the company Shopify ID.
 - Headers and footers per page context
 - Place a link to each Graphql endpoint in their perspective route file. 
 

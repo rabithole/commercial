@@ -8,8 +8,8 @@ function ProductPage() {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { company_shopify_id } = useContext(CompanyContext);
-  let clientMarkup = .1;
+  const { company_shopify_id, cost_plus } = useContext(CompanyContext);
+  let clientMarkup = cost_plus / 100;
   // console.log('loading', loading)
   // console.log('product variants', product.variants)
   // console.log('Product Cost', productCost)
@@ -46,15 +46,6 @@ function ProductPage() {
             })
           })
       })
-
-      // axios
-      //     .get(`http://localhost:5080/companies/company_by_shopify_id?key=${shopify_id}` )
-      //     .then((response) => {
-      //       console.log('response', response)
-      //     })
-      //     .catch((err) => {
-      //       console.log('error', err)
-      //     })
   },[]);
 
   let productData = false;
@@ -68,6 +59,7 @@ function ProductPage() {
     <div>
       <h1>{product.title}</h1>
       <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
+      <h3>Cost Plus Pricing: {cost_plus}% above our cost</h3>
       {/* <p>{product.id}</p> */}
       <div>
         {productData ? 
