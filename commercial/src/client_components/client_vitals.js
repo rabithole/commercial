@@ -1,43 +1,32 @@
-// import './App.css';
-import React, { useEffect, useState } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import {  } from 'react-router-dom';
 import axios from 'axios';
-import ProductCollections from './product_collections';
 import { CompanyContext } from '../context/company_shopify_id';
 
 function ClientVitals() {
-  //company_shopify_id, cost_plus, localId
   const [companyInfo, setCompanyInfo] = useState();
   const [companyAddressField, setCompanyAddressField] = useState([]);
-  console.log('companyInfo', companyInfo)
-
-  let company_shopify_id = 'gid://shopify/Customer/5973979234340';
+  const { company_shopify_id } = useContext(CompanyContext);
 
   useEffect(() => {
       axios
           .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
           .then((response) => {
-            console.log('response data admin', response.data.data.customer)
             let companyInfo = response.data.data.customer;
             setCompanyInfo(companyInfo);
-            // let localCompanyId = {localCompanyId: localId};
             companyInfo.addresses.map((company) => {
-              // setAddressData(company);
-              console.log(company)
               setCompanyAddressField(company)
             })
           })
           .catch((error) => {
             console.log('Error', error)
           })
-  },[]);
+  },[company_shopify_id]);
 
   let companyData = false;
-  if(companyAddressField.length == 0){
-    console.log('false');
+  if(companyAddressField.length === 0){
     companyData = false;
   } else {
-    console.log('true');
     companyData = true;
   }
 

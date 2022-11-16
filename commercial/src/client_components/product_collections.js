@@ -1,16 +1,12 @@
 // import './App.css';
 import React, { useEffect, useState, useContext } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id';
-import ProductCollection from './product_collection';
 
 function ProductCollections() {
   const { company_shopify_id } = useContext(CompanyContext);
-  console.log('shopify customer id:', company_shopify_id)
-
   const [category, setCategories] = useState([]);
-  const [collectionShopifyId, setShopifyCollectionId] = useState();
 
   useEffect(() => {
     axios
@@ -26,10 +22,10 @@ function ProductCollections() {
       .catch((error) => {
         console.log('Error', error)
       })
-  },[]);
+  },[company_shopify_id]);
 
   let categoryData = false;
-  if(category.length == 0){
+  if(category.length === 0){
     categoryData = false;
   }else{
     categoryData = true;

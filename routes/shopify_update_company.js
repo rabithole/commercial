@@ -14,8 +14,6 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     let shopifyId = JSON.stringify(request.body.updateContact.shopify_id);
-    console.log('Request body, shopify_update_company.js', request.body);
-    console.log('Shopify ID', shopifyId)
     let company = request.body;
     let updateCompany =`
         mutation {

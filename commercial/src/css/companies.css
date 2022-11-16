@@ -1,11 +1,11 @@
 /* Global */
 
 /* List of all companies page */
-.company-list-container {
+.company_list_container {
 	text-align: center;
 }
 
-.company-cards-container {
+.company_cards_container {
 	margin: 15px 5px;
 	text-align: center;
 	display: flex;
@@ -24,12 +24,12 @@
 	border: 5px solid white;
 }
 
-.company-cards-container a {
+.company_cards_container a {
 	color: black;
 	text-decoration: none;
 }
 
-.company-card {
+.company_card {
 	background-color: lightgrey;
 	text-align: left;
 	width: 350px;
@@ -40,20 +40,20 @@
 	flex-wrap: wrap;*/
 }
 
-.company-card div {
+.company_card div {
 /*	display: flex;
 	flex-direction: row;
 	justify-content: space-around;*/
 }
 
-.company-card button {
+.company_card button {
 	width: 200px ;
 	padding: 5px 20px;
 
 }
 
 @media only screen and ( max-width: 600px ) {
-	.company-card div {
+	.company_card div {
 		flex-direction: column;
 	}
 }
@@ -64,16 +64,6 @@ input {
 	background-color: lightgrey;
 	box-shadow: 5px 5px 5px black;
 	font-size: large;
-}
-
-.inside-card {
-	/*display: flex;
-	flex-direction: column;
-	padding: 5px;*/
-}
-
-.inside-card p {
-	/*margin: 0px;*/
 }
 
 #notes {
@@ -267,7 +257,7 @@ nav a {
 	/*box-shadow: 0 3px 0 0 black;*/
 }
 
-.collectionProducts {
+.collection_products {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -275,7 +265,7 @@ nav a {
 	padding: 20px;
 }
 
-.collectionProduct {
+.collection_product {
 	width: 300px;
 	height: auto;
 	padding: 5px;
@@ -286,13 +276,17 @@ nav a {
 	position: relative;
 }
 
-.collectionProduct button {
+.collection_product button {
 	position: absolute;
 	bottom: 5px;
 	left: 5px;
 }
 
-.collectionProduct img {
+.collection_product img {
 	width: 40%;
 	margin-bottom: 60px;
+}
+
+.product_image {
+	width: 200px;
 }

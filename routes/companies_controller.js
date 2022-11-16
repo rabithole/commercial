@@ -93,15 +93,4 @@ router.delete('/:id', async (req, res) => {
         })
 })
 
-module.exports = router;
-
-
-// const { id, name } = req.params;
-// const company = await Company.query().select('id', 'name', 'cost_plus', 'street', 'city', 'state', 'zip', 'annual_revenue');
-// Company.query()
-// .then(data => {
-//     res.status(200).json(company[id]);
-// })
-// .catch(error => {
-//     res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
-// });      
+module.exports = router; 

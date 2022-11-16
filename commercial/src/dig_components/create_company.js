@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
 function CreateCompany(props) {
-	// console.log('Create Company Refresh')
 	const dashboard = useNavigate();
 	const digDashboard = () => {
 		setTimeout(() => {
@@ -16,17 +15,12 @@ function CreateCompany(props) {
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	console.log('New Company', newCompany);
-	console.log('Primary Contact', primaryContact);
-	console.log('Company', company);
 
 	function createShopifyCompany(event){
 		event.preventDefault();
 	    axios.post('http://localhost:5080/shopify_create_company', company)
 	      .then((response) => {
-	      	let companyId = response.data;
-	      	// setCompanyId(response.data);
-	        console.log('Response admin api', companyId);
+	      	let companyId = response.data.id;
 	      	updateLocalCompanyData({
 	      		shopify_id: companyId,
 	      		company_name: newCompany.company,
@@ -52,7 +46,7 @@ function CreateCompany(props) {
 				}
 			}
 		)
-	},[company]);
+	},[company, newCompany, primaryContact]);
 
 	function updateLocalCompanyData(newCompanyData){
 		axios.post('http://localhost:5080/companies', newCompanyData)

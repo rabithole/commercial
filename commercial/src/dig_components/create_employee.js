@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useLocation, useNavigate, useRoutes } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 
 function CreateEmployee(props) {
@@ -34,7 +34,7 @@ function CreateEmployee(props) {
 	}
 
 	const handleSubmit = event => {
-		if(newEmployee.first_name == ''){
+		if(newEmployee.first_name === ''){
 			console.log('Must enter info')
 			alert('Must fill out form')
 		} 

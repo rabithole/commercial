@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -33,7 +33,7 @@ function EmployeeEdit(props) {
 	// Sets state from default values that are set from company.js component
 	useEffect(() => {
 		setEmployeeInfo(employeeInfo)		
-	},[])
+	},[employeeInfo])
 
 	const handleSubmit = event => {
 		event.preventDefault();

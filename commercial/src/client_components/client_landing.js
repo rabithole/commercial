@@ -1,4 +1,3 @@
-// import './App.css';
 import React, { useEffect, useState } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
@@ -7,66 +6,52 @@ import ClientVitals from './client_vitals';
 import { CompanyContext } from '../context/company_shopify_id';
 import ProductCollection from './product_collection';
 import ProductPage from './product_page';
+import ClientHeader from './client_header';
 
 function ClientLanding() {
-  //company_shopify_id, cost_plus, localId
-  const [companyInfo, setCompanyInfo] = useState();
-  const [companyAddressField, setCompanyAddressField] = useState([]);
   const [cost_plus, setCostPlus] = useState([]);
-  // console.log('companyInfo', companyInfo)
 
+  // Shopify company id will be set from client sign in portal.
   let company_shopify_id = 'gid://shopify/Customer/5973979234340';
 
   useEffect(() => {
-      axios
-          .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
-          .then((response) => {
-            // console.log('response data admin', response.data.data.customer)
-            let companyInfo = response.data.data.customer;
-            setCompanyInfo(companyInfo);
-            // let localCompanyId = {localCompanyId: localId};
-            companyInfo.addresses.map((company) => {
-              // setAddressData(company);
-              // console.log(company)
-              setCompanyAddressField(company)
-            })
-          })
-          .catch((error) => {
-            console.log('Error', error)
-          })
+    // This will be part of client sign in.
+      // axios
+      //     .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
+      //     .then((response) => {
+      //         let companyInfo = response.data.data.customer;
+      //         companyInfo.addresses.map((company) => {
+      //       })
+      //     })
+      //     .catch((error) => {
+      //       console.log('Error', error)
+      //     })
 
           axios
               .get(`http://localhost:5080/companies/company_by_shopify_id?key=${company_shopify_id}` )
               .then((response) => {
-                // console.log('response in client landing', response.data.cost_plus)
                 setCostPlus(response.data.cost_plus)
               })
               .catch((err) => {
                 console.log('error', err)
               })
-  },[]);
+  },[company_shopify_id]);
 
-  let companyData = false;
-  if(companyAddressField.length == 0){
-    companyData = false;
-  } else {
-    companyData = true;
-  }
+  // For conditional rendering in JSX. Will come into to play later in the project for client sign in.
+  // let companyData = false;
+  // if(companyAddressField.length === 0){
+  //   companyData = false;
+  // } else {
+  //   companyData = true;
+  // }
 
   return (
     <div>
+      <ClientHeader />
       <nav>
-        <Link 
-          to='client_vitals' 
-          className='collectionLinks'>
-            Main Page
-        </Link>
-        <Link 
-            to='product_collections'
-            className='collectionLinks'
-            state={company_shopify_id}>
-              Product Collections
-        </Link>
+        <Link to='client_vitals' className='collectionLinks'>Main Page</Link>
+        <Link to='product_collections' className='collectionLinks'>Product Collections</Link>
+        <Link to='/' className='collectionLinks'>Orders</Link>
       </nav>
 
       <CompanyContext.Provider value={{ company_shopify_id, cost_plus}}>

@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
-// Test
+import { Link, useParams } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [localCompanyData, setLocalCompanyData] = useState([]);
-	console.log('local company data', localCompanyData)
-	const [primaryEmployee, setPrimaryEmployeeList] = useState([])
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
-	const localId = localCompanyData.id;
 
-	const location = useNavigate();
 	let { id } = useParams();
-	console.log('id from params', id)
 
 	let companyURL = {companyURL: window.location.pathname};
 
@@ -23,7 +17,6 @@ function SingleCompany(props) {
 			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
 				setLocalCompanyData(response.data);
-				// setPrimaryEmployeeList(response.data.employees);
 				getShopifyCompanyData(response.data.shopify_id, response.data.cost_plus, id)
 			})
 			.catch(error => {
@@ -31,7 +24,6 @@ function SingleCompany(props) {
 			})
 
 		function getShopifyCompanyData(shopify_id, cost_plus, localId){
-			// console.log('Local Id', localId)
 			axios
 				.post('http://localhost:5080/shopify_get_company', {id: shopify_id})
 				.then((response) => {
@@ -69,34 +61,34 @@ function SingleCompany(props) {
 	      })
   	}
 
-  	const deleteEmployee = (id, event, item) => {
-  		console.log('current target', localCompanyData.employees[1], id)
-	    	axios.delete('http://localhost:5080/employees/' + id)
-	      		.then(res => {
-	        		console.log('This employee has been deleted', localCompanyData);
-	      })
+  	// const deleteEmployee = (id, event, item) => {
+  	// 	console.log('current target', localCompanyData.employees[1], id)
+	//     	axios.delete('http://localhost:5080/employees/' + id)
+	//       		.then(res => {
+	//         		console.log('This employee has been deleted', localCompanyData);
+	//       })
 
-  		// setTimeout(() => {
-			location(-1)
-		// }, '500');
-  	}
+  	// 	// setTimeout(() => {
+	// 		location(-1)
+	// 	// }, '500');
+  	// }
 
-  	const formatPhoneNumber = (str) => {
-		//Filter only numbers from the input
-		let cleaned = ('' + str).replace(/\D/g, '');
+  	// const formatPhoneNumber = (str) => {
+	// 	//Filter only numbers from the input
+	// 	let cleaned = ('' + str).replace(/\D/g, '');
 
-		//Check if the input is of correct length
-		let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+	// 	//Check if the input is of correct length
+	// 	let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-		if (match) {
-			return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-		};
+	// 	if (match) {
+	// 		return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+	// 	};
 
-		return null
-	};
+	// 	return null
+	// };
 
 	let tag = false;
-	if(shopifyData.length == 0){
+	if(shopifyData.length === 0){
 		// console.log('false')
 		tag = false;
 	} else {

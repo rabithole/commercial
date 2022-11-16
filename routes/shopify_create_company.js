@@ -13,7 +13,6 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    console.log('Request body', request.body)
     
     let company = request.body;
     let newCompany =` 
@@ -58,7 +57,7 @@ router.post('/', async (request, response) => {
 	});
 
     const res = await ShopfyClient.post(API_PATH, { query: newCompany });
-    let customerId = res.data.data.customerCreate.customer.id;
+    let customerId = res.data.data.customerCreate.customer;
     response.status(201).json(customerId);  
 })
 

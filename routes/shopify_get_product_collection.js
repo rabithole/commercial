@@ -14,7 +14,6 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     let collectionId = JSON.stringify(request.body.id);
-    console.log('The Requesting body, shopify_get_product_collection.js', collectionId);
 
     let company = request.body;
     let getProductCollection =`{
