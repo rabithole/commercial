@@ -4,24 +4,14 @@ import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id';
 
 function ClientVitals() {
-  const [companyInfo, setCompanyInfo] = useState();
-  const [companyAddressField, setCompanyAddressField] = useState([]);
-  const { company_shopify_id } = useContext(CompanyContext);
+  const { company_shopify_id, companyInfo, companyAddressField } = useContext(CompanyContext);
+  // console.log('company info', companyInfo)
+  // console.log('shopify id', company_shopify_id)
+  // console.log('company address', companyAddressField)
 
   useEffect(() => {
-      axios
-          .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
-          .then((response) => {
-            let companyInfo = response.data.data.customer;
-            setCompanyInfo(companyInfo);
-            companyInfo.addresses.map((company) => {
-              setCompanyAddressField(company)
-            })
-          })
-          .catch((error) => {
-            console.log('Error', error)
-          })
-  },[company_shopify_id]);
+    
+  },[]);
 
   let companyData = false;
   if(companyAddressField.length === 0){

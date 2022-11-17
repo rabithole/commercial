@@ -59,10 +59,10 @@ function CompanyEdit(props) {
 	    await axios.post('http://localhost:5080/shopify_update_company', updatedInfo)
 			.then((response) => {
 				let error = response.data.data.customerUpdate.userErrors;
-				if(error === 0){
+				if(error == 0){
 					updateLocalCompanyData();
 				} else {
-					console.log('There was an error')
+					console.log('There was an error', error)
 				}
 			})
 			.catch((error) => {

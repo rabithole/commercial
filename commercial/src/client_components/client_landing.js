@@ -10,31 +10,39 @@ import ClientHeader from './client_header';
 
 function ClientLanding() {
   const [cost_plus, setCostPlus] = useState([]);
+  const [companyInfo, setCompanyInfo] = useState();
+  const [companyAddressField, setCompanyAddressField] = useState([]);
 
   // Shopify company id will be set from client sign in portal.
   let company_shopify_id = 'gid://shopify/Customer/5973979234340';
 
   useEffect(() => {
     // This will be part of client sign in.
-      // axios
-      //     .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
-      //     .then((response) => {
-      //         let companyInfo = response.data.data.customer;
-      //         companyInfo.addresses.map((company) => {
-      //       })
-      //     })
-      //     .catch((error) => {
-      //       console.log('Error', error)
-      //     })
+    axios
+      .post('http://localhost:5080/shopify_get_company', {id: company_shopify_id})
+      .then((response) => {
+          let companyInfo = response.data.data.customer;
+          setCompanyInfo(companyInfo);
+          if(companyInfo == undefined){
+            console.log('company info undefined')
+          }else{
+            companyInfo.addresses.map((company) => {
+              setCompanyAddressField(company)
+            })
+          }
+      })
+      .catch((error) => {
+        console.log('Error', error)
+      })
 
-          axios
-              .get(`http://localhost:5080/companies/company_by_shopify_id?key=${company_shopify_id}` )
-              .then((response) => {
-                setCostPlus(response.data.cost_plus)
-              })
-              .catch((err) => {
-                console.log('error', err)
-              })
+    axios
+      .get(`http://localhost:5080/companies/company_by_shopify_id?key=${company_shopify_id}` )
+      .then((response) => {
+        setCostPlus(response.data.cost_plus);
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
   },[company_shopify_id]);
 
   // For conditional rendering in JSX. Will come into to play later in the project for client sign in.
@@ -47,14 +55,16 @@ function ClientLanding() {
 
   return (
     <div>
-      <ClientHeader />
+      <ClientHeader
+          companyAddressField={companyAddressField}
+        />
       <nav>
         <Link to='client_vitals' className='collectionLinks'>Main Page</Link>
         <Link to='product_collections' className='collectionLinks'>Product Collections</Link>
         <Link to='/' className='collectionLinks'>Orders</Link>
       </nav>
 
-      <CompanyContext.Provider value={{ company_shopify_id, cost_plus}}>
+      <CompanyContext.Provider value={{ company_shopify_id, cost_plus, companyInfo, companyAddressField}}>
         <Routes>
           <Route path='product_collections/*' element={<ProductCollections />} />
           <Route path='client_vitals' element={<ClientVitals />} />

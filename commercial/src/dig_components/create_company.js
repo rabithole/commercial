@@ -8,7 +8,7 @@ function CreateCompany(props) {
 	const dashboard = useNavigate();
 	const digDashboard = () => {
 		setTimeout(() => {
-			dashboard("/")
+			dashboard("/company_list")
 		}, 1000)
 	}
 
@@ -77,7 +77,7 @@ function CreateCompany(props) {
 	return (
 		<div className='company'>
 			<nav>
-				<Link to='/'>Back to List of Companies</Link>
+				<Link to='/company_list'>Back to List of Companies</Link>
 			</nav>
 		
 			<h2>Input Your Company Information</h2>

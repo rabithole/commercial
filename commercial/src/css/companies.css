@@ -1,4 +1,40 @@
 /* Global */
+.App {
+	/*text-align: center;*/
+	margin: auto;
+	width: 90%;
+}
+
+.client_header {
+	background-color: #282c34;
+	/*min-height: 100vh;*/
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+  
+.client_header a {
+	color: white;
+}
+
+.dig_header {
+	background-color: #282c34;
+	/*min-height: 100vh;*/
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.dig_header a {
+	color: white;
+}
+
 
 /* List of all companies page */
 .company_list_container {
