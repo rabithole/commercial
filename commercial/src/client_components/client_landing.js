@@ -7,6 +7,7 @@ import { CompanyContext } from '../context/company_shopify_id';
 import ProductCollection from './product_collection';
 import ProductPage from './product_page';
 import ClientHeader from './client_header';
+import Orders from './client_orders';
 
 function ClientLanding() {
   const [cost_plus, setCostPlus] = useState([]);
@@ -61,7 +62,7 @@ function ClientLanding() {
       <nav>
         <Link to='client_vitals' className='collectionLinks'>Main Page</Link>
         <Link to='product_collections' className='collectionLinks'>Product Collections</Link>
-        <Link to='/' className='collectionLinks'>Orders</Link>
+        <Link to='orders' className='collectionLinks'>Orders</Link>
       </nav>
 
       <CompanyContext.Provider value={{ company_shopify_id, cost_plus, companyInfo, companyAddressField}}>
@@ -70,6 +71,7 @@ function ClientLanding() {
           <Route path='client_vitals' element={<ClientVitals />} />
           <Route path='/product_collection' element={<ProductCollection />} />
           <Route path='/product_page' element={<ProductPage />} />
+          <Route path='/orders' element={<Orders />} />
         </Routes>
       </CompanyContext.Provider>
     </div>
