@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
  
@@ -50,6 +50,11 @@ function ProductPage() {
     productData = true;
   }
 
+  function grabProductDetails(e){
+    let element = e.target.parentNode;
+    console.log(element, 'Element')
+  }
+
   return (
     <div>
       <h1>{product.title}</h1>
@@ -61,7 +66,10 @@ function ProductPage() {
             <img src={product.featuredImage.url} className='product_image' alt='product'></img>
             <p>Variants and pricing:</p>
               {productCost.map((variant, index) => {
-                return  <p key={index}>{variant.title}: Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }</p>
+                return  <div key={index} className='add_to_order'>
+                        <p className='inside_order_box'>{variant.title}: Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }</p>
+                <button onClick={grabProductDetails}>Add To Draft Order</button>
+                </div>
               })}
             <p>{product.description}</p>
           </div>
