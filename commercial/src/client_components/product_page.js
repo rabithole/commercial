@@ -3,12 +3,13 @@ import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
  
-function ProductPage() {
+function ProductPage(props) {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
+  console.log(clientMarkup)
 
   const product_id = useLocation().state;
   useEffect(() => {
@@ -43,6 +44,17 @@ function ProductPage() {
       })
   },[product_id]);
 
+  async function create_draft_order(draft_order){
+    console.log('create draft order function')
+    await axios.post('http://localhost:5080/create_draft_order', draft_order)
+      .then((response) => {
+        console.log('create draft order response in product page')
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+  }
+
   let productData = false;
   if(loading){
     productData = false;
@@ -50,9 +62,22 @@ function ProductPage() {
     productData = true;
   }
 
-  function grabProductDetails(e){
-    let element = e.target.parentNode;
-    console.log(element, 'Element')
+  function grabProductDetails(variant){
+    console.log('cost', variant.variant.product_cost, variant)
+    // let productCost = (variant.variant.product_cost * clientMarkup) + variant.variant.product_cost;
+    let productCost = (variant.variant.product_cost * clientMarkup + +variant.variant.product_cost).toFixed(2);
+    let sku = variant.variant.sku;
+
+    let input = {
+      lineItems: [{
+        originalUnitPrice: productCost,
+        sku: sku,
+        title: product.title
+      }]
+    }
+    create_draft_order(
+      input
+    );
   }
 
   return (
@@ -66,9 +91,9 @@ function ProductPage() {
             <img src={product.featuredImage.url} className='product_image' alt='product'></img>
             <p>Variants and pricing:</p>
               {productCost.map((variant, index) => {
-                return  <div key={index} className='add_to_order'>
+                return  <div key={index} className='add_to_order' >
                         <p className='inside_order_box'>{variant.title}: Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }</p>
-                <button onClick={grabProductDetails}>Add To Draft Order</button>
+                <button onClick={() => grabProductDetails({variant})}>Add To Draft Order</button>
                 </div>
               })}
             <p>{product.description}</p>
@@ -81,3 +106,5 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
+// Draft order number D205

@@ -20,6 +20,7 @@ const product = require('./shopify_get_product');
 const getAllUnitCosts = require('./shopify_get_all_unit_costs'); 
 const setUnitCosts = require('./unit_costs_controller');
 const getUnitCostBySku = require('./get_unit_cost_by_sku');
+const createDraftOrder = require('./create_draft_order');
 
 const { response } = require('express');
 const app = express();
@@ -43,6 +44,7 @@ app.use('/shopify_get_product_collections', productCategories)
 app.use('/shopify_get_product_collection', productCollection)
 app.use('/shopify_get_product', product);
 app.use('/shopify_get_all_unit_costs', getAllUnitCosts);
+app.use('/create_draft_order', createDraftOrder);
 
 // Process to query unit cost data from Shopify and store it in our database.
 // getUnitCosts();
