@@ -21,7 +21,7 @@ function ClientVitals() {
   }
 
   return (
-    <div>
+    <div className='client_vitals'>
       <h1>{companyData ? companyAddressField.company : '...loading'}</h1>
       <p>Welcome Back: <b>{companyInfo ? companyInfo.displayName : '...loading'}</b></p>
       <p>Balance Owed:</p>

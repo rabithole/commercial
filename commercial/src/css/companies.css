@@ -265,11 +265,18 @@ nav a {
 	padding: 10px;
 	margin-top: 20px;
 	margin-bottom: 40px;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .product_collections a {
 	text-decoration: none;
 	color: black;
+	width: 300px;
+	background-color: #7FB38E;
+	border: 1px solid black;
+	margin: 5px;
+	padding: 5px;
 }
 
 .product_collections a:hover {
@@ -323,6 +330,10 @@ nav a {
 	margin-bottom: 60px;
 }
 
+.collection_product a {
+	text-decoration: none;
+}
+
 .product_image {
 	width: 200px;
 }
@@ -338,4 +349,25 @@ nav a {
 
 .inside_order_box {
 	flex-direction: column;
+}
+
+
+/* Client landing page */
+.client_vitals {
+	border: 1px solid black;
+	margin-top: 30px;
+	padding: 10px;
+	background-color: lightgray;
+}
+
+.client_vitals h1 {
+	background-color: #7FB38E;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+
+/* Prodcut Page */
+.quantity {
+	margin: 5px;
 }

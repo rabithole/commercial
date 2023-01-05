@@ -7,6 +7,8 @@ function ProductPage(props) {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const [quantity, setQuantity] = useState(1);
+  // console.log('quantity', quantity)
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
   console.log(clientMarkup)
@@ -42,6 +44,8 @@ function ProductPage(props) {
             })
           })
       })
+
+      
   },[product_id]);
 
   async function create_draft_order(draft_order){
@@ -62,22 +66,60 @@ function ProductPage(props) {
     productData = true;
   }
 
-  function grabProductDetails(variant){
+  function grabProductDetails(variant, e){
     console.log('cost', variant.variant.product_cost, variant)
     // let productCost = (variant.variant.product_cost * clientMarkup) + variant.variant.product_cost;
     let productCost = (variant.variant.product_cost * clientMarkup + +variant.variant.product_cost).toFixed(2);
     let sku = variant.variant.sku;
+    let test = document.querySelectorAll('input')
+    let index = document.querySelector('name')
+    console.log('test', test, index)
 
     let input = {
       lineItems: [{
         originalUnitPrice: productCost,
         sku: sku,
         title: product.title
+        // quantity: target
       }]
     }
+
     create_draft_order(
       input
     );
+  }
+  // let quantityArray = document.getElementsByClassName('add_to_order');
+
+  let quantity = 0;
+  let checkIndex = 0;
+  function decrement(index){
+    let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
+    console.log('Quantity array', quantityArray, 'index', index)
+    if(checkIndex == index){
+      quantity = quantity - 1;
+      quantityArray.innerHTML = quantity;
+    }else {
+      checkIndex = index;
+      // quantity = quantityArray.innerHTML;
+      quantity = Number(quantityArray.innerHTML);
+      quantity = quantity - 1;
+      quantityArray.innerHTML = quantity;
+    }
+  }
+
+  function increment(index){
+    let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
+    console.log('Quantity array', quantityArray, 'index', index)
+    if(checkIndex == index){
+      quantity = quantity + 1;
+      quantityArray.innerHTML = quantity;
+    }else {
+      checkIndex = index;
+      // quantity = quantityArray.innerHTML;
+      quantity = Number(quantityArray.innerHTML);
+      quantity = quantity + 1;
+      quantityArray.innerHTML = quantity;
+    }
   }
 
   return (
@@ -90,10 +132,23 @@ function ProductPage(props) {
           <div>
             <img src={product.featuredImage.url} className='product_image' alt='product'></img>
             <p>Variants and pricing:</p>
-              {productCost.map((variant, index) => {
+              {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
-                        <p className='inside_order_box'>{variant.title}: Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }</p>
-                <button onClick={() => grabProductDetails({variant})}>Add To Draft Order</button>
+                        <h3 className='inside_order_box'>
+                            {variant.title}
+                          </h3>
+                          <p>
+                            Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
+                          </p>
+                          <h3>
+                            Quantity
+                          </h3>
+                          <p>0</p>
+                          <p>
+                            <button onClick={() => increment(index)} className='quantity'>Plus</button>
+                            <button onClick={() => decrement(index)} className='quantity'>Minus</button>
+                          </p>
+                <button >Add To Draft Order</button>
                 </div>
               })}
             <p>{product.description}</p>
