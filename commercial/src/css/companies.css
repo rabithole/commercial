@@ -289,6 +289,12 @@ nav a {
 
 
 /* Product Collection and Collections nav */
+#variant_container {
+	border: 1px solid black;
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
 .collectionLinks {
 	margin-right: 30px;
 	background-color: #7FB38E;
@@ -344,7 +350,27 @@ nav a {
 	width: 15em;
 	border: 1px solid black;
 	padding: 10px;
-	margin-bottom: 10px;
+	margin: 10px 5px 10px 5px;
+}
+
+.client_cost {
+	border: 1px solid black;
+	width: 200px;
+	text-align: center;
+	background-color: #66cc00;
+	font-size: 2vh;
+}
+
+.product_quantity {
+	margin-top: 0;
+	margin-bottom: 30px;
+	font-size: 2vh;
+	/* font-weight: 400; */
+	border: 1px solid black;
+	width: 60px;
+	/* margin: auto; */
+	text-align: center;
+	background-color: #66cc00;
 }
 
 .inside_order_box {

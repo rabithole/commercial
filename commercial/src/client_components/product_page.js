@@ -97,12 +97,17 @@ function ProductPage(props) {
     console.log('Quantity array', quantityArray, 'index', index)
     if(checkIndex == index){
       quantity = quantity - 1;
+      if(quantity < 0){
+        quantity = 0;
+      }
       quantityArray.innerHTML = quantity;
     }else {
       checkIndex = index;
-      // quantity = quantityArray.innerHTML;
       quantity = Number(quantityArray.innerHTML);
       quantity = quantity - 1;
+      if(quantity < 0){
+        quantity = 0;
+      }
       quantityArray.innerHTML = quantity;
     }
   }
@@ -131,26 +136,28 @@ function ProductPage(props) {
         {productData ? 
           <div>
             <img src={product.featuredImage.url} className='product_image' alt='product'></img>
-            <p>Variants and pricing:</p>
+            <h2>Variants and pricing:</h2>
+            <div id='variant_container'>
               {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
                         <h3 className='inside_order_box'>
                             {variant.title}
                           </h3>
-                          <p>
+                          <p className='client_cost'>
                             Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
                           </p>
                           <h3>
                             Quantity
                           </h3>
-                          <p>0</p>
+                          <p className='product_quantity'>0</p>
                           <p>
                             <button onClick={() => increment(index)} className='quantity'>Plus</button>
                             <button onClick={() => decrement(index)} className='quantity'>Minus</button>
                           </p>
-                <button >Add To Draft Order</button>
+                <button onClick={() => grabProductDetails()}>Add To Draft Order</button>
                 </div>
               })}
+              </div>
             <p>{product.description}</p>
           </div>
         : <h2>...loading</h2>}
