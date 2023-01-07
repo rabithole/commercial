@@ -7,11 +7,9 @@ function ProductPage(props) {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [quantity, setQuantity] = useState(1);
-  // console.log('quantity', quantity)
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
-  console.log(clientMarkup)
+  console.log('Client Markup', clientMarkup)
 
   const product_id = useLocation().state;
   useEffect(() => {
@@ -66,29 +64,25 @@ function ProductPage(props) {
     productData = true;
   }
 
-  function grabProductDetails(variant, e){
-    console.log('cost', variant.variant.product_cost, variant)
-    // let productCost = (variant.variant.product_cost * clientMarkup) + variant.variant.product_cost;
-    let productCost = (variant.variant.product_cost * clientMarkup + +variant.variant.product_cost).toFixed(2);
-    let sku = variant.variant.sku;
-    let test = document.querySelectorAll('input')
-    let index = document.querySelector('name')
-    console.log('test', test, index)
+  function grabProductDetails(index, variant){
+    let quantityArray = document.querySelectorAll('.add_to_order')[index];
+    console.log('Quantity Array', quantityArray.childNodes[3].innerHTML)
+    console.log('index', index)
+    console.log('variant', variant)
 
-    let input = {
-      lineItems: [{
-        originalUnitPrice: productCost,
-        sku: sku,
-        title: product.title
-        // quantity: target
-      }]
-    }
+    // let input = {
+    //   lineItems: [{
+    //     originalUnitPrice: productCost,
+    //     sku: sku,
+    //     title: product.title
+    //     // quantity: target
+    //   }]
+    // }
 
-    create_draft_order(
-      input
-    );
+    // create_draft_order(
+    //   input
+    // );
   }
-  // let quantityArray = document.getElementsByClassName('add_to_order');
 
   let quantity = 0;
   let checkIndex = 0;
@@ -136,12 +130,12 @@ function ProductPage(props) {
         {productData ? 
           <div>
             <img src={product.featuredImage.url} className='product_image' alt='product'></img>
-            <h2>Variants and pricing:</h2>
+            <h2>Variant pricing and quantity</h2>
             <div id='variant_container'>
               {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
                         <h3 className='inside_order_box'>
-                            {variant.title}
+                            {variant.title} ----- Sku: { variant.sku }
                           </h3>
                           <p className='client_cost'>
                             Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
@@ -151,10 +145,10 @@ function ProductPage(props) {
                           </h3>
                           <p className='product_quantity'>0</p>
                           <p>
-                            <button onClick={() => increment(index)} className='quantity'>Plus</button>
-                            <button onClick={() => decrement(index)} className='quantity'>Minus</button>
+                            <button onClick={() => increment(index)} className='quantity'>Add</button>
+                            <button onClick={() => decrement(index)} className='quantity'>Remove</button>
                           </p>
-                <button onClick={() => grabProductDetails()}>Add To Draft Order</button>
+                <button onClick={() => grabProductDetails(index, variant)}>Add To Draft Order</button>
                 </div>
               })}
               </div>
