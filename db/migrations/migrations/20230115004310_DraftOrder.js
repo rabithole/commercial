@@ -5,10 +5,10 @@
 exports.up = function(knex) {
   return knex.schema.createTable('order_line_items', table => {
     table.increments();
-    table.integer('title').references('id').inTable('orders').onUpdate('CASCADE').onDelete('CASCADE');
-    table.integer('sku'); // References shopify id
+    table.text('title');
+    table.integer('sku');
     table.integer('quantity');
-    table.float('originalUnitPrice');
+    table.float('origianlUnitPrice');
   })
 };
 

@@ -7,9 +7,14 @@ function ProductPage(props) {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lineItems, setLineItems] = useState([]);
+  // const [input, setGraphQlInput] = useState([]);
+  // console.log('input-----:', input)
+  console.log('Line Item:----', lineItems)
+
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
-  console.log('Client Markup', clientMarkup)
+  // console.log('Client Markup', clientMarkup)
 
   const product_id = useLocation().state;
   useEffect(() => {
@@ -66,22 +71,39 @@ function ProductPage(props) {
 
   function grabProductDetails(index, variant){
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
-    console.log('Quantity Array', quantityArray.childNodes[3].innerHTML)
-    console.log('index', index)
-    console.log('variant', variant)
+    let quantity = quantityArray.childNodes[3].innerHTML;
+    let variantCost = (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2);
+    let variantTotal = (variantCost * quantity).toFixed(2);
+    let graphQlObject = [{
+      originalUnitPrice: variantCost,
+      sku: variant.sku,
+      quantity: quantity,
+      title: variant.title
+    }]
+    console.log('GrapgQL Object----', graphQlObject)
 
-    // let input = {
-    //   lineItems: [{
-    //     originalUnitPrice: productCost,
-    //     sku: sku,
-    //     title: product.title
-    //     // quantity: target
-    //   }]
-    // }
+    // console.log('Quantity Array', quantityArray)
+    // console.log('index', index)
+    // console.log('variant cost-----', variantCost)
+    // console.log('variant total----', variantTotal )
+    // console.log('quantity:----', quantity)
 
-    // create_draft_order(
-    //   input
-    // );
+    // console.log('variant', variant)
+
+    setLineItems([
+      ...lineItems,
+        ...graphQlObject
+    ])
+
+    createShopifyDraftOrder(lineItems);
+  }
+
+  function createShopifyDraftOrder(lineItems){
+    axios.post('http://localhost:5080/create_draft_order', lineItems)
+      console.log('input object test', lineItems)
+      // .then((response) => {
+      //   console.log('input object test', lineItems)
+      // })
   }
 
   let quantity = 0;
@@ -138,7 +160,7 @@ function ProductPage(props) {
                             {variant.title} ----- Sku: { variant.sku }
                           </h3>
                           <p className='client_cost'>
-                            Your Cost: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
+                            Cost Per Unit: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
                           </p>
                           <h3>
                             Quantity
