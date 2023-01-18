@@ -51,17 +51,6 @@ function ProductPage(props) {
       
   },[product_id]);
 
-  async function create_draft_order(draft_order){
-    console.log('create draft order function')
-    await axios.post('http://localhost:5080/create_draft_order', draft_order)
-      .then((response) => {
-        console.log('create draft order response in product page')
-      })
-      .catch((err) => {
-        console.log('error', err)
-      })
-  }
-
   let productData = false;
   if(loading){
     productData = false;
@@ -94,12 +83,19 @@ function ProductPage(props) {
       ...lineItems,
         ...graphQlObject
     ])
-
-    createShopifyDraftOrder(lineItems);
   }
 
-  function createShopifyDraftOrder(lineItems){
-    axios.post('http://localhost:5080/create_draft_order', lineItems)
+  useEffect(() => {
+    window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
+    let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
+    // console.log('Get Item:---', JSON.parse(window.localStorage.getItem('graphQL')))
+    console.log('storage', localStorage.lineItems);
+
+    // createShopifyDraftOrder(localStorage);
+  })
+
+  function createShopifyDraftOrder(passing){
+    axios.post('http://localhost:5080/create_draft_order', passing)
       console.log('input object test', lineItems)
       // .then((response) => {
       //   console.log('input object test', lineItems)
@@ -153,7 +149,9 @@ function ProductPage(props) {
           <div>
             <img src={product.featuredImage.url} className='product_image' alt='product'></img>
             <h2>Variant pricing and quantity</h2>
+            
             <div id='variant_container'>
+            <button onClick={() => createShopifyDraftOrder(lineItems)} id='draftOrderButton'>Create Draft Order</button>
               {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
                         <h3 className='inside_order_box'>

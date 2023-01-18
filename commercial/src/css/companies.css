@@ -290,12 +290,21 @@ nav a {
 
 /* Product Collection and Collections nav */
 #variant_container {
+	position: relative;
 	border: 1px solid black;
 	background-color: lightgrey;
 	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
+	padding-top: 40px;
 }
+
+#draftOrderButton {
+	position: absolute;
+	right: 70px;
+	top: 5px;
+}
+
 .collectionLinks {
 	margin-right: 30px;
 	background-color: #7FB38E;
