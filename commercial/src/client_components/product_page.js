@@ -10,7 +10,7 @@ function ProductPage(props) {
   const [lineItems, setLineItems] = useState([]);
   // const [input, setGraphQlInput] = useState([]);
   // console.log('input-----:', input)
-  console.log('Line Item:----', lineItems)
+  // console.log('Line Item:----', lineItems)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -59,16 +59,18 @@ function ProductPage(props) {
   }
 
   function grabProductDetails(index, variant){
+    // console.log('variant:----', variant)
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
-    let variantCost = (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2);
+    let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
     let variantTotal = (variantCost * quantity).toFixed(2);
     let graphQlObject = [{
       originalUnitPrice: variantCost,
       sku: variant.sku,
-      quantity: quantity,
+      quantity: Number(quantity),
       title: variant.title
     }]
+    // graphQlObject = graphQlObject[0].replace(/'/g, '"');
     console.log('GrapgQL Object----', graphQlObject)
 
     // console.log('Quantity Array', quantityArray)
@@ -87,19 +89,25 @@ function ProductPage(props) {
 
   useEffect(() => {
     window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
-    let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
+    // let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
     // console.log('Get Item:---', JSON.parse(window.localStorage.getItem('graphQL')))
-    console.log('storage', localStorage.lineItems);
+    // console.log('storage', localStorage.lineItems);
+    // setGraphQlInput(localStorage.lineItems)
 
     // createShopifyDraftOrder(localStorage);
   })
 
-  function createShopifyDraftOrder(passing){
-    axios.post('http://localhost:5080/create_draft_order', passing)
-      console.log('input object test', lineItems)
-      // .then((response) => {
-      //   console.log('input object test', lineItems)
-      // })
+  function createShopifyDraftOrder(){
+    console.log('unparsed', window.localStorage.getItem('graphQL'));
+    let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
+    // let localStorage = window.localStorage.getItem('graphQL');
+    console.log('Local Storage', localStorage)
+    axios.post('http://localhost:5080/create_draft_order', localStorage)
+      .then((response) => {
+        // console.log('input object test', passing)
+        console.log('Response', response.config.data)
+        // console.log('Error', response.data.errors[0])
+      })
   }
 
   let quantity = 0;
@@ -126,7 +134,7 @@ function ProductPage(props) {
 
   function increment(index){
     let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
-    console.log('Quantity array', quantityArray, 'index', index)
+    // console.log('Quantity array', quantityArray, 'index', index)
     if(checkIndex == index){
       quantity = quantity + 1;
       quantityArray.innerHTML = quantity;

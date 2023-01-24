@@ -13,45 +13,44 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    console.log('draft order request', request.body);
+    let draftOrderLineItems = request.body;
+    console.log('draft order request', draftOrderLineItems);
+    console.log('new draft', draftOrderLineItems.lineItems[0])
     
-    // let company = request.body;
-    // let newCompany =` 
-    // mutation{
-    //     draftOrderCreate(
-    //         input: {
-    //             note: "notes go here",
-    //             customerId: "gid://shopify/Customer/5973979234340"
-                
-    //             lineItems: [{
-    //                 quantity: 2,
-    //                 sku: "600350",
-    //                 title: "Amino Treatment",
-    //                 originalUnitPrice: 74.09,
-    //             }]
-    //         }
-    //     )
-    //     {
-    //         draftOrder{
-    //             email
-    //             id
-    //         }
-    //         userErrors{
-    //             field
-    //             message
-    //         }
-    //     }
-    // }
-    // `
+    let draftOrder =` 
+    mutation{
+        draftOrderCreate(
+            input: {
+                note: "notes go here",
+                customerId: "gid://shopify/Customer/5973979234340",
+                ${draftOrderLineItems}
+            }
+        )
+        {
+            draftOrder{
+                email
+                id
+            }
+            userErrors{
+                field
+                message
+            }
+        }
+    }
+    `
 
-	// const ShopfyClient = axios.create({
-	// 	baseURL: BASE_URL,
-	// 	headers: headers
-	// });
+    // let stringedDraftOrder = draftOrder.replace(/'/g, '"');
+    console.log('stringed Draft Order', draftOrder)
 
-    // const res = await ShopfyClient.post(API_PATH, { query: newCompany });
+	const ShopfyClient = axios.create({
+		baseURL: BASE_URL,
+		headers: headers
+	});
+
+    const res = await ShopfyClient.post(API_PATH, { query: draftOrder });
     // let customerId = res.data.data.customerCreate.customer;
-    // response.status(201).json(customerId);  
+    response.status(200).json(res.data);  
+    console.log('response', res.data)
 })
 
 module.exports = router;
