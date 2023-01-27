@@ -9,7 +9,7 @@ module.exports = {
     connection: {
       database: 'testdb',
       user:     'postgres',
-      password: 'h6eB?n;x%],5cA$_',
+      password: 'bodiddly',
     },
     pool: {
       min: 2,
