@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
+// import { v4 as uuidv4 } from 'uuid';
  
 function ProductPage(props) {
   const [product, setProduct] = useState([]);
@@ -73,14 +74,6 @@ function ProductPage(props) {
     // graphQlObject = graphQlObject[0].replace(/'/g, '"');
     console.log('GrapgQL Object----', graphQlObject)
 
-    // console.log('Quantity Array', quantityArray)
-    // console.log('index', index)
-    // console.log('variant cost-----', variantCost)
-    // console.log('variant total----', variantTotal )
-    // console.log('quantity:----', quantity)
-
-    // console.log('variant', variant)
-
     setLineItems([
       ...lineItems,
         ...graphQlObject
@@ -106,6 +99,7 @@ function ProductPage(props) {
       .then((response) => {
         // console.log('input object test', passing)
         console.log('Response', response.config.data)
+        console.log('Looking for x-request-id', response.headers)
         // console.log('Error', response.data.errors[0])
       })
   }
