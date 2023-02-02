@@ -91,7 +91,7 @@ function ProductPage(props) {
   })
 
   function createShopifyDraftOrder(){
-    console.log('unparsed', window.localStorage.getItem('graphQL'));
+    // console.log('unparsed', window.localStorage.getItem('graphQL'));
     let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
     // let localStorage = window.localStorage.getItem('graphQL');
     console.log('Local Storage', localStorage)
@@ -99,7 +99,7 @@ function ProductPage(props) {
       .then((response) => {
         // console.log('input object test', passing)
         console.log('Response', response.config.data)
-        console.log('Looking for x-request-id', response.headers)
+        console.log('Looking for x-request-id', response)
         // console.log('Error', response.data.errors[0])
       })
   }

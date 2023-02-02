@@ -36,7 +36,6 @@ router.post('/', async (request, response) => {
             userErrors{
                 field
                 message
-                X-request-ID
             }
         }
     }
@@ -52,8 +51,10 @@ router.post('/', async (request, response) => {
 
     const res = await ShopfyClient.post(API_PATH, { query: draftOrder });
     // let customerId = res.data.data.customerCreate.customer;
-    response.status(200).json(res.data);
-    console.log('response here', JSON.parse(res.headers))
+    response.status(200).json(res.data); // Remember to add error handling!
+    let xRequest = JSON.stringify(res.headers);
+    xRequest = JSON.parse(xRequest);
+    console.log('response here', xRequest['x-request-id'])
 })
 
 module.exports = router;
