@@ -2,20 +2,15 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
-// import { v4 as uuidv4 } from 'uuid';
  
 function ProductPage(props) {
   const [product, setProduct] = useState([]);
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
-  // const [input, setGraphQlInput] = useState([]);
-  // console.log('input-----:', input)
-  // console.log('Line Item:----', lineItems)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
-  // console.log('Client Markup', clientMarkup)
 
   const product_id = useLocation().state;
   useEffect(() => {
@@ -82,12 +77,6 @@ function ProductPage(props) {
 
   useEffect(() => {
     window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
-    // let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
-    // console.log('Get Item:---', JSON.parse(window.localStorage.getItem('graphQL')))
-    // console.log('storage', localStorage.lineItems);
-    // setGraphQlInput(localStorage.lineItems)
-
-    // createShopifyDraftOrder(localStorage);
   })
 
   function createShopifyDraftOrder(){
@@ -99,7 +88,6 @@ function ProductPage(props) {
       .then((response) => {
         // console.log('input object test', passing)
         console.log('Response', response.config.data)
-        console.log('Looking for x-request-id', response)
         // console.log('Error', response.data.errors[0])
       })
   }

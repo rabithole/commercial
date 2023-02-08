@@ -17,17 +17,11 @@ router.use(express.json());
 router.post('/', async (request, response) => {
     let draftOrderLineItems = request.body;
     console.log('draft order request', draftOrderLineItems);
-    console.log('new draft', draftOrderLineItems.lineItems[0])
+    console.log('new draft', draftOrderLineItems.lineItems[0])                    
     
-    let draftOrder =` 
-    mutation{
-        draftOrderCreate(
-            input: {
-                note: "notes go here",
-                customerId: "gid://shopify/Customer/5973979234340",
-                ${draftOrderLineItems}
-            }
-        )
+    let query =` 
+    mutation draftOrderCreate($input: DraftOrderInput!) {
+        draftOrderCreate(input: $input)
         {
             draftOrder{
                 email
@@ -40,16 +34,28 @@ router.post('/', async (request, response) => {
         }
     }
     `
+    let variables = {
+        input: {
+            note: "notes go here",
+            customerId: "gid://shopify/Customer/5973979234340",
+            lineItems: draftOrderLineItems.lineItems
+        }
+    };
+
+    // let draftOrder = mutation draftOrderCreate()
 
     // let stringedDraftOrder = draftOrder.replace(/'/g, '"');
-    console.log('stringed Draft Order', draftOrder)
+    // console.log('stringed Draft Order', )
 
 	const ShopfyClient = axios.create({
 		baseURL: BASE_URL,
 		headers: headers
 	});
 
-    const res = await ShopfyClient.post(API_PATH, { query: draftOrder });
+    const res = await ShopfyClient.post(API_PATH, { 
+        query: query,
+        variables: variables
+    });
     // let customerId = res.data.data.customerCreate.customer;
     response.status(200).json(res.data); // Remember to add error handling!
     let xRequest = JSON.stringify(res.headers);
