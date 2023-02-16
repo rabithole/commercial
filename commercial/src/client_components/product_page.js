@@ -153,7 +153,7 @@ function ProductPage(props) {
                           <h3>
                             Quantity
                           </h3>
-                          <p className='product_quantity'>0</p>
+                          <p className='product_quantity' contentEditable='true'>0</p>
                           <p>
                             <button onClick={() => increment(index)} className='quantity'>Add</button>
                             <button onClick={() => decrement(index)} className='quantity'>Remove</button>
