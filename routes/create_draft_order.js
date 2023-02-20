@@ -42,11 +42,6 @@ router.post('/', async (request, response) => {
         }
     };
 
-    // let draftOrder = mutation draftOrderCreate()
-
-    // let stringedDraftOrder = draftOrder.replace(/'/g, '"');
-    // console.log('stringed Draft Order', )
-
 	const ShopfyClient = axios.create({
 		baseURL: BASE_URL,
 		headers: headers

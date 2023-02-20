@@ -12,6 +12,7 @@ function ProductCollection() {
     axios
       .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id})
       .then((response) => {
+        console.log('Has Next Page', response.data.data.collection)
         setProducts(response.data.data.collection.products.nodes);
       })
       .catch((error) => {

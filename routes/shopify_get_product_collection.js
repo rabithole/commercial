@@ -21,11 +21,15 @@ router.post('/', async (request, response) => {
                         id 
                         title
                         products(first: 30){
+                            edges {
+                                cursor
+                            }
                             nodes{
                                 title
                                 id
                                 images(first: 1){
                                     edges{
+                                        cursor
                                         node{
                                             id
                                             url

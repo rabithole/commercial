@@ -8,6 +8,7 @@ function ProductPage(props) {
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
+  console.log('Line Items', lineItems)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -55,7 +56,6 @@ function ProductPage(props) {
   }
 
   function grabProductDetails(index, variant){
-    // console.log('variant:----', variant)
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
     let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
@@ -64,10 +64,9 @@ function ProductPage(props) {
       originalUnitPrice: variantCost,
       sku: variant.sku,
       quantity: Number(quantity),
-      title: variant.title
+      title: variant.title,
+      requiresShipping: true
     }]
-    // graphQlObject = graphQlObject[0].replace(/'/g, '"');
-    console.log('GrapgQL Object----', graphQlObject)
 
     setLineItems([
       ...lineItems,
@@ -80,15 +79,12 @@ function ProductPage(props) {
   })
 
   function createShopifyDraftOrder(){
-    // console.log('unparsed', window.localStorage.getItem('graphQL'));
     let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
-    // let localStorage = window.localStorage.getItem('graphQL');
     console.log('Local Storage', localStorage)
+
     axios.post('http://localhost:5080/create_draft_order', localStorage)
       .then((response) => {
-        // console.log('input object test', passing)
         console.log('Response', response.config.data)
-        // console.log('Error', response.data.errors[0])
       })
   }
 
@@ -116,13 +112,11 @@ function ProductPage(props) {
 
   function increment(index){
     let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
-    // console.log('Quantity array', quantityArray, 'index', index)
     if(checkIndex == index){
       quantity = quantity + 1;
       quantityArray.innerHTML = quantity;
     }else {
       checkIndex = index;
-      // quantity = quantityArray.innerHTML;
       quantity = Number(quantityArray.innerHTML);
       quantity = quantity + 1;
       quantityArray.innerHTML = quantity;
@@ -153,7 +147,7 @@ function ProductPage(props) {
                           <h3>
                             Quantity
                           </h3>
-                          <p className='product_quantity' contentEditable='true'>0</p>
+                          <p className='product_quantity' contentEditable='true'  suppressContentEditableWarning={true}>0</p>
                           <p>
                             <button onClick={() => increment(index)} className='quantity'>Add</button>
                             <button onClick={() => decrement(index)} className='quantity'>Remove</button>
