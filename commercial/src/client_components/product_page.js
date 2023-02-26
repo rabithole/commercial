@@ -8,7 +8,7 @@ function ProductPage(props) {
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
-  console.log('Line Items', lineItems)
+  console.log('Product Cost----', productCost)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -26,11 +26,12 @@ function ProductPage(props) {
           let sku = cost.node.sku;
           let requestSku = cost.node.sku;
           let title = cost.node.title;
+          let variantId = cost.node.id;
           axios
             .get('http://localhost:5080/costs_by_sku/' + requestSku)
             .then(function(response) {
               let product_cost = response.data.unit_cost;
-              array.push({sku, title, product_cost})
+              array.push({sku, title, product_cost, variantId})
               setProductCost(array)
               if(array.length === variantArrayLength){
                 setLoading(false);
@@ -56,15 +57,17 @@ function ProductPage(props) {
   }
 
   function grabProductDetails(index, variant){
+    console.log('variant----', variant)
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
     let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
     let variantTotal = (variantCost * quantity).toFixed(2);
     let graphQlObject = [{
+      title: variant.title,
       originalUnitPrice: variantCost,
       sku: variant.sku,
+      variantId: variant.variantId,
       quantity: Number(quantity),
-      title: variant.title,
       requiresShipping: true
     }]
 
