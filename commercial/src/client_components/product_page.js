@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
@@ -8,7 +8,8 @@ function ProductPage(props) {
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
-  console.log('Product Cost----', productCost)
+  console.log('Local Storage Object', window.localStorage.getItem('graphQL'))
+  console.log('Line Items', lineItems)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -71,14 +72,35 @@ function ProductPage(props) {
       requiresShipping: true
     }]
 
+    if(graphQlObject[0].variantId == graphQlObject[0].variantId){
+      console.log('Same object', graphQlObject[0].variantId, graphQlObject[0].quantity)
+      console.log(lineItems)
+    }else{
+      console.log('different object')
+
+    }
+
     setLineItems([
       ...lineItems,
         ...graphQlObject
     ])
+
+    // window.localStorage.setItem('graphQL', JSON.stringify(graphQlObject));
   }
 
   useEffect(() => {
-    window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
+
+      // window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
+
+    // console.log('checking local storage', window.localStorage.getItem('graphQL'))
+
+    // if(window.localStorage.getItem('graphQL')){
+    //   console.log('Data present in local storage', window.localStorage.getItem('graphQL'))
+    // }else{
+    //   window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
+    //   console.log('Nothing here. Barin and dry')
+    // }
+    
   })
 
   function createShopifyDraftOrder(){
