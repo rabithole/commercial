@@ -46,9 +46,14 @@ function ProductPage(props) {
             })
           })
       })
-
-      
   },[product_id]);
+
+  let orderObjectArray = [];
+
+  function orderObjectHandling(productList){
+    orderObjectArray.push(productList);
+    console.log('order object aray---', orderObjectArray)
+  }
 
   let productData = false;
   if(loading){
@@ -63,27 +68,21 @@ function ProductPage(props) {
     let quantity = quantityArray.childNodes[3].innerHTML;
     let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
     let variantTotal = (variantCost * quantity).toFixed(2);
-    let graphQlObject = [{
+    let graphQlObject = {
       title: variant.title,
       originalUnitPrice: variantCost,
       sku: variant.sku,
       variantId: variant.variantId,
       quantity: Number(quantity),
       requiresShipping: true
-    }]
-
-    if(graphQlObject[0].variantId == graphQlObject[0].variantId){
-      console.log('Same object', graphQlObject[0].variantId, graphQlObject[0].quantity)
-      console.log(lineItems)
-    }else{
-      console.log('different object')
-
     }
 
-    setLineItems([
-      ...lineItems,
-        ...graphQlObject
-    ])
+    // setLineItems([
+    //   ...lineItems,
+    //     ...graphQlObject
+    // ])
+
+    orderObjectHandling(graphQlObject);
 
     // window.localStorage.setItem('graphQL', JSON.stringify(graphQlObject));
   }
