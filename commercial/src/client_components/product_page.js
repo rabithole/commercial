@@ -8,8 +8,7 @@ function ProductPage(props) {
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
-  console.log('Local Storage Object', window.localStorage.getItem('graphQL'))
-  console.log('Line Items', lineItems)
+  // console.log('Local Storage Object', window.localStorage.getItem('graphQL'))
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -50,9 +49,25 @@ function ProductPage(props) {
 
   let orderObjectArray = [];
 
-  function orderObjectHandling(productList){
-    orderObjectArray.push(productList);
-    console.log('order object aray---', orderObjectArray)
+  function orderObjectHandling(productList){    
+    if(orderObjectArray.length == 0){
+      orderObjectArray.push(productList)
+      console.log('array---', orderObjectArray)
+    }else{
+      for(let i = 0; i < orderObjectArray.length; i++){
+        console.log('order object array looping', orderObjectArray[i].sku)
+        if(orderObjectArray[i].sku == productList.sku){
+          orderObjectArray[i] = productList
+          console.log('array end---', orderObjectArray)
+          window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
+          return
+        }else if(i == orderObjectArray.length-1){
+          orderObjectArray.push(productList)
+          console.log('array---', orderObjectArray)
+          window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
+        }
+      }
+    }
   }
 
   let productData = false;
@@ -63,7 +78,7 @@ function ProductPage(props) {
   }
 
   function grabProductDetails(index, variant){
-    console.log('variant----', variant)
+    // console.log('variant----', variant)
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
     let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
@@ -77,14 +92,7 @@ function ProductPage(props) {
       requiresShipping: true
     }
 
-    // setLineItems([
-    //   ...lineItems,
-    //     ...graphQlObject
-    // ])
-
     orderObjectHandling(graphQlObject);
-
-    // window.localStorage.setItem('graphQL', JSON.stringify(graphQlObject));
   }
 
   useEffect(() => {
