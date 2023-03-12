@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState, useContext, useRef, useCallback } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
@@ -8,10 +8,21 @@ function ProductPage(props) {
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
-  // console.log('Local Storage Object', window.localStorage.getItem('graphQL'))
-
+  // setLineItems(window.localStorage.getItem('draftOrder'))
+  console.log('line items---', lineItems)
+  
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
+
+  useEffect(() => {
+    setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')))
+    
+  },[])
+
+  if(lineItems){
+    let quantity = document.querySelectorAll('.add_to_order')
+    console.log('quantity---', quantity)
+  }
 
   const product_id = useLocation().state;
   useEffect(() => {
@@ -53,6 +64,7 @@ function ProductPage(props) {
     if(orderObjectArray.length == 0){
       orderObjectArray.push(productList)
       console.log('array---', orderObjectArray)
+      window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
     }else{
       for(let i = 0; i < orderObjectArray.length; i++){
         console.log('order object array looping', orderObjectArray[i].sku)
@@ -95,65 +107,51 @@ function ProductPage(props) {
     orderObjectHandling(graphQlObject);
   }
 
-  useEffect(() => {
-
-      // window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
-
-    // console.log('checking local storage', window.localStorage.getItem('graphQL'))
-
-    // if(window.localStorage.getItem('graphQL')){
-    //   console.log('Data present in local storage', window.localStorage.getItem('graphQL'))
-    // }else{
-    //   window.localStorage.setItem('graphQL', JSON.stringify({lineItems}));
-    //   console.log('Nothing here. Barin and dry')
-    // }
-    
-  })
-
   function createShopifyDraftOrder(){
-    let localStorage = JSON.parse(window.localStorage.getItem('graphQL'));
+    let localStorage = JSON.parse(window.localStorage.getItem('draftOrder'));
     console.log('Local Storage', localStorage)
 
     axios.post('http://localhost:5080/create_draft_order', localStorage)
       .then((response) => {
         console.log('Response', response.config.data)
+        console.log('response', response)
       })
   }
 
-  let quantity = 0;
-  let checkIndex = 0;
-  function decrement(index){
-    let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
-    console.log('Quantity array', quantityArray, 'index', index)
-    if(checkIndex == index){
-      quantity = quantity - 1;
-      if(quantity < 0){
-        quantity = 0;
-      }
-      quantityArray.innerHTML = quantity;
-    }else {
-      checkIndex = index;
-      quantity = Number(quantityArray.innerHTML);
-      quantity = quantity - 1;
-      if(quantity < 0){
-        quantity = 0;
-      }
-      quantityArray.innerHTML = quantity;
-    }
-  }
+  // let quantity = 0;
+  // let checkIndex = 0;
+  // function decrement(index){
+  //   let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
+  //   console.log('Quantity array', quantityArray, 'index', index)
+  //   if(checkIndex == index){
+  //     quantity = quantity - 1;
+  //     if(quantity < 0){
+  //       quantity = 0;
+  //     }
+  //     quantityArray.innerHTML = quantity;
+  //   }else {
+  //     checkIndex = index;
+  //     quantity = Number(quantityArray.innerHTML);
+  //     quantity = quantity - 1;
+  //     if(quantity < 0){
+  //       quantity = 0;
+  //     } 
+  //     quantityArray.innerHTML = quantity;
+  //   }
+  // }
 
-  function increment(index){
-    let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
-    if(checkIndex == index){
-      quantity = quantity + 1;
-      quantityArray.innerHTML = quantity;
-    }else {
-      checkIndex = index;
-      quantity = Number(quantityArray.innerHTML);
-      quantity = quantity + 1;
-      quantityArray.innerHTML = quantity;
-    }
-  }
+  // function increment(index){
+  //   let quantityArray = document.querySelectorAll('.add_to_order')[index].childNodes[3];
+  //   if(checkIndex == index){
+  //     quantity = quantity + 1;
+  //     quantityArray.innerHTML = quantity;
+  //   }else {
+  //     checkIndex = index;
+  //     quantity = Number(quantityArray.innerHTML);
+  //     quantity = quantity + 1;
+  //     quantityArray.innerHTML = quantity;
+  //   }
+  // }
 
   return (
     <div>
@@ -163,14 +161,20 @@ function ProductPage(props) {
       <div>
         {productData ? 
           <div>
-            <img src={product.featuredImage.url} className='product_image' alt='product'></img>
-            <h2>Variant pricing and quantity</h2>
-            
+            <div id='productDraftOrder'>
+              <section>
+                <img src={product.featuredImage.url} className='product_image' alt='product'></img>
+                <h2>Variant pricing and quantity</h2>
+              </section>
+              <section>
+                <h3>Current Draft Order</h3>
+              </section>
+            </div>
             <div id='variant_container'>
-            <button onClick={() => createShopifyDraftOrder(lineItems)} id='draftOrderButton'>Create Draft Order</button>
+            <button onClick={() => createShopifyDraftOrder()} id='draftOrderButton'>Create Draft Order</button>
               {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
-                        <h3 className='inside_order_box'>
+                          <h3 className='inside_order_box'>
                             {variant.title} ----- Sku: { variant.sku }
                           </h3>
                           <p className='client_cost'>
@@ -180,12 +184,12 @@ function ProductPage(props) {
                             Quantity
                           </h3>
                           <p className='product_quantity' contentEditable='true'  suppressContentEditableWarning={true}>0</p>
-                          <p>
+                          {/* <p>
                             <button onClick={() => increment(index)} className='quantity'>Add</button>
                             <button onClick={() => decrement(index)} className='quantity'>Remove</button>
-                          </p>
-                <button onClick={() => grabProductDetails(index, variant)}>Add To Draft Order</button>
-                </div>
+                          </p> */}
+                          <button onClick={() => grabProductDetails(index, variant)}>Add To Draft Order</button>
+                        </div>
               })}
               </div>
             <p>{product.description}</p>

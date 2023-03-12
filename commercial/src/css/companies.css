@@ -408,3 +408,7 @@ nav a {
 .quantity {
 	margin: 5px;
 }
+
+#productDraftOrder {
+	display: flex;
+}

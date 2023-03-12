@@ -17,7 +17,6 @@ router.use(express.json());
 router.post('/', async (request, response) => {
     let draftOrderLineItems = request.body;
     console.log('draft order request', draftOrderLineItems);
-    console.log('new draft', draftOrderLineItems.lineItems[0])                    
     
     let query =` 
     mutation draftOrderCreate($input: DraftOrderInput!) {
@@ -38,7 +37,7 @@ router.post('/', async (request, response) => {
         input: {
             note: "notes go here",
             customerId: "gid://shopify/Customer/5973979234340",
-            lineItems: draftOrderLineItems.lineItems
+            lineItems: draftOrderLineItems
         }
     };
 
