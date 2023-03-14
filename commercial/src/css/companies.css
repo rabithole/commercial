@@ -378,7 +378,7 @@ nav a {
 	margin-bottom: 30px;
 	font-size: 20px;
 	border: 1px solid black;
-	width: 60px;
+	width: 150px;
 	text-align: center;
 	background-color: rgba(140, 255, 26, .5);
 	box-shadow: 4px 4px 4px black;
@@ -411,4 +411,33 @@ nav a {
 
 #productDraftOrder {
 	display: flex;
+}
+
+.draftOrderBox {
+	border: 2px solid black;
+	width: 90%;
+	margin-bottom: 20px;
+	padding: 20px;
+	background-color: #7FB38E;
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+}
+
+.currentOrder {
+	margin: 10px;
+	border: 1px solid black;
+	padding: 5px;
+	width: 200px;
+	height: 150px;
+	/* flex-wrap: wrap; */
+}
+
+#currentDraftOrderH2 {
+	position: absolute;
+	top: -20px;
+}
+
+.currentOrder p {
+	margin: 0;
 }

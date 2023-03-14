@@ -8,28 +8,35 @@ function ProductPage(props) {
   const [productCost, setProductCost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lineItems, setLineItems] = useState([]);
+  const [productName, setProductName] = useState([]);
+  const [orderObjectArray, setOrderOjectArray] = useState([]);
   // setLineItems(window.localStorage.getItem('draftOrder'))
-  console.log('line items---', lineItems)
-  
+  // console.log('line items---', lineItems)
+  // console.log('Product response---', product)
+
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
 
   useEffect(() => {
-    setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')))
-    
+      if(window.localStorage.getItem('draftOrder') == null){
+        return
+      }else {
+        setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
+        setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
+      }
   },[])
-
-  if(lineItems){
-    let quantity = document.querySelectorAll('.add_to_order')
-    console.log('quantity---', quantity)
-  }
 
   const product_id = useLocation().state;
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_get_product', {id: product_id})
       .then((response) => {
-        setProduct(response.data.data.product)
+        let product = response.data.data.product;
+        let productName = product.title;
+        console.log('product name---', product.title)
+        setProductName(productName);
+        setProduct(product) // Product information returned from API with product info and variants.
+
         let variantArrayLength = response.data.data.product.variants.edges.length;
         let variants = response.data.data.product.variants.edges;
         let array = [];
@@ -58,7 +65,8 @@ function ProductPage(props) {
       })
   },[product_id]);
 
-  let orderObjectArray = [];
+  // let orderObjectArray = [];
+  console.log('order object array---', orderObjectArray)
 
   function orderObjectHandling(productList){    
     if(orderObjectArray.length == 0){
@@ -89,7 +97,7 @@ function ProductPage(props) {
     productData = true;
   }
 
-  function grabProductDetails(index, variant){
+  function addToDraftOrder(index, variant){
     // console.log('variant----', variant)
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
@@ -101,7 +109,8 @@ function ProductPage(props) {
       sku: variant.sku,
       variantId: variant.variantId,
       quantity: Number(quantity),
-      requiresShipping: true
+      requiresShipping: true,
+      name: productName
     }
 
     orderObjectHandling(graphQlObject);
@@ -109,14 +118,78 @@ function ProductPage(props) {
 
   function createShopifyDraftOrder(){
     let localStorage = JSON.parse(window.localStorage.getItem('draftOrder'));
+    for(let i = 0; i < localStorage.length; i++){
+      delete localStorage[i].name;
+    }
     console.log('Local Storage', localStorage)
 
-    axios.post('http://localhost:5080/create_draft_order', localStorage)
-      .then((response) => {
-        console.log('Response', response.config.data)
-        console.log('response', response)
-      })
+    // axios.post('http://localhost:5080/create_draft_order', localStorage)
+    //   .then((response) => {
+    //     console.log('Response', response.config.data)
+    //     console.log('response', response)
+    //   })
   }
+
+  return (
+    <div>
+      <h1>{product.title}</h1>
+      <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
+      <h3>Cost Plus Pricing: {cost_plus}% above our cost</h3>
+      <div>
+        {productData ? 
+          <div>
+            <div id='productDraftOrder'>
+              <section>
+                <img src={product.featuredImage.url} className='product_image' alt='product'></img>
+                <h2>Variant pricing and quantity</h2>
+              </section>
+              <section className='draftOrderBox'>
+                <h2 id='currentDraftOrderH2'>Current Draft Order</h2>
+                {lineItems.map((item, index) => {
+                  return  <div className='currentOrder' key={index}>
+                            <p>Name: {item.name}</p>
+                            <p>Title: {item.title}</p>
+                            <p>Cost Per Unit: {item.originalUnitPrice}</p>
+                            <p>Sku: {item.sku}</p>
+                            <p>Quantity: {item.quantity}</p>
+                          </div>
+                })}
+              </section>
+            </div>
+            <div id='variant_container'>
+            <button onClick={() => createShopifyDraftOrder()} id='draftOrderButton'>Create Draft Order</button>
+              {productCost.map((variant, index, e) => {
+                return  <div key={index} className='add_to_order' >
+                          <h3 className='inside_order_box'>
+                            {variant.title} ----- Sku: { variant.sku }
+                          </h3>
+                          <p className='client_cost'>
+                            Cost Per Unit: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
+                          </p>
+                          <h3>
+                            Enter Quantity
+                          </h3>
+                          <p className='product_quantity' contentEditable='true'  suppressContentEditableWarning={true}></p>
+                          {/* <p>
+                            <button onClick={() => increment(index)} className='quantity'>Add</button>
+                            <button onClick={() => decrement(index)} className='quantity'>Remove</button>
+                          </p> */}
+                          <button onClick={() => addToDraftOrder(index, variant)}>Add To Draft Order</button>
+                        </div>
+              })}
+              </div>
+            <p>{product.description}</p>
+          </div>
+        : <h2>...loading</h2>}
+      </div>
+      {}
+    </div>
+  );
+}
+
+export default ProductPage;
+
+// Increment and decrement button logic. May or may not use
 
   // let quantity = 0;
   // let checkIndex = 0;
@@ -152,55 +225,3 @@ function ProductPage(props) {
   //     quantityArray.innerHTML = quantity;
   //   }
   // }
-
-  return (
-    <div>
-      <h1>{product.title}</h1>
-      <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
-      <h3>Cost Plus Pricing: {cost_plus}% above our cost</h3>
-      <div>
-        {productData ? 
-          <div>
-            <div id='productDraftOrder'>
-              <section>
-                <img src={product.featuredImage.url} className='product_image' alt='product'></img>
-                <h2>Variant pricing and quantity</h2>
-              </section>
-              <section>
-                <h3>Current Draft Order</h3>
-              </section>
-            </div>
-            <div id='variant_container'>
-            <button onClick={() => createShopifyDraftOrder()} id='draftOrderButton'>Create Draft Order</button>
-              {productCost.map((variant, index, e) => {
-                return  <div key={index} className='add_to_order' >
-                          <h3 className='inside_order_box'>
-                            {variant.title} ----- Sku: { variant.sku }
-                          </h3>
-                          <p className='client_cost'>
-                            Cost Per Unit: { (+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2) }
-                          </p>
-                          <h3>
-                            Quantity
-                          </h3>
-                          <p className='product_quantity' contentEditable='true'  suppressContentEditableWarning={true}>0</p>
-                          {/* <p>
-                            <button onClick={() => increment(index)} className='quantity'>Add</button>
-                            <button onClick={() => decrement(index)} className='quantity'>Remove</button>
-                          </p> */}
-                          <button onClick={() => grabProductDetails(index, variant)}>Add To Draft Order</button>
-                        </div>
-              })}
-              </div>
-            <p>{product.description}</p>
-          </div>
-        : <h2>...loading</h2>}
-      </div>
-      {}
-    </div>
-  );
-}
-
-export default ProductPage;
-
-// Draft order number D205
