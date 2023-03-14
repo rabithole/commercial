@@ -10,9 +10,6 @@ function ProductPage(props) {
   const [lineItems, setLineItems] = useState([]);
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
-  // setLineItems(window.localStorage.getItem('draftOrder'))
-  // console.log('line items---', lineItems)
-  // console.log('Product response---', product)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -73,6 +70,8 @@ function ProductPage(props) {
       orderObjectArray.push(productList)
       console.log('array---', orderObjectArray)
       window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
+      setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
+      setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
     }else{
       for(let i = 0; i < orderObjectArray.length; i++){
         console.log('order object array looping', orderObjectArray[i].sku)
@@ -80,11 +79,15 @@ function ProductPage(props) {
           orderObjectArray[i] = productList
           console.log('array end---', orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
+          setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
+          setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
           return
         }else if(i == orderObjectArray.length-1){
           orderObjectArray.push(productList)
           console.log('array---', orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
+          setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
+          setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
         }
       }
     }
@@ -123,11 +126,11 @@ function ProductPage(props) {
     }
     console.log('Local Storage', localStorage)
 
-    // axios.post('http://localhost:5080/create_draft_order', localStorage)
-    //   .then((response) => {
-    //     console.log('Response', response.config.data)
-    //     console.log('response', response)
-    //   })
+    axios.post('http://localhost:5080/create_draft_order', localStorage)
+      .then((response) => {
+        console.log('Response', response.config.data)
+        console.log('response', response)
+      })
   }
 
   return (
