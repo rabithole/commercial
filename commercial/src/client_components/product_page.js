@@ -119,6 +119,12 @@ function ProductPage(props) {
     orderObjectHandling(graphQlObject);
   }
 
+  function clearDraftOrder(){
+    window.localStorage.clear();
+    setLineItems([]);
+    setOrderOjectArray([]);
+  }
+
   function createShopifyDraftOrder(){
     let localStorage = JSON.parse(window.localStorage.getItem('draftOrder'));
     for(let i = 0; i < localStorage.length; i++){
@@ -157,6 +163,7 @@ function ProductPage(props) {
                             <p>Quantity: {item.quantity}</p>
                           </div>
                 })}
+                <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>
               </section>
             </div>
             <div id='variant_container'>
