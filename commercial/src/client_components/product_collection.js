@@ -10,7 +10,7 @@ function ProductCollection() {
 
   const { company_shopify_id } = useContext(CompanyContext);
   const collection_id = useLocation().state;
-  console.log("collection id----", collection_id)
+  console.log("collection id----", collection_id);
 
   // let endCursor = null;
   // let hasNextPage = false;

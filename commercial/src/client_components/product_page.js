@@ -10,6 +10,7 @@ function ProductPage(props) {
   const [lineItems, setLineItems] = useState([]);
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
+  console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -61,9 +62,6 @@ function ProductPage(props) {
           })
       })
   },[product_id]);
-
-  // let orderObjectArray = [];
-  console.log('order object array---', orderObjectArray)
 
   function orderObjectHandling(productList){    
     if(orderObjectArray.length == 0){
