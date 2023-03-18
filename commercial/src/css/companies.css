@@ -436,8 +436,13 @@ nav a {
 	border: 2px solid black;
 	padding: 5px;
 	width: 200px;
-	height: 150px;
+	height: 180px;
 	background-color: lightgray;
+}
+
+.currentOrder h4 {
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 #currentDraftOrderH2 {
