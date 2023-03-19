@@ -10,8 +10,6 @@ const currencyFormat = new Intl.NumberFormat('en-US', {
 function Orders() {
   const [lineItems, setLineItems] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
-  const [total, setTotal] = useState(0);
-  // console.log('order object array---', orderObjectArray)
 
   useEffect(() => {
     if(window.localStorage.getItem('draftOrder') == null){
@@ -30,20 +28,10 @@ function Orders() {
       console.log('draft order total undefinded')
     }else{
       let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,0) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
-      console.log('draft order total from data attribute---', ordertotal)
       orderTotalArray.push(ordertotal);
-      console.log('draft order total array', orderTotalArray)
       for(const value of orderTotalArray){
         sum += value;
       }
-      console.log('array sum---', sum)
-    }
-
-    if(total == 0){
-      console.log('total is zero')
-    }
-    if(total > 0){
-      setTotal(sum);
     }
   }
 
@@ -55,7 +43,7 @@ function Orders() {
 
   return (
       <div>
-        <h1>Current Draft Order Total: {total}</h1>
+        <h1>Current Draft Order Total: {currencyFormat.format(sum)}</h1>
         <div className='draftOrderBox'>
           {orderObjectArray.map((variant, index) => {
             return  <div className='currentOrder' key={index}>
