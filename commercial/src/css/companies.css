@@ -436,7 +436,7 @@ nav a {
 	border: 2px solid black;
 	padding: 5px;
 	width: 200px;
-	height: 180px;
+	/* height: 180px; */
 	background-color: lightgray;
 }
 

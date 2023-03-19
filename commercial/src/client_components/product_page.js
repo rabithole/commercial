@@ -2,6 +2,12 @@ import React, { useEffect, useState, useContext, useRef, useCallback } from 'rea
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CompanyContext } from '../context/company_shopify_id.js';
+
+const currencyFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
  
 function ProductPage(props) {
   const [product, setProduct] = useState([]);
@@ -10,6 +16,7 @@ function ProductPage(props) {
   const [lineItems, setLineItems] = useState([]);
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
+  const [total, setTotal] = useState(0);
   console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
@@ -137,6 +144,25 @@ function ProductPage(props) {
       })
   }
 
+  let orderTotalArray = [];
+  let sum = 0;
+  
+  useEffect(() => {
+  let draftOrderTotal = document.querySelectorAll('.draftOrderTotal');
+  for(let i = 0; i < draftOrderTotal.length; i++){
+    if(draftOrderTotal[i] == undefined){
+      console.log('draft order total undefinded')
+    }else{
+      let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,0) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
+      orderTotalArray.push(ordertotal);
+      for(const value of orderTotalArray){
+        sum += value;
+      }
+    }
+  }
+  setTotal(sum);
+})
+
   return (
     <div>
       <h1>{product.title}</h1>
@@ -151,14 +177,16 @@ function ProductPage(props) {
                 <h2>Variant pricing and quantity</h2>
               </section>
               <section className='draftOrderBox'>
-                <h2 id='currentDraftOrderH2'>Current Draft Order</h2>
+                <h2 id='currentDraftOrderH2'>Current Draft Order Total: {currencyFormat.format(total)}</h2>
                 {lineItems.map((item, index) => {
                   return  <div className='currentOrder' key={index}>
                             <p>Name: {item.name}</p>
                             <p>Title: {item.title}</p>
-                            <p>Cost Per Unit: {item.originalUnitPrice}</p>
+                            <h4>Cost Per Unit: ${currencyFormat.format(item.originalUnitPrice)}</h4>
                             <p>Sku: {item.sku}</p>
                             <p>Quantity: {item.quantity}</p>
+                            <h4>Total</h4>
+                            <h4 className='draftOrderTotal'>{currencyFormat.format(item.quantity * item.originalUnitPrice)}</h4>
                           </div>
                 })}
                 <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>
