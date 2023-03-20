@@ -423,6 +423,7 @@ nav a {
 .draftOrderBox {
 	border: 2px solid black;
 	width: 90%;
+	height: auto;
 	margin-bottom: 20px;
 	padding: 20px;
 	padding-bottom: 50px;
@@ -434,10 +435,11 @@ nav a {
 
 .currentOrder {
 	margin: 10px;
+	margin-top: 40px;
 	border: 2px solid black;
 	padding: 5px;
 	width: 200px;
-	height: 240px;
+	height: 300px;
 	background-color: lightgray;
 }
 

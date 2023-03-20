@@ -17,7 +17,7 @@ function ProductPage(props) {
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
   const [total, setTotal] = useState(0);
-  // console.log('Line Items---', lineItems)
+  console.log('Total---', total)
   // console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
@@ -143,19 +143,23 @@ function ProductPage(props) {
         console.log('Response', response.config.data)
         console.log('response', response)
       })
+    clearDraftOrder();
   }
 
   let orderTotalArray = [];
   let sum = 0;
   
+  // Totaling current draft order
   useEffect(() => {
   let draftOrderTotal = document.querySelectorAll('.draftOrderTotal');
   for(let i = 0; i < draftOrderTotal.length; i++){
     if(draftOrderTotal[i] == undefined){
       console.log('draft order total undefinded')
     }else{
-      let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,0) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
+      // let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,1) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
+      let ordertotal = Number(draftOrderTotal[i].innerHTML.slice(1));
       orderTotalArray.push(ordertotal);
+      console.log('order total array inside function---', orderTotalArray)
       for(const value of orderTotalArray){
         sum += value;
       }
@@ -199,19 +203,19 @@ function removeLineItem(index){
                   return  <div className='currentOrder' key={index}>
                             <p>Name: {item.name}</p>
                             <p>Title: {item.title}</p>
-                            <h4>Cost Per Unit: ${currencyFormat.format(item.originalUnitPrice)}</h4>
+                            <h4>Cost Per Unit: {currencyFormat.format(item.originalUnitPrice)}</h4>
                             <p>Sku: {item.sku}</p>
                             <p>Quantity: {item.quantity}</p>
                             <h4>Total</h4>
-                            <h4 className='draftOrderTotal'>{currencyFormat.format(item.quantity * item.originalUnitPrice)}</h4>
+                            <h4 className='draftOrderTotal'>${item.quantity * item.originalUnitPrice}</h4>
                             <button id='removeItemButton' onClick={() => removeLineItem(index)}>Remove</button>
+                            <button onClick={() => createShopifyDraftOrder()} id='draftOrderButton'>Create Draft Order</button>
                           </div>
                 })}
                 <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>
               </section>
             </div>
             <div id='variant_container'>
-            <button onClick={() => createShopifyDraftOrder()} id='draftOrderButton'>Create Draft Order</button>
               {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
                           <h3 className='inside_order_box'>

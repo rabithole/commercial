@@ -24,13 +24,16 @@ function Orders() {
 
   let orderTotalArray = [];
   let sum = 0;
+
+  // Totals current draft order
   useEffect(() => {
   let draftOrderTotal = document.querySelectorAll('.draftOrderTotal');
   for(let i = 0; i < draftOrderTotal.length; i++){
     if(draftOrderTotal[i] == undefined){
       console.log('draft order total undefinded')
     }else{
-      let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,0) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
+      // let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,0) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
+      let ordertotal = Number(draftOrderTotal[i].innerHTML.slice(1));
       // console.log('draft order total from data attribute---', ordertotal)
       orderTotalArray.push(ordertotal);
       // console.log('draft order total array', orderTotalArray)
@@ -77,6 +80,7 @@ function Orders() {
           console.log('Response', response.config.data)
           console.log('response', response)
         })
+      clearDraftOrder();
     }
 
   return (
@@ -91,7 +95,7 @@ function Orders() {
                       <h4>Cost Per Unit: ${currencyFormat.format(variant.originalUnitPrice)}</h4>
                       <p>Quantity: {variant.quantity}</p>
                       <h4>Total</h4>
-                      <h4 className='draftOrderTotal'>{currencyFormat.format(variant.quantity * variant.originalUnitPrice)}</h4>
+                      <h4 className='draftOrderTotal'>${variant.quantity * variant.originalUnitPrice}</h4>
                       <button id='removeItemButton' onClick={() => removeLineItem(index)}>Remove</button>
                     </div>
           })}
