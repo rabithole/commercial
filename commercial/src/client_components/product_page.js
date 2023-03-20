@@ -17,6 +17,7 @@ function ProductPage(props) {
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
   const [total, setTotal] = useState(0);
+  // console.log('Line Items---', lineItems)
   console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
@@ -38,7 +39,7 @@ function ProductPage(props) {
       .then((response) => {
         let product = response.data.data.product;
         let productName = product.title;
-        console.log('product name---', product.title)
+        // console.log('product name---', product.title)
         setProductName(productName);
         setProduct(product) // Product information returned from API with product info and variants.
 
@@ -163,6 +164,22 @@ function ProductPage(props) {
   setTotal(sum);
 })
 
+function removeLineItem(index){
+  console.log('remove item', index)
+  console.log('Order object array---', orderObjectArray)
+
+    for(let i = 0; i < orderObjectArray.length; i++){
+      if(index == i){
+        orderObjectArray.splice(i,1)
+        // setOrderOjectArray(orderObjectArray)
+        window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
+        setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
+        setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
+        console.log('deleted---', orderObjectArray)
+      }
+    }
+  }
+
   return (
     <div>
       <h1>{product.title}</h1>
@@ -187,6 +204,7 @@ function ProductPage(props) {
                             <p>Quantity: {item.quantity}</p>
                             <h4>Total</h4>
                             <h4 className='draftOrderTotal'>{currencyFormat.format(item.quantity * item.originalUnitPrice)}</h4>
+                            <button id='removeItemButton' onClick={() => removeLineItem(index)}>Remove</button>
                           </div>
                 })}
                 <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>

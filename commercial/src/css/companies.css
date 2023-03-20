@@ -425,6 +425,7 @@ nav a {
 	width: 90%;
 	margin-bottom: 20px;
 	padding: 20px;
+	padding-bottom: 50px;
 	background-color: #7FB38E;
 	display: flex;
 	flex-wrap: wrap;
@@ -436,7 +437,7 @@ nav a {
 	border: 2px solid black;
 	padding: 5px;
 	width: 200px;
-	/* height: 180px; */
+	height: 240px;
 	background-color: lightgray;
 }
 
@@ -452,4 +453,9 @@ nav a {
 
 .currentOrder p {
 	margin: 0;
+}
+
+#removeItemButton {
+	height: 40px;
+	margin-top: 10px;
 }
