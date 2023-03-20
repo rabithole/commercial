@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { } from 'react-router-dom';
+import axios from 'axios';
 
 const currencyFormat = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -64,6 +65,20 @@ function Orders() {
       }
     }
 
+    function createShopifyDraftOrder(){
+      let localStorage = JSON.parse(window.localStorage.getItem('draftOrder'));
+      for(let i = 0; i < localStorage.length; i++){
+        delete localStorage[i].name;
+      }
+      console.log('Local Storage', localStorage)
+  
+      axios.post('http://localhost:5080/create_draft_order', localStorage)
+        .then((response) => {
+          console.log('Response', response.config.data)
+          console.log('response', response)
+        })
+    }
+
   return (
       <div>
         <h1>Current Draft Order Total: {currencyFormat.format(total)}</h1>
@@ -81,6 +96,7 @@ function Orders() {
                     </div>
           })}
           <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>
+          <button onClick={() => createShopifyDraftOrder()} id='draftOrderButton'>Create Draft Order</button>
         </div>
       </div>
   );

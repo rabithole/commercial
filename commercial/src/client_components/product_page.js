@@ -18,7 +18,7 @@ function ProductPage(props) {
   const [orderObjectArray, setOrderOjectArray] = useState([]);
   const [total, setTotal] = useState(0);
   // console.log('Line Items---', lineItems)
-  console.log('order object array---', orderObjectArray)
+  // console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
