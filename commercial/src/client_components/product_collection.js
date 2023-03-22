@@ -35,21 +35,21 @@ function ProductCollection() {
 
   function nextPage(next) {
     console.log(next)
-    // axios
-    // .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id, after: endCursor})
-    // .then((response) => {
-    //   setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
-    //   setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
+    axios
+    .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id, after: endCursor})
+    .then((response) => {
+      setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
+      setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
 
-    //   // console.log('Next Page Function', response.data.data.collection.products.pageInfo)
-    //   // console.log('end cursor in next page function', endCursor)
-    //   // console.log('has next page', hasNextPage)
+      // console.log('Next Page Function', response.data.data.collection.products.pageInfo)
+      // console.log('end cursor in next page function', endCursor)
+      // console.log('has next page', hasNextPage)
 
-    //   setProducts(response.data.data.collection.products.nodes);
-    // })
-    // .catch((error) => {
-    //   console.log('Error', error)
-    // })
+      setProducts(response.data.data.collection.products.nodes);
+    })
+    .catch((error) => {
+      console.log('Error', error)
+    })
   }
 
   let productData = false;
@@ -63,7 +63,7 @@ function ProductCollection() {
     <div>
       <h1>{collection_id.title}</h1>
       <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
-      <button onClick={() => nextPage('Yes, I want the next page')}>Next Page</button>
+      <button onClick={() => nextPage('Yes, I want the next page')} id='nextPageButton'>Next Page</button>
       {productData ? <div className='collection_products'>
         {product.map((eachProduct) => {
           return <div className='collection_product' key={eachProduct.id}>

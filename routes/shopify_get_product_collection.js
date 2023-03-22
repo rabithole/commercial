@@ -15,47 +15,49 @@ router.use(express.json());
 router.post('/', async (request, response) => {
     let collectionId = JSON.stringify(request.body.id);
     let endCursor = request.body.after;
+    // let endCursor = "eyJsYXN0X2lkIjo2ODg2MDc5ODU2Njc2LCJsYXN0X3ZhbHVlIjoiMSJ9";
     console.log('end endCursor from front end response------', endCursor)
 
-    let getProductCollection =`{
-           collection(id: ${collectionId}) {
-                        id 
+    let getProductCollection =`
+        query ($cursor: String){
+            collection(id: ${collectionId}) {
+                id 
+                title
+                products(first: 30, after: $cursor){
+                    edges {
+                        cursor
+                    }
+                    pageInfo{
+                        hasNextPage
+                        hasPreviousPage
+                        endCursor
+                    }
+                    nodes{
                         title
-                        products(first: 30){
-                            edges {
-                                cursor
-                            }
-                            pageInfo{
-                                hasNextPage
-                                hasPreviousPage
-                                endCursor
-                            }
-                            nodes{
-                                title
-                                id
-                                images(first: 1){
-                                    edges{
-                                        node{
-                                            id
-                                            url
-                                        }
-                                    }
+                        id
+                        images(first: 1){
+                            edges{
+                                node{
+                                    id
+                                    url
                                 }
-                                variants(first: 10){
-                                    nodes{
-                                        id
-                                        title
-                                        sku
-                                        selectedOptions {
-                                            name
-                                            value
-                                        }
-                                    }
+                            }
+                        }
+                        variants(first: 10){
+                            nodes{
+                                id
+                                title
+                                sku
+                                selectedOptions {
+                                    name
+                                    value
                                 }
                             }
                         }
                     }
-            }`
+                }
+            }
+        }`
 
     // let getProductCollection = `
     //         collection(id: ${collectionId}) {
@@ -109,7 +111,8 @@ router.post('/', async (request, response) => {
 	});
 
     const res = await ShopfyClient.post(API_PATH, { 
-        query: getProductCollection 
+        query: getProductCollection,
+        variables: variables
     });
     response.status(200).json(res.data);
   });
