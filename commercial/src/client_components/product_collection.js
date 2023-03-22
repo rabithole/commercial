@@ -6,14 +6,12 @@ import { CompanyContext } from '../context/company_shopify_id.js';
 function ProductCollection() {
   const [product, setProducts] = useState([]);
   const [endCursor, setEndCursor] = useState(null);
-  const [hasNextPage, setHasNextPage] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [previousCursor, setPreviousCursor] = useState(null);
 
   const { company_shopify_id } = useContext(CompanyContext);
   const collection_id = useLocation().state;
-  console.log("collection id----", collection_id);
 
-  // let endCursor = null;
-  // let hasNextPage = false;
   console.log('end Cursor', endCursor)
   console.log('has next page---', hasNextPage)
 
@@ -23,8 +21,6 @@ function ProductCollection() {
       .then((response) => {
         setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
         setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
-
-        // console.log('Has Next Page', response.data.data.collection.products.pageInfo)
 
         setProducts(response.data.data.collection.products.nodes);
       })
@@ -41,15 +37,20 @@ function ProductCollection() {
       setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
       setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
 
-      // console.log('Next Page Function', response.data.data.collection.products.pageInfo)
-      // console.log('end cursor in next page function', endCursor)
-      // console.log('has next page', hasNextPage)
-
-      setProducts(response.data.data.collection.products.nodes);
+      if(hasNextPage == false){
+        alert("No more products in this collection")
+      }else{
+        setProducts(response.data.data.collection.products.nodes);
+      }
     })
     .catch((error) => {
       console.log('Error', error)
+      alert("An error has occured. Please try again!")
     })
+  }
+
+  function previousPage(){
+    console.log('previous page')
   }
 
   let productData = false;
@@ -63,6 +64,7 @@ function ProductCollection() {
     <div>
       <h1>{collection_id.title}</h1>
       <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
+      <button onClick={() => previousPage('Previous page please')} id='nextPageButton'>Previous Page</button>
       <button onClick={() => nextPage('Yes, I want the next page')} id='nextPageButton'>Next Page</button>
       {productData ? <div className='collection_products'>
         {product.map((eachProduct) => {
