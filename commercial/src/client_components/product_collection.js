@@ -32,13 +32,18 @@ function ProductCollection() {
   },[collection_id.id]);
 
   function nextPage(next) {
+    // let popup = document.getElementById('popUp');
+    // console.log('pop up', popup.classList)
+    // popup.classList.toggle("show")
+    console.log('request again')
+
     setTimeout(() => {
       axios
         .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id, after: endCursor})
         .then((response) => {
           setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
           setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
-
+          
           if(hasNextPage == false){
             alert("No more products in this collection")
           }else{
@@ -49,7 +54,7 @@ function ProductCollection() {
             console.log('Error again', error)
             alert("An error has occured. Please try again!")
           })
-        },2500)
+        },4000)
   }
 
   function previousPage(){
@@ -81,7 +86,7 @@ function ProductCollection() {
         })}
       </div>: <h2>...loading</h2>}
 
-      <div className='popUp'>
+      <div className='popUp' id='popUp'>
         <h1>Gathering the next page of products...</h1>
       </div>
     </div>
