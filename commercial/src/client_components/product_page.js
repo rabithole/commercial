@@ -166,7 +166,7 @@ function ProductPage(props) {
     }
   }
   setTotal(sum);
-})
+},[])
 
 function removeLineItem(index){
   console.log('remove item', index)

@@ -19,10 +19,12 @@ function ProductCollection() {
     axios
       .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id})
       .then((response) => {
-        setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
-        setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
-
-        setProducts(response.data.data.collection.products.nodes);
+        let endCursor = response.data.data.collection.products.pageInfo.endCursor;
+        let hasNextPage = response.data.data.collection.products.pageInfo.hasNextPage;
+        let products = response.data.data.collection.products.nodes;
+        setEndCursor(endCursor);
+        setHasNextPage(hasNextPage);
+        setProducts(products);
       })
       .catch((error) => {
         console.log('Error', error)
@@ -30,23 +32,24 @@ function ProductCollection() {
   },[collection_id.id]);
 
   function nextPage(next) {
-    console.log(next)
-    axios
-    .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id, after: endCursor})
-    .then((response) => {
-      setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
-      setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
+    setTimeout(() => {
+      axios
+        .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id, after: endCursor})
+        .then((response) => {
+          setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
+          setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
 
-      if(hasNextPage == false){
-        alert("No more products in this collection")
-      }else{
-        setProducts(response.data.data.collection.products.nodes);
-      }
-    })
-    .catch((error) => {
-      console.log('Error', error)
-      alert("An error has occured. Please try again!")
-    })
+          if(hasNextPage == false){
+            alert("No more products in this collection")
+          }else{
+            setProducts(response.data.data.collection.products.nodes);
+          }
+        })
+        .catch((error) => {
+            console.log('Error again', error)
+            alert("An error has occured. Please try again!")
+          })
+        },2500)
   }
 
   function previousPage(){
@@ -77,6 +80,10 @@ function ProductCollection() {
                   </div>
         })}
       </div>: <h2>...loading</h2>}
+
+      <div className='popUp'>
+        <h1>Gathering the next page of products...</h1>
+      </div>
     </div>
   );
 }

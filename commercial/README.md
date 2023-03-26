@@ -2,6 +2,8 @@
 - Add restrictions to making duplicate companies etc
 - Set unit cost query process to a regular schedule when deployed.
 - Update company info without having to make a change in every form field. 
+- TypeError in product collection when paginating
+- Add timestamp to update unit costs process
 
 - Login and protected route emplementation
 --- This will set the company Shopify ID.

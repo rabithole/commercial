@@ -400,6 +400,16 @@ nav a {
 	flex-direction: column;
 }
 
+.popUp {
+	visibility: hidden;
+	position: absolute;
+	top: 40%;
+	left: 20%;
+	background-color: grey;
+	padding: 50px;
+	border: solid 2px black;
+}
+
 
 /* Client landing page */
 .client_vitals {
