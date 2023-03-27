@@ -71,7 +71,7 @@ function ProductCollection() {
       axios
         .post('http://localhost:5080/shopify_collection_backward_pagination', {id: collection_id.id, after: endCursor, before: startCursor})
         .then((response) => {
-          console.log('start cursor', response.data.data.collection.products.pageInfo)
+          console.log('start cursor', response.data.data.collection.products.pageInfo.startCursor)
           setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
           setStartCursor(response.data.data.collection.products.pageInfo.startCursor);
           setHasPreviousPage(response.data.data.collection.products.pageInfo.hasPreviousPage);
