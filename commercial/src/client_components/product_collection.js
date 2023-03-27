@@ -7,58 +7,87 @@ function ProductCollection() {
   const [product, setProducts] = useState([]);
   const [endCursor, setEndCursor] = useState(null);
   const [hasNextPage, setHasNextPage] = useState(true);
-  const [previousCursor, setPreviousCursor] = useState(null);
+  const [startCursor, setStartCursor] = useState(null);
+  const [hasPreviousPage, setHasPreviousPage] = useState(null);
 
   const { company_shopify_id } = useContext(CompanyContext);
   const collection_id = useLocation().state;
 
   console.log('end Cursor', endCursor)
   console.log('has next page---', hasNextPage)
+  console.log('has previous page', hasPreviousPage)
 
   useEffect(() => {
     axios
-      .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id})
+      .post('http://localhost:5080/shopify_collection_forward_pagination', {id: collection_id.id})
       .then((response) => {
+        console.log('pagination---', {after: response.data.data.collection.products.pageInfo.endCursor})
         let endCursor = response.data.data.collection.products.pageInfo.endCursor;
+        let startCursor = response.data.data.collection.products.pageInfo.startCursor;
+        let hasPreviousPage = response.data.data.collection.products.pageInfo.hasPreviousPage;
+        console.log('Has previous page', hasPreviousPage)
         let hasNextPage = response.data.data.collection.products.pageInfo.hasNextPage;
         let products = response.data.data.collection.products.nodes;
         setEndCursor(endCursor);
+        setStartCursor(startCursor);
         setHasNextPage(hasNextPage);
         setProducts(products);
+        setHasPreviousPage(hasPreviousPage);
       })
       .catch((error) => {
-        console.log('Error', error)
+        console.log('Error', error);
+        alert("An error has occured. Please refresh the page!");
       })
   },[collection_id.id]);
 
   function nextPage(next) {
-    // let popup = document.getElementById('popUp');
-    // console.log('pop up', popup.classList)
-    // popup.classList.toggle("show")
-    console.log('request again')
-
     setTimeout(() => {
       axios
-        .post('http://localhost:5080/shopify_get_product_collection', {id: collection_id.id, after: endCursor})
+        .post('http://localhost:5080/shopify_collection_forward_pagination', {id: collection_id.id, after: endCursor, before: startCursor})
         .then((response) => {
+          console.log('start cursor', response.data.data.collection.products.pageInfo.startCursor)
+          setStartCursor(response.data.data.collection.products.pageInfo.startCursor)
           setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
           setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
+          setHasPreviousPage(response.data.data.collection.products.pageInfo.hasPreviousPage);
           
           if(hasNextPage == false){
-            alert("No more products in this collection")
+            alert("No more products in this collection");
           }else{
             setProducts(response.data.data.collection.products.nodes);
           }
         })
         .catch((error) => {
-            console.log('Error again', error)
-            alert("An error has occured. Please try again!")
+            console.log('Error again', error);
+            alert("An error has occured. Please try again!");
           })
-        },4000)
+        },1000)
   }
 
   function previousPage(){
     console.log('previous page')
+
+    setTimeout(() => {
+      axios
+        .post('http://localhost:5080/shopify_collection_backward_pagination', {id: collection_id.id, after: endCursor, before: startCursor})
+        .then((response) => {
+          console.log('start cursor', response.data.data.collection.products.pageInfo)
+          setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
+          setStartCursor(response.data.data.collection.products.pageInfo.startCursor);
+          setHasPreviousPage(response.data.data.collection.products.pageInfo.hasPreviousPage);
+          setEndCursor(response.data.data.collection.products.pageInfo.endCursor)
+          
+          if(hasPreviousPage == false){
+            alert("You are back at the beginning of the collection");
+          }else{
+            setProducts(response.data.data.collection.products.nodes);
+          }
+        })
+        .catch((error) => {
+            console.log('Error again', error);
+            alert("An error has occured. Please try again!");
+          })
+        },1000)
   }
 
   let productData = false;

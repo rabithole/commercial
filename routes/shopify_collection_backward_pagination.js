@@ -14,22 +14,22 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     let collectionId = JSON.stringify(request.body.id);
-    let endCursor = request.body.after;
-    // let endCursor = "eyJsYXN0X2lkIjo2ODg2MDc5ODU2Njc2LCJsYXN0X3ZhbHVlIjoiMSJ9";
-    console.log('end endCursor from front end response------', endCursor)
+    let startCursor = request.body.before;
+    console.log('Before---', request.body)
 
-    let getProductCollection =`
+    let backwardPagination =`
         query ($cursor: String){
             collection(id: ${collectionId}) {
                 id 
                 title
-                products(first: 30, after: $cursor){
+                products(last: 30, before: $cursor){
                     edges {
                         cursor
                     }
                     pageInfo{
                         hasNextPage
                         hasPreviousPage
+                        startCursor
                         endCursor
                     }
                     nodes{
@@ -59,49 +59,8 @@ router.post('/', async (request, response) => {
             }
         }`
 
-    // let getProductCollection = `
-    //         collection(id: ${collectionId}) {
-    //             id
-    //             title
-    //                 products(first: $numProducts, after: $cursor){
-    //                     edges {
-    //                         cursor
-    //                     }
-    //                     pageInfo{
-    //                         hasNextPage
-    //                         hasPreviousPage
-    //                         endCursor
-    //                     }
-    //                     nodes{
-    //                         title
-    //                         id
-    //                         images(first: 1){
-    //                             edges{
-    //                                 node{
-    //                                     id
-    //                                     url
-    //                                 }
-    //                             }
-    //                         }
-    //                         variants(first: 10){
-    //                             nodes{
-    //                                 id
-    //                                 title
-    //                                 sku
-    //                                 selectedOptions {
-    //                                     name
-    //                                     value
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //         }
-    // `
-
     let variables = {
-        "numProducts": 30,
-        "cursor": endCursor
+        "cursor": startCursor
     }
     console.log('Variables---', variables.cursor)
 
@@ -111,7 +70,7 @@ router.post('/', async (request, response) => {
 	});
 
     const res = await ShopfyClient.post(API_PATH, { 
-        query: getProductCollection,
+        query: backwardPagination,
         variables: variables
     });
     response.status(200).json(res.data);
