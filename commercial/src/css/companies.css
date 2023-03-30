@@ -474,8 +474,9 @@ nav a {
 }
 
 #currentDraftOrderH2 {
-	position: absolute;
-	top: -20px;
+	/* position: relative;
+	left: 20%; */
+	margin-left: 30%;
 }
 
 .currentOrder p {

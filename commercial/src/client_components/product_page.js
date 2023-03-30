@@ -166,7 +166,7 @@ function ProductPage(props) {
     }
   }
   setTotal(sum);
-},[])
+})
 
 function removeLineItem(index){
   console.log('remove item', index)
@@ -189,6 +189,7 @@ function removeLineItem(index){
       <h1>{product.title}</h1>
       <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
       <h3>Cost Plus Pricing: {cost_plus}% above our cost</h3>
+      <h2 id='currentDraftOrderH2'>Current Draft Order Total: {currencyFormat.format(total)}</h2>
       <div>
         {productData ? 
           <div>
@@ -198,7 +199,6 @@ function removeLineItem(index){
                 <h2>Variant pricing and quantity</h2>
               </section>
               <section className='draftOrderBox'>
-                <h2 id='currentDraftOrderH2'>Current Draft Order Total: {currencyFormat.format(total)}</h2>
                 {lineItems.map((item, index) => {
                   return  <div className='currentOrder' key={index}>
                             <p>Name: {item.name}</p>
