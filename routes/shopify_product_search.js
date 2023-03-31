@@ -13,16 +13,21 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
+    console.log('request', request.body)
     let wordSearch = JSON.stringify(request.body);
+    console.log('word search variable', wordSearch)
 
     let company = request.body;
     let searchShopifyProducts =`
-        query($products: String){
-            products(query: $products, first: 20){
+        query productSearch($products: String){
+            products(query: $products, first: 10){
                 edges{
                     node{
                         id
                         title
+                        featuredImage{
+                            url
+                        }
                     }
                 }
             }
@@ -35,7 +40,7 @@ router.post('/', async (request, response) => {
 	});
 
     let variables = {
-        "product": wordSearch
+        "products": wordSearch
     }
 
     const res = await ShopfyClient.post(API_PATH, { query: searchShopifyProducts });

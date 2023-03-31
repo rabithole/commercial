@@ -35,9 +35,9 @@ function ProductCollections() {
   function getSearchWord(event){
     let inputValue = event.target.value;
     console.log("input value---", inputValue)
-
+    
     axios 
-      .post('http://localhost:5080/shopify_product_search')
+      .post('http://localhost:5080/shopify_product_search', inputValue)
       .then((response) => {
         console.log("console log response", response.data.data.products.edges)
         let productSearch = response.data.data.products.edges;
@@ -50,6 +50,14 @@ function ProductCollections() {
       .catch((error) => {
         console.log('Error', error);
       })
+      event.preventDefault();
+  }
+
+  let productData = false;
+  if(searchWord.length === 0){
+    productData = false;
+  }else{
+    productData = true;
   }
  
   return (
@@ -69,8 +77,14 @@ function ProductCollections() {
 
       <form className='product_search'>
         <label >Search for products</label>
-        <input type='text' id='product_search' name='productSearch' onChange={getSearchWord}></input>
+        <input type='text' id='product_search' name='productSearch' onSubmit={getSearchWord}></input>
       </form>
+
+      {productData ? <div>
+        {searchWord.map((eachProduct) => {
+          return <p key={eachProduct.id}>{eachProduct.title}</p>
+        })}
+      </div>: <h2></h2>}
     </div>
   );
 }
