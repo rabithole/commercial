@@ -6,6 +6,8 @@ import { CompanyContext } from '../context/company_shopify_id';
 function ProductCollections() {
   const { company_shopify_id } = useContext(CompanyContext);
   const [category, setCategories] = useState([]);
+  const [searchWord, setSeachWord] = useState('');
+  console.log('search words array', searchWord)
 
   useEffect(() => {
     axios
@@ -29,6 +31,26 @@ function ProductCollections() {
   }else{
     categoryData = true;
   }
+
+  function getSearchWord(event){
+    let inputValue = event.target.value;
+    console.log("input value---", inputValue)
+
+    axios 
+      .post('http://localhost:5080/shopify_product_search')
+      .then((response) => {
+        console.log("console log response", response.data.data.products.edges)
+        let productSearch = response.data.data.products.edges;
+        let productSearchArray = [];
+        for(let i = 0; i < productSearch.length; i++){
+          productSearchArray.push(productSearch[i].node)
+        }
+        setSeachWord(productSearchArray);
+      })
+      .catch((error) => {
+        console.log('Error', error);
+      })
+  }
  
   return (
     <div>
@@ -47,7 +69,7 @@ function ProductCollections() {
 
       <form className='product_search'>
         <label >Search for products</label>
-        <input type='text' id='product_search' name='productSearch'></input>
+        <input type='text' id='product_search' name='productSearch' onChange={getSearchWord}></input>
       </form>
     </div>
   );
