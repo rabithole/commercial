@@ -19,7 +19,7 @@ router.post('/', async (request, response) => {
     let company = request.body;
     let searchShopifyProducts =`
     query productSearch($products: String){
-        products(query: $products, first: 10){
+        products(query: $products, first: 50){
             edges{
                 node{
                     id

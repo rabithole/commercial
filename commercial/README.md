@@ -4,6 +4,7 @@
 - Update company info without having to make a change in every form field. 
 - TypeError in product collection when paginating
 - Add timestamp to update unit costs process
+- refine product search more...
 
 - Login and protected route emplementation
 --- This will set the company Shopify ID.
