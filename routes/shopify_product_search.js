@@ -30,6 +30,12 @@ router.post('/', async (request, response) => {
                     }
                 }
             }
+            pageInfo{
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+            }
         }
     }
     `
