@@ -215,6 +215,7 @@ function removeLineItem(index){
                 <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>
               </section>
             </div>
+            <p>{product.description}</p>
             <div id='variant_container'>
               {productCost.map((variant, index, e) => {
                 return  <div key={index} className='add_to_order' >
@@ -236,7 +237,6 @@ function removeLineItem(index){
                         </div>
               })}
               </div>
-            <p>{product.description}</p>
           </div>
         : <h2>...loading</h2>}
       </div>

@@ -13,20 +13,18 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
-    console.log('request', request.body)
-    // let wordSearch = JSON.stringify(request.body);
     let wordSearch = request.body;
     console.log('word search variable', wordSearch.input)
 
     let company = request.body;
     let searchShopifyProducts =`
-        
     query productSearch($products: String){
         products(query: $products, first: 10){
             edges{
                 node{
                     id
                     title
+                    description
                     featuredImage{
                         url
                     }
@@ -34,7 +32,6 @@ router.post('/', async (request, response) => {
             }
         }
     }
-        
     `
 
 	const ShopfyClient = axios.create({

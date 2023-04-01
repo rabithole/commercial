@@ -37,7 +37,7 @@ function ProductCollections() {
   })
   function getSearchWord(event){
     let inputValue = {input: event.target.value};
-    console.log("input value---", inputValue.input)
+    // console.log("input value---", inputValue.input)
     
     axios 
       .post('http://localhost:5080/shopify_product_search', inputValue)
@@ -82,9 +82,14 @@ function ProductCollections() {
         <input type='text' id='product_search' name='productSearch' onChange={getSearchWord}></input>
       </form>
 
-      {productData ? <div>
+      {productData ? <div className='collection_products'>
         {searchWord.map((eachProduct) => {
-          return <p key={eachProduct.id}>{eachProduct.title}</p>
+          return <div>
+              <div key={eachProduct.id} className='collection_product'>
+                <p>{eachProduct.title}</p>
+                <img src={eachProduct.featuredImage.url} className='product_image' alt='product'></img>
+              </div>
+              </div>
         })}
       </div>: <h2></h2>}
     </div>
