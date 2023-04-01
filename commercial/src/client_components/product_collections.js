@@ -32,9 +32,12 @@ function ProductCollections() {
     categoryData = true;
   }
 
+  useEffect(() => {
+    
+  })
   function getSearchWord(event){
-    let inputValue = event.target.value;
-    console.log("input value---", inputValue)
+    let inputValue = {input: event.target.value};
+    console.log("input value---", inputValue.input)
     
     axios 
       .post('http://localhost:5080/shopify_product_search', inputValue)
@@ -50,7 +53,6 @@ function ProductCollections() {
       .catch((error) => {
         console.log('Error', error);
       })
-      event.preventDefault();
   }
 
   let productData = false;
@@ -77,7 +79,7 @@ function ProductCollections() {
 
       <form className='product_search'>
         <label >Search for products</label>
-        <input type='text' id='product_search' name='productSearch' onSubmit={getSearchWord}></input>
+        <input type='text' id='product_search' name='productSearch' onChange={getSearchWord}></input>
       </form>
 
       {productData ? <div>

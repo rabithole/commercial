@@ -159,7 +159,7 @@ function ProductPage(props) {
       // let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,1) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
       let ordertotal = Number(draftOrderTotal[i].innerHTML.slice(1));
       orderTotalArray.push(ordertotal);
-      console.log('order total array inside function---', orderTotalArray)
+      // console.log('order total array inside function---', orderTotalArray)
       for(const value of orderTotalArray){
         sum += value;
       }

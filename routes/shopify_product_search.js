@@ -14,24 +14,27 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     console.log('request', request.body)
-    let wordSearch = JSON.stringify(request.body);
-    console.log('word search variable', wordSearch)
+    // let wordSearch = JSON.stringify(request.body);
+    let wordSearch = request.body;
+    console.log('word search variable', wordSearch.input)
 
     let company = request.body;
     let searchShopifyProducts =`
-        query productSearch($products: String){
-            products(query: $products, first: 10){
-                edges{
-                    node{
-                        id
-                        title
-                        featuredImage{
-                            url
-                        }
+        
+    query productSearch($products: String){
+        products(query: $products, first: 10){
+            edges{
+                node{
+                    id
+                    title
+                    featuredImage{
+                        url
                     }
                 }
             }
         }
+    }
+        
     `
 
 	const ShopfyClient = axios.create({
@@ -40,10 +43,13 @@ router.post('/', async (request, response) => {
 	});
 
     let variables = {
-        "products": wordSearch
+        "products": wordSearch.input
     }
 
-    const res = await ShopfyClient.post(API_PATH, { query: searchShopifyProducts });
+    const res = await ShopfyClient.post(API_PATH, {
+        query: searchShopifyProducts,
+        variables: variables 
+    });
     response.status(200).json(res.data);
   });
 
