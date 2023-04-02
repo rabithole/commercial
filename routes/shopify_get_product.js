@@ -29,6 +29,7 @@ router.post('/', async (request, response) => {
                         id 
                         title
                         sku
+                        weight
                     }
                 }
                }

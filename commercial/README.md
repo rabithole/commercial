@@ -5,6 +5,7 @@
 - TypeError in product collection when paginating
 - Add timestamp to update unit costs process
 - refine product search more...
+- add notes to draft order submision
 
 - Login and protected route emplementation
 --- This will set the company Shopify ID.

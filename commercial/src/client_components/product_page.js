@@ -17,7 +17,7 @@ function ProductPage(props) {
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
   const [total, setTotal] = useState(0);
-  console.log('Total---', total)
+  // console.log('Product cost---', productCost)
   // console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
@@ -33,6 +33,7 @@ function ProductPage(props) {
   },[])
 
   const product_id = useLocation().state;
+  // Pulls product details from shopify admin API, pulls cost data from local API then sets product name and product details to local state as product and prooductName. 
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_get_product', {id: product_id})
@@ -50,12 +51,14 @@ function ProductPage(props) {
           let sku = cost.node.sku;
           let requestSku = cost.node.sku;
           let title = cost.node.title;
-          let variantId = cost.node.id;
+          // let variantId = cost.node.id;
+          let weight = cost.node.weight;
+          // console.log('weight', cost.node.weight)
           axios
             .get('http://localhost:5080/costs_by_sku/' + requestSku)
             .then(function(response) {
               let product_cost = response.data.unit_cost;
-              array.push({sku, title, product_cost, variantId})
+              array.push({sku, title, product_cost, weight})
               setProductCost(array)
               if(array.length === variantArrayLength){
                 setLoading(false);
@@ -71,26 +74,27 @@ function ProductPage(props) {
       })
   },[product_id]);
 
+  // Sets draft order line items oject to local storage for persistance. Local storage object will later be used to send the draft order line items to shopify.
   function orderObjectHandling(productList){    
     if(orderObjectArray.length == 0){
       orderObjectArray.push(productList)
-      console.log('array---', orderObjectArray)
+      // console.log('array---', orderObjectArray)
       window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
       setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
       setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
     }else{
       for(let i = 0; i < orderObjectArray.length; i++){
-        console.log('order object array looping', orderObjectArray[i].sku)
+        // console.log('order object array looping', orderObjectArray[i].sku)
         if(orderObjectArray[i].sku == productList.sku){
           orderObjectArray[i] = productList
-          console.log('array end---', orderObjectArray)
+          // console.log('array end---', orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
           setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
           setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
           return
         }else if(i == orderObjectArray.length-1){
           orderObjectArray.push(productList)
-          console.log('array---', orderObjectArray)
+          // console.log('array---', orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
           setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
           setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
@@ -99,6 +103,7 @@ function ProductPage(props) {
     }
   }
 
+  // Loading indicator  bolean for user and delays DOM loading until React has populated local product data.
   let productData = false;
   if(loading){
     productData = false;
@@ -106,22 +111,26 @@ function ProductPage(props) {
     productData = true;
   }
 
+  // Grabs quantity entered into the input tag by client, calculates price to client from variant object and specified markup for client. 
+  // Creates an object to be utilize with graphql to send info to Shopifies API.
   function addToDraftOrder(index, variant){
-    // console.log('variant----', variant)
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
     let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
-    let variantTotal = (variantCost * quantity).toFixed(2);
+    let productWeight = variant.weight;
     let graphQlObject = {
       title: variant.title,
       originalUnitPrice: variantCost,
       sku: variant.sku,
-      variantId: variant.variantId,
+      // variantId: variant.variantId,
       quantity: Number(quantity),
       requiresShipping: true,
-      name: productName
+      name: productName,
+      weight: {
+        // unit: 'GRAMS',
+        value: productWeight
+      }
     }
-
     orderObjectHandling(graphQlObject);
   }
 
@@ -133,23 +142,30 @@ function ProductPage(props) {
 
   function createShopifyDraftOrder(){
     let localStorage = JSON.parse(window.localStorage.getItem('draftOrder'));
+    // Removes the name key value from graphql object as the name key is not accepted by Shopify's create draft order query.
     for(let i = 0; i < localStorage.length; i++){
       delete localStorage[i].name;
     }
-    console.log('Local Storage', localStorage)
+    // console.log('Local Storage', localStorage)
 
     axios.post('http://localhost:5080/create_draft_order', localStorage)
       .then((response) => {
-        console.log('Response', response.config.data)
         console.log('response', response)
+        console.log('Errors---', response.data.errors[0].message)
+        if(response.data.data.draftOrderCreate){
+          console.log('Yes, we created a draft order')
+          clearDraftOrder();
+        }
       })
-    clearDraftOrder();
+      // .catch((response) => {
+      //   console.log('error', response)
+      // })
   }
 
   let orderTotalArray = [];
   let sum = 0;
   
-  // Totaling current draft order
+  // Totaling current draft order to be displayed at the top of the page for user reference.
   useEffect(() => {
   let draftOrderTotal = document.querySelectorAll('.draftOrderTotal');
   for(let i = 0; i < draftOrderTotal.length; i++){
@@ -168,6 +184,7 @@ function ProductPage(props) {
   setTotal(sum);
 })
 
+// Removes a single item via the remove button on each product in a draft order. This happens before the draft order is sent to Shopify's API.
 function removeLineItem(index){
   console.log('remove item', index)
   console.log('Order object array---', orderObjectArray)
