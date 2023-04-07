@@ -17,8 +17,6 @@ function ProductPage(props) {
   const [productName, setProductName] = useState([]);
   const [orderObjectArray, setOrderOjectArray] = useState([]);
   const [total, setTotal] = useState(0);
-  // console.log('Product cost---', productCost)
-  // console.log('order object array---', orderObjectArray)
 
   const { company_shopify_id, cost_plus } = useContext(CompanyContext);
   let clientMarkup = cost_plus / 100;
@@ -40,7 +38,6 @@ function ProductPage(props) {
       .then((response) => {
         let product = response.data.data.product;
         let productName = product.title;
-        // console.log('product name---', product.title)
         setProductName(productName);
         setProduct(product) // Product information returned from API with product info and variants.
 
@@ -51,14 +48,12 @@ function ProductPage(props) {
           let sku = cost.node.sku;
           let requestSku = cost.node.sku;
           let title = cost.node.title;
-          // let variantId = cost.node.id;
-          let weight = cost.node.weight;
-          // console.log('weight', cost.node.weight)
+          let variantId = cost.node.id;
           axios
             .get('http://localhost:5080/costs_by_sku/' + requestSku)
             .then(function(response) {
               let product_cost = response.data.unit_cost;
-              array.push({sku, title, product_cost, weight})
+              array.push({sku, title, product_cost, variantId})
               setProductCost(array)
               if(array.length === variantArrayLength){
                 setLoading(false);
@@ -78,23 +73,19 @@ function ProductPage(props) {
   function orderObjectHandling(productList){    
     if(orderObjectArray.length == 0){
       orderObjectArray.push(productList)
-      // console.log('array---', orderObjectArray)
       window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
       setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
       setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
     }else{
       for(let i = 0; i < orderObjectArray.length; i++){
-        // console.log('order object array looping', orderObjectArray[i].sku)
         if(orderObjectArray[i].sku == productList.sku){
           orderObjectArray[i] = productList
-          // console.log('array end---', orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
           setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
           setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
           return
         }else if(i == orderObjectArray.length-1){
           orderObjectArray.push(productList)
-          // console.log('array---', orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
           setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
           setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
@@ -117,19 +108,14 @@ function ProductPage(props) {
     let quantityArray = document.querySelectorAll('.add_to_order')[index];
     let quantity = quantityArray.childNodes[3].innerHTML;
     let variantCost = Number((+variant.product_cost * clientMarkup + +variant.product_cost).toFixed(2));
-    let productWeight = variant.weight;
     let graphQlObject = {
       title: variant.title,
       originalUnitPrice: variantCost,
       sku: variant.sku,
-      // variantId: variant.variantId,
+      variantId: variant.variantId,
       quantity: Number(quantity),
       requiresShipping: true,
       name: productName,
-      weight: {
-        // unit: 'GRAMS',
-        value: productWeight
-      }
     }
     orderObjectHandling(graphQlObject);
   }
@@ -146,7 +132,6 @@ function ProductPage(props) {
     for(let i = 0; i < localStorage.length; i++){
       delete localStorage[i].name;
     }
-    // console.log('Local Storage', localStorage)
 
     axios.post('http://localhost:5080/create_draft_order', localStorage)
       .then((response) => {
@@ -172,10 +157,8 @@ function ProductPage(props) {
     if(draftOrderTotal[i] == undefined){
       console.log('draft order total undefinded')
     }else{
-      // let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,1) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
       let ordertotal = Number(draftOrderTotal[i].innerHTML.slice(1));
       orderTotalArray.push(ordertotal);
-      // console.log('order total array inside function---', orderTotalArray)
       for(const value of orderTotalArray){
         sum += value;
       }
@@ -192,7 +175,6 @@ function removeLineItem(index){
     for(let i = 0; i < orderObjectArray.length; i++){
       if(index == i){
         orderObjectArray.splice(i,1)
-        // setOrderOjectArray(orderObjectArray)
         window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
         setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
         setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));

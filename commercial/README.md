@@ -6,6 +6,8 @@
 - Add timestamp to update unit costs process
 - refine product search more...
 - add notes to draft order submision
+- Link collections page search results to their perspective products. 
+- Error handling if product does not have an accurate price displayed.
 
 - Login and protected route emplementation
 --- This will set the company Shopify ID.

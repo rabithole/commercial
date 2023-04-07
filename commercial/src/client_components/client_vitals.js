@@ -5,9 +5,6 @@ import { CompanyContext } from '../context/company_shopify_id';
 
 function ClientVitals() {
   const { company_shopify_id, companyInfo, companyAddressField } = useContext(CompanyContext);
-  // console.log('company info', companyInfo)
-  // console.log('shopify id', company_shopify_id)
-  // console.log('company address', companyAddressField)
 
   useEffect(() => {
     

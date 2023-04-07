@@ -32,15 +32,11 @@ function Orders() {
     if(draftOrderTotal[i] == undefined){
       console.log('draft order total undefinded')
     }else{
-      // let ordertotal = Number(draftOrderTotal[i].innerHTML.substring(0,0) + draftOrderTotal[i].innerHTML.substring(1,draftOrderTotal[i].length));
       let ordertotal = Number(draftOrderTotal[i].innerHTML.slice(1));
-      // console.log('draft order total from data attribute---', ordertotal)
       orderTotalArray.push(ordertotal);
-      // console.log('draft order total array', orderTotalArray)
       for(const value of orderTotalArray){
         sum += value;
       }
-      // console.log('array sum---', sum)
     }
   }
   setTotal(sum);
@@ -59,7 +55,6 @@ function Orders() {
       for(let i = 0; i < orderObjectArray.length; i++){
         if(index == i){
           orderObjectArray.splice(i,1)
-          // setOrderOjectArray(orderObjectArray)
           window.localStorage.setItem('draftOrder', JSON.stringify(orderObjectArray));
           setLineItems(JSON.parse(window.localStorage.getItem('draftOrder')));
           setOrderOjectArray(JSON.parse(window.localStorage.getItem('draftOrder')));
