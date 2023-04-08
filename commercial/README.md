@@ -8,6 +8,7 @@
 - add notes to draft order submision
 - Link collections page search results to their perspective products. 
 - Error handling if product does not have an accurate price displayed.
+- Implement login and account creation for clients
 
 - Login and protected route emplementation
 --- This will set the company Shopify ID.

@@ -12,20 +12,15 @@ function ProductCollection() {
 
   const { company_shopify_id } = useContext(CompanyContext);
   const collection_id = useLocation().state;
-
-  console.log('end Cursor', endCursor)
-  console.log('has next page---', hasNextPage)
-  console.log('has previous page', hasPreviousPage)
+  console.log('product', product)
 
   useEffect(() => {
     axios
       .post('http://localhost:5080/shopify_collection_forward_pagination', {id: collection_id.id})
       .then((response) => {
-        console.log('pagination---', {after: response.data.data.collection.products.pageInfo.endCursor})
         let endCursor = response.data.data.collection.products.pageInfo.endCursor;
         let startCursor = response.data.data.collection.products.pageInfo.startCursor;
         let hasPreviousPage = response.data.data.collection.products.pageInfo.hasPreviousPage;
-        console.log('Has previous page', hasPreviousPage)
         let hasNextPage = response.data.data.collection.products.pageInfo.hasNextPage;
         let products = response.data.data.collection.products.nodes;
         setEndCursor(endCursor);

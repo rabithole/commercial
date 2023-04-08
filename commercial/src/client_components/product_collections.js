@@ -44,7 +44,7 @@ function ProductCollections() {
     axios 
       .post('http://localhost:5080/shopify_product_search', inputValue)
       .then((response) => {
-        console.log("has next page", response.data.data.products.pageInfo)
+        console.log("product search info", response.data.data.products)
         let productSearch = response.data.data.products.edges;
         let productSearchArray = [];
         for(let i = 0; i < productSearch.length; i++){
@@ -88,7 +88,7 @@ function ProductCollections() {
         {searchWord.map((eachProduct, index) => {
           return <div key={eachProduct.id}>
                 <div className='collection_product'>
-                  <Link to='/client_landing/product_page'>
+                  <Link to='/client_landing/product_page' state={eachProduct.id}>
                     <p>{eachProduct.title}</p>
                     <img src={eachProduct.featuredImage.url} className='product_image' alt='product'></img>
                     </Link>

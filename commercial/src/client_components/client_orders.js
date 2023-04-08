@@ -48,7 +48,7 @@ function Orders() {
     setOrderOjectArray([]);
   }
 
-  function removeLineItem(index){
+  function removeLineItemName(index){
     console.log('remove item', index)
     console.log('Order object array---', orderObjectArray)
   
@@ -91,7 +91,7 @@ function Orders() {
                       <p>Quantity: {variant.quantity}</p>
                       <h4>Total</h4>
                       <h4 className='draftOrderTotal'>${variant.quantity * variant.originalUnitPrice}</h4>
-                      <button id='removeItemButton' onClick={() => removeLineItem(index)}>Remove</button>
+                      <button id='removeItemButton' onClick={() => removeLineItemName(index)}>Remove</button>
                     </div>
           })}
           <button id='clearDraftOrder' onClick={() => clearDraftOrder()}>Clear Draft Order</button>
