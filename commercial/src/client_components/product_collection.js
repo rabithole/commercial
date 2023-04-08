@@ -12,7 +12,7 @@ function ProductCollection() {
 
   const { company_shopify_id } = useContext(CompanyContext);
   const collection_id = useLocation().state;
-  console.log('product', product)
+  console.log('product', product);
 
   useEffect(() => {
     axios
@@ -40,8 +40,8 @@ function ProductCollection() {
       axios
         .post('http://localhost:5080/shopify_collection_forward_pagination', {id: collection_id.id, after: endCursor, before: startCursor})
         .then((response) => {
-          console.log('start cursor', response.data.data.collection.products.pageInfo.startCursor)
-          setStartCursor(response.data.data.collection.products.pageInfo.startCursor)
+          console.log('start cursor', response.data.data.collection.products.pageInfo.startCursor);
+          setStartCursor(response.data.data.collection.products.pageInfo.startCursor);
           setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
           setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
           setHasPreviousPage(response.data.data.collection.products.pageInfo.hasPreviousPage);
@@ -66,11 +66,11 @@ function ProductCollection() {
       axios
         .post('http://localhost:5080/shopify_collection_backward_pagination', {id: collection_id.id, after: endCursor, before: startCursor})
         .then((response) => {
-          console.log('start cursor', response.data.data.collection.products.pageInfo.startCursor)
+          console.log('start cursor', response.data.data.collection.products.pageInfo.startCursor);
           setHasNextPage(response.data.data.collection.products.pageInfo.hasNextPage);
           setStartCursor(response.data.data.collection.products.pageInfo.startCursor);
           setHasPreviousPage(response.data.data.collection.products.pageInfo.hasPreviousPage);
-          setEndCursor(response.data.data.collection.products.pageInfo.endCursor)
+          setEndCursor(response.data.data.collection.products.pageInfo.endCursor);
           
           if(hasPreviousPage == false){
             alert("You are back at the beginning of the collection");

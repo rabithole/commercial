@@ -72,10 +72,12 @@ function Orders() {
   
       axios.post('http://localhost:5080/create_draft_order', localStorage)
         .then((response) => {
-          console.log('Response', response.config.data)
           console.log('response', response)
+          if(response.data.data.draftOrderCreate){
+            console.log('Draft order created')
+            clearDraftOrder();
+          }
         })
-      clearDraftOrder();
     }
 
   return (
