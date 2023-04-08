@@ -1073,7 +1073,7 @@ function getUnitCosts() {
                 // console.log('unit costs', unitCosts)
             }else{
                 console.log('There is not another page ---', hasNextPage)
-                console.log('Unit Costs array', unitCosts)
+                // console.log('Unit Costs array', unitCosts)
                 fs.writeFile("routes/unitCost.json", JSON.stringify(unitCosts), function(err){
                     console.log('json file creation')
                 })
@@ -1084,7 +1084,8 @@ function getUnitCosts() {
 
     // processJsonDataFromShopfiy(rawTestArray);
 }
-// getUnitCosts();
+// Be sure to start the Express server with npm start and not nodemon!!!!!!
+getUnitCosts();
 // ---------------------------------------------------------------------------------------------------------
 
 
@@ -1101,7 +1102,9 @@ function processJsonDataFromShopfiy(costsData) {
             parsingArray.push({
                 shopify_id: parsed.node.variant.id,
                 sku: parsed.node.variant.sku,
-                unit_cost: parsed.node.unitCost.amount
+                unit_cost: parsed.node.unitCost.amount,
+                updated_at: parsed.node.variant.updatedAt,
+                created_at: parsed.node.variant.createdAt
             })
         }
     })

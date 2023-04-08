@@ -135,8 +135,6 @@ function ProductPage(props) {
 
     axios.post('http://localhost:5080/create_draft_order', localStorage)
       .then((response) => {
-        console.log('response', response)
-        // console.log('Errors---', response.data.errors[0].message)
         if(response.data.data.draftOrderCreate){
           console.log('Yes, we created a draft order')
           clearDraftOrder();

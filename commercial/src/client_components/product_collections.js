@@ -7,7 +7,6 @@ function ProductCollections() {
   const { company_shopify_id } = useContext(CompanyContext);
   const [category, setCategories] = useState([]);
   const [searchWord, setSeachWord] = useState('');
-  console.log('search words array', searchWord)
 
   useEffect(() => {
     axios

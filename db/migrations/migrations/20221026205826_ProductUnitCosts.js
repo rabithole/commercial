@@ -8,6 +8,10 @@ exports.up = function(knex) {
         table.string('unit_cost');
         table.string('sku');
         table.string('shopify_id');
+        table.string('created_at');
+        table.string('updated_at');
+        table.timestamp('last_run').defaultTo(knex.fn.now());
+        // table.timestamps(true, true);
     })
   
 };

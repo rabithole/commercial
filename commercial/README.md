@@ -1,4 +1,7 @@
 # To Do List
+------- REMEMBER NODEMON WON'T ALLOW THE UNIT COSTS UPDATE TO FINNISH ---------
+------------------ USE ( NPM START ) ----------------
+
 - Add restrictions to making duplicate companies etc
 - Set unit cost query process to a regular schedule when deployed.
 - Update company info without having to make a change in every form field. 
@@ -9,6 +12,7 @@
 - Link collections page search results to their perspective products. 
 - Error handling if product does not have an accurate price displayed.
 - Implement login and account creation for clients
+- Error handling for all graphQl calls
 
 - Login and protected route emplementation
 --- This will set the company Shopify ID.

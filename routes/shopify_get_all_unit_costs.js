@@ -25,6 +25,7 @@ app.post('/', async (request, response) => {
                         id 
                         sku
                         updatedAt
+                        createdAt
                     }
                     unitCost{
                         amount

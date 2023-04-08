@@ -7,14 +7,17 @@ const router = express.Router();
 router.use(express.json());
 
 router.post('/', async (req, res) => {
-    let costsArray = req.body;      
+    let costsArray = req.body;   
+    console.log('unit costs controller')   
     checkForRecord(req);
 })
 
 function checkForRecord(req){
+    console.log('check for record')
     let dataArray = req.body;
     for(let i = 0; i < dataArray.length; i++){
         let sku = dataArray[i].sku;
+        console.log('for loop in check for record')
         UnitCosts.query().findOne({sku: sku})
             .then(data => {
                 console.log('sku 2', sku)
@@ -33,7 +36,7 @@ function checkForRecord(req){
 }
 
 function insertUnitCosts(array){
-    console.log('insert data array', array)
+    console.log('insert data array')
     UnitCosts.query().insert(array)
         .then(data => {
             console.log('data controller', data)
