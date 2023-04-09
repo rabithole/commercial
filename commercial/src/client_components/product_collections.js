@@ -65,21 +65,10 @@ function ProductCollections() {
  
   return (
     <div>
-      <h1>Product Collections</h1>
-      <div className='product_collections'>{categoryData ? category.map((collection) => {
-        return  <Link 
-                  state={collection}
-                  to={`/client_landing/product_collection`} 
-                  style={{display: 'block'}} 
-                  key={collection.id}>
-                  {collection.title}
-                </Link>;
-      }) : <h2>...loading</h2>}</div>
-
       <h3>SHOPIFY COMPANY ID: {company_shopify_id}</h3>
 
       <form className='product_search' onSubmit={(event) => event.preventDefault()}>
-        <label >Search for products</label>
+        <label >Search ALL products</label>
         <input type='text' id='product_search' name='productSearch' onChange={getSearchWord}></input>
       </form>
 
@@ -95,6 +84,17 @@ function ProductCollections() {
               </div>
         })}
       </div>: <h2></h2>}
+
+      <h1>Product Collections</h1>
+      <div className='product_collections'>{categoryData ? category.map((collection) => {
+        return  <Link 
+                  state={collection}
+                  to={`/client_landing/product_collection`} 
+                  style={{display: 'block'}} 
+                  key={collection.id}>
+                  {collection.title}
+                </Link>;
+      }) : <h2>...loading</h2>}</div>
     </div>
   );
 }
