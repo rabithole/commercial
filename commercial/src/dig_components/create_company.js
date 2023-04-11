@@ -90,7 +90,6 @@ function CreateCompany(props) {
 						id='name'
 						name='company'
 						onChange={companyChange}
-						 
 						autoFocus
 					/>
 				</div>

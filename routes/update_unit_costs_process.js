@@ -1085,7 +1085,7 @@ function getUnitCosts() {
     // processJsonDataFromShopfiy(rawTestArray);
 }
 // Be sure to start the Express server with npm start and not nodemon!!!!!!
-getUnitCosts();
+// getUnitCosts();
 // ---------------------------------------------------------------------------------------------------------
 
 

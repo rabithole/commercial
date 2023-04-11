@@ -489,3 +489,16 @@ nav a {
 	height: 40px;
 	margin-top: 10px;
 }
+
+
+/* Sign in sign up page */
+#username {
+	margin-bottom: 20px;
+}
+
+.sign_in_sign_up {
+	border: 1px solid black;
+	margin-top: 30px;
+	padding: 10px;
+	background-color: lightgray;
+}

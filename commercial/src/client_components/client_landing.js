@@ -8,6 +8,7 @@ import ProductCollection from './product_collection';
 import ProductPage from './product_page';
 import ClientHeader from './client_header';
 import Orders from './client_orders';
+import SignInSignUp from './sign_in_sign_up';
 
 function ClientLanding() {
   const [cost_plus, setCostPlus] = useState([]);
@@ -72,6 +73,7 @@ function ClientLanding() {
           <Route path='/product_collection' element={<ProductCollection />} />
           <Route path='/product_page' element={<ProductPage />} />
           <Route path='/orders' element={<Orders />} />
+          <Route path='/sign_in_sign_up' element={<SignInSignUp />} />
         </Routes>
       </CompanyContext.Provider>
     </div>
