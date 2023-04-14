@@ -77,7 +77,7 @@ function CreateCompany(props) {
 	return (
 		<div className='company'>
 			<nav>
-				<Link to='/company_list'>Back to List of Companies</Link>
+				<Link to='/dig_landing/companies_list'>Back to List of Companies</Link>
 			</nav>
 		
 			<h2>Input Your Company Information</h2>

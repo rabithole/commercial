@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react';
-import {  } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { CompanyContext } from '../context/company_shopify_id';
 
 function SignInSignUp() {
-  const { company_shopify_id, companyInfo, companyAddressField } = useContext(CompanyContext);
   const [credentials, setCredentials] = useState({});
-  console.log('passowrd---', credentials)
+  const [whoIsSigningIn, setWhoIsSignedIn] = useState(false);
+  console.log('creds---', credentials)
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     
   },[]);
 
-  const onChange = (event) => {
+  const onChange = () => {
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
     setCredentials({
@@ -23,27 +24,48 @@ function SignInSignUp() {
     })
   }
 
+  let employeeClient = '';
+
+  function ClientEmployee(cliemp) {
+    setWhoIsSignedIn(true);
+
+    if(cliemp == 'employee'){
+      employeeClient = 'employee';
+      // navigate('/dig_landing/companies_list')
+    }
+    if(cliemp == 'client'){
+      employeeClient = 'client';
+      // navigate('/client_landing/client_vitals')
+    }
+    console.log('Client employee function', employeeClient)
+  }
+
   return (
     <div className='sign_in_sign_up'>
         <h1>Sign In Sign Up Page Beginning</h1>
-        <form>
-            <label>Username: </label>
-            <input 
-                type='text' 
-                id="username" 
-                name='username'
-                onChange={onChange}
-                />
-            <br/>
+        {whoIsSigningIn == false ? 
+          <section className='client_employee'>
+            <button onClick={() => ClientEmployee('employee')}>DIG Employees</button>
+            <button onClick={() => ClientEmployee("client")}>DIG Clients</button>
+          </section>
+        : <form>
+        <label>Username: </label>
+        <input 
+            type='text' 
+            id="username" 
+            name='username'
+            onChange={onChange}
+            />
+        <br/>
 
-            <label>Password: </label>
-            <input 
-                type='text' 
-                id='password' 
-                name='password'
-                onChange={onChange}
-                />
-        </form>
+        <label>Password: </label>
+        <input 
+            type='text' 
+            id='password' 
+            name='password'
+            onChange={onChange}
+            />
+    </form>}
     </div>
   );
 }

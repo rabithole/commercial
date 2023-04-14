@@ -1,3 +1,8 @@
+# Local files 
+/knexfile.js
+/shapedArray.json
+/unitCost.json
+
 # Logs
 logs
 *.log

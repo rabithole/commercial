@@ -95,6 +95,7 @@ function ProductCollections() {
                   {collection.title}
                 </Link>;
       }) : <h2>...loading</h2>}</div>
+
     </div>
   );
 }

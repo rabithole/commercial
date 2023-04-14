@@ -27,7 +27,7 @@ function CompaniesList(props) {
 
 	return (
 		<div className='company_list_container'>
-			<Link to={'create_company'} id='create_company_button'>Create Company</Link>
+			<Link to={'/dig_landing/create_company'} id='create_company_button'>Create Company</Link>
 				<form>
 					<h3>Search for Company by Name</h3>
 					<input type='text' id='name' name='name' onChange={getCompanyName}></input>
@@ -45,7 +45,7 @@ function CompaniesList(props) {
 				}).map(({ company_name, cost_plus, annual_revenue, id, note, first_name, last_name, phone}) => (
 					
 						<div className='company_card' key={id}>
-							<Link to={`company${id}`}>
+							<Link to={`/dig_landing/company${id}`}>
 								<h3>{company_name}</h3>
 
 								<div>

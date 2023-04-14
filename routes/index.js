@@ -24,7 +24,7 @@ const createDraftOrder = require('./create_draft_order');
 const backwardProductCollection = require('./shopify_collection_backward_pagination');
 const shopifyApiProductSearch = require('./shopify_product_search');
 
-const { response } = require('express');
+// const { response } = require('express');
 const app = express();
 app.use(express.json());
 

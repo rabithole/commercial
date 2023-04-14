@@ -69,7 +69,7 @@ function ClientLanding() {
       <CompanyContext.Provider value={{ company_shopify_id, cost_plus, companyInfo, companyAddressField}}>
         <Routes>
           <Route path='product_collections/*' element={<ProductCollections />} />
-          <Route path='client_vitals' element={<ClientVitals />} />
+          <Route path='/client_vitals' element={<ClientVitals />} />
           <Route path='/product_collection' element={<ProductCollection />} />
           <Route path='/product_page' element={<ProductPage />} />
           <Route path='/orders' element={<Orders />} />
