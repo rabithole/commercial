@@ -42,7 +42,7 @@ function SignInSignUp() {
 
   return (
     <div className='sign_in_sign_up'>
-        <h1>Sign In Sign Up Page Beginning</h1>
+        <h1>Client or Employee</h1>
         {whoIsSigningIn == false ? 
           <section className='client_employee'>
             <button onClick={() => ClientEmployee('employee')}>DIG Employees</button>

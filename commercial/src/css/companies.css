@@ -524,4 +524,5 @@ nav a {
 	margin: 10%;
 	justify-content: center;
 	flex-direction: row;
+	width: 350px;
 }
