@@ -272,6 +272,10 @@ nav a {
 	margin-right: 10px;
 }
 
+#nextPageButton:hover {
+	background-color: #7FB38E;
+}
+
 .product_collections {
 	border: 2px solid green;
 	padding: 10px;

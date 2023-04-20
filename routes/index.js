@@ -1,9 +1,12 @@
 const express = require('express');
 
+console.log('index.js')
+
 let parsingCosts = require('./unitCost.json');
 let shapedArray = require('./shapedArray.json');
 let getUnitCosts = require('./update_unit_costs_process.js');
 
+const userCredentials = require('./credentials_controller');
 const companyController = require('./companies_controller');
 const employeesController = require('./employees_controller');
 const invoicesController = require('./invoices_controller');
@@ -28,6 +31,7 @@ const shopifyApiProductSearch = require('./shopify_product_search');
 const app = express();
 app.use(express.json());
 
+app.use('/credentials', userCredentials);
 app.use('/companies', companyController);
 app.use('/employees', employeesController);
 app.use('/invoices', invoicesController);

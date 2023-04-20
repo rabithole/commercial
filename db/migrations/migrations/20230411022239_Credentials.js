@@ -5,8 +5,9 @@
 exports.up = function(knex) {
   return knex.schema.createTable('credentials', table => {
     table.increments();
-    table.text('username').notNullable().unique();
+    table.text('username').notNullable();
     table.text('password').notNullable();
+    table.text('shopifyId').notNullable().unique();
   })
 };
 

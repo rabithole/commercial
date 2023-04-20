@@ -13,8 +13,11 @@ const headers = {
 router.use(express.json());
 
 router.post('/', async (request, response) => {
+
+  console.log('response data---', response.data)
     
     let company = request.body;
+    console.log('company data ---', company.input.first_name)
     let newCompany =` 
             mutation {
               customerCreate (
@@ -22,8 +25,8 @@ router.post('/', async (request, response) => {
                     firstName: ${JSON.stringify(company.input.first_name)},
                     lastName: ${JSON.stringify(company.input.last_name)},
                     email: ${JSON.stringify(company.input.email)},
-                    note: ${JSON.stringify(company.addresses.note)}
-                    tags: ${JSON.stringify(company.input.tags)}
+                    note: ${JSON.stringify(company.addresses.note)},
+                    tags: ${JSON.stringify(company.input.tags)},
                     addresses: 
                         {
                             address1: ${JSON.stringify(company.addresses.address1)},

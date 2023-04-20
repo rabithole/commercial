@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function SingleCompany(props) {
 	const [localCompanyData, setLocalCompanyData] = useState([]);
 	const [shopifyData, setShopifyData] = useState([]);
 	const [shopifyAddressData, setAddressData] = useState([]);
 
-	let { id } = useParams();
+	const backToCompaniesList = useNavigate();
 
+	let { id } = useParams();
 	let companyURL = {companyURL: window.location.pathname};
 
 	useEffect(() => {
@@ -58,7 +59,11 @@ function SingleCompany(props) {
 	    	axios.delete('http://localhost:5080/companies/' + id)
 	      		.then(res => {
 	        		console.log('This Company has been deleted', localCompanyData)
-	      })
+					backToCompaniesList(-1);
+	      		})
+				.catch(error => {
+					console.log('error company.js')
+				})
   	}
 
   	// const deleteEmployee = (id, event, item) => {

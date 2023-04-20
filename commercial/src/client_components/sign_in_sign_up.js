@@ -31,11 +31,11 @@ function SignInSignUp() {
 
     if(cliemp == 'employee'){
       employeeClient = 'employee';
-      // navigate('/dig_landing/companies_list')
+      navigate('/dig_landing/companies_list')
     }
     if(cliemp == 'client'){
       employeeClient = 'client';
-      // navigate('/client_landing/client_vitals')
+      navigate('/client_landing/client_vitals')
     }
     console.log('Client employee function', employeeClient)
   }
