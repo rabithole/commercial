@@ -16,7 +16,7 @@ function ClientLanding() {
   const [companyAddressField, setCompanyAddressField] = useState([]);
 
   // Shopify company id will be set from client sign in portal.
-  let company_shopify_id = 'gid://shopify/Customer/5973979234340';
+  let company_shopify_id = 'gid://shopify/Customer/6208973144100';
 
   useEffect(() => {
     // This will be part of client sign in.

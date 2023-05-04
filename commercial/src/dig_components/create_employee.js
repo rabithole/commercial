@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 function CreateEmployee(props) {
 	// Pulling in company ID to set in the memberships table
@@ -115,7 +115,7 @@ function CreateEmployee(props) {
 					onChange={handleChange} 
 					
 				/>*/}
-				<NumberFormat 
+				<NumericFormat 
 					format='(###)###-####' 
 					mask="_"
 					type='text' 

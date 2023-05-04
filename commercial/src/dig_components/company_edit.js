@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { useNavigate, useLocation } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 function CompanyEdit(props) {
 	const backToCompany = useNavigate();
@@ -151,7 +151,7 @@ function CompanyEdit(props) {
 
 				<div>
 					<label>Phone:</label><br/>
-					<NumberFormat  
+					<NumericFormat  
 						format='###-###-####'
 						mask="_"
 						type='text' 

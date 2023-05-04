@@ -17,6 +17,7 @@ function SingleCompany(props) {
 		axios
 			.get('http://localhost:5080/companies/company/' + id)
 			.then(function(response) {
+				console.log('response', response.data)
 				setLocalCompanyData(response.data);
 				getShopifyCompanyData(response.data.shopify_id, response.data.cost_plus, id)
 			})
@@ -65,32 +66,6 @@ function SingleCompany(props) {
 					console.log('error company.js')
 				})
   	}
-
-  	// const deleteEmployee = (id, event, item) => {
-  	// 	console.log('current target', localCompanyData.employees[1], id)
-	//     	axios.delete('http://localhost:5080/employees/' + id)
-	//       		.then(res => {
-	//         		console.log('This employee has been deleted', localCompanyData);
-	//       })
-
-  	// 	// setTimeout(() => {
-	// 		location(-1)
-	// 	// }, '500');
-  	// }
-
-  	// const formatPhoneNumber = (str) => {
-	// 	//Filter only numbers from the input
-	// 	let cleaned = ('' + str).replace(/\D/g, '');
-
-	// 	//Check if the input is of correct length
-	// 	let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-	// 	if (match) {
-	// 		return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-	// 	};
-
-	// 	return null
-	// };
 
 	let tag = false;
 	if(shopifyData.length === 0){
@@ -157,54 +132,6 @@ function SingleCompany(props) {
 			<button onClick={deleteItemCompany}>Delete Company</button>
 
 			<h2 id='companyH2'>Employees</h2>
-			
-			{/*<Link 
-				to='/employees/create_employee'
-				id='create_employee_button'
-				// state is passing the id of the company a new employee is being created for 
-				state={{id: id, companyName: localCompanyData.name}}
-				>Add Employee
-			</Link>*/}
-
-			{/* List of employees working for or with the company */}
-			{/*<section>
-				{primaryEmployee.map((employee) => (
-					<div className='employee_list' key={ employee.id }>
-						<p><b>Name:</b> { employee.first_name } { employee.last_name }</p>
-						<p><b>Phone:</b> { formatPhoneNumber(employee.phone) }</p>
-						<p><b>Email:</b> { employee.email }</p>
-						<p><b>Title:</b> { employee.title }</p>
-						<p>{employee.id}</p>
-
-						<label>Check if primary contact</label>
-						<input 
-							type='checkbox' 
-							id='primary-contact' 
-							name='primary-contact'
-							onChange={event => checkForPrimaryContact(event, employee.id)}
-							checked={employee.primary}
-						>
-						</input>
-						<blockquote className='notes'>{ employee.notes }</blockquote>
-						<Link 
-							to='/employee_edit'
-							state={{ 
-								firstName: employee.first_name,
-								lastName: employee.last_name,
-								phone: employee.phone,
-								email: employee.email,
-								title: employee.title,
-								employeeId: employee.id,
-								employeeNotes: employee.notes
-							 }}
-							>Edit Employee Info
-						</Link>
-						<button onClick={ () => deleteEmployee(employee.id)}>Delete Employee</button>
-					</div>
-				))}
-			</section>*/}
-
-			
 		</div>
 	)
 }

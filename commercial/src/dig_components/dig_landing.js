@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import '../css/companies.css';
 import CompaniesList from './companies_list';
 import DigHeader from './dig_header';
-import Company from './company';
+import SingleCompany from './company';
 import CreateCompany from './create_company';
 
 function DigLanding(props) {
@@ -14,8 +14,8 @@ function DigLanding(props) {
 		<div className='company_list_container'>
 			<DigHeader />
             <Routes>
+                <Route path='/company/:id' element={<SingleCompany />} />
                 <Route path='/companies_list' element={<CompaniesList />} /> 
-                <Route path='/company:id' element={<Company />} />
                 <Route path='/create_company' element={<CreateCompany />} />
             </Routes>
             

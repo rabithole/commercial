@@ -5,6 +5,7 @@ import axios from 'axios';
 function SignInSignUp() {
   const [credentials, setCredentials] = useState({});
   const [whoIsSigningIn, setWhoIsSignedIn] = useState(false);
+  const [employeeOrClient, setemployeeOrClient] = useState('');
   console.log('creds---', credentials)
 
   const navigate = useNavigate();
@@ -28,21 +29,30 @@ function SignInSignUp() {
 
   function ClientEmployee(cliemp) {
     setWhoIsSignedIn(true);
+    setemployeeOrClient(cliemp);
 
     if(cliemp == 'employee'){
       employeeClient = 'employee';
-      navigate('/dig_landing/companies_list')
+      // if(credentials){
+      //   navigate('/dig_landing/companies_list')
+      // }else{
+      //   console.log('no credentials')
+      // }
     }
     if(cliemp == 'client'){
       employeeClient = 'client';
-      navigate('/client_landing/client_vitals')
+      // if(credentials){
+      //   navigate('/client_landing/client_vitals')
+      // }else{
+      //   console.log('no credentials')
+      // }
     }
     console.log('Client employee function', employeeClient)
   }
 
   return (
     <div className='sign_in_sign_up'>
-        <h1>Client or Employee</h1>
+        {employeeOrClient == 'client' ? <h1>Cultivator</h1> : <h1>Employee</h1>}
         {whoIsSigningIn == false ? 
           <section className='client_employee'>
             <button onClick={() => ClientEmployee('employee')}>DIG Employees</button>

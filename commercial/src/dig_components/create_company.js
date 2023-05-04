@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useNavigate } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 function CreateCompany(props) {
 	const dashboard = useNavigate();
@@ -163,7 +163,7 @@ function CreateCompany(props) {
 
 				<div>
 					<label>Phone:</label><br/>
-					<NumberFormat  
+					 <NumericFormat 
 						format='###-###-####'
 						mask="_"
 						type='text' 
