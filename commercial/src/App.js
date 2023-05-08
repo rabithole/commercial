@@ -1,5 +1,6 @@
-import React, { } from 'react';
+import { React, useReducer } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { AuthProvider } from 'react-auth-kit';
 // import axios from 'axios';
 import CompaniesList from './dig_components/companies_list';
 // import Company from './dig_components/company';
@@ -19,8 +20,20 @@ import SignInSignUp from './client_components/sign_in_sign_up';
 
 function App() {
   // let { companyId } = useParams();
+  // const [state, dispatch] = useReducer(AuthReducer, {
+  //   user: JSON.parse(localStorage.getItem("user")) || INITIAL_STATE.user,
+  //   loading: INITIAL_STATE.loading,
+  //   error: INITIAL_STATE.error,
+  // });
+  
 
   return (
+    // <AuthProvider
+    //   authType={'localstorage'}
+    //   authName={'_auth'}
+    //   cookieDomain={window.location.hostname}
+    //   cookieSecure={window.location.protocol === 'https:'}
+    // >
     <BrowserRouter>
       <div className="App">
         <Routes>
@@ -42,6 +55,7 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+    // </AuthProvider>
   );
 }
 

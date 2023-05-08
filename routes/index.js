@@ -1,6 +1,8 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-console.log('index.js')
+console.log('index.js');
 
 let parsingCosts = require('./unitCost.json');
 let shapedArray = require('./shapedArray.json');
@@ -26,6 +28,7 @@ const getUnitCostBySku = require('./get_unit_cost_by_sku');
 const createDraftOrder = require('./create_draft_order');
 const backwardProductCollection = require('./shopify_collection_backward_pagination');
 const shopifyApiProductSearch = require('./shopify_product_search');
+// const authRouter = require('./auth_router');
 
 // const { response } = require('express');
 const app = express();
@@ -40,6 +43,7 @@ app.use('/order_Line_Items', orderLineItemsController);
 app.use('/orders', ordersController);
 app.use('/unit_costs_controller', setUnitCosts);
 app.use('/costs_by_sku', getUnitCostBySku);
+// app.use('/register', authRouter);
 
 // Shopify graphql API endpoints
 app.use('/shopify_create_company', shopifyCreateCompany);

@@ -9,7 +9,6 @@ import CreateCompany from './create_company';
 
 function DigLanding(props) {
 
-
 	return (
 		<div className='company_list_container'>
 			<DigHeader />

@@ -1,11 +1,15 @@
 const express = require('express');
 const Credentials = require('../db/models/credentials.js');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+console.log('credentials controller')
 
 const router = express.Router();
 
 router.use(express.json());
 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
     console.log('New Credentials here', req.body)
     await Credentials.query().insert(req.body)
     .then(data => {

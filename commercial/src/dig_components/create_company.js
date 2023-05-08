@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { NumericFormat } from 'react-number-format';
+import { PatternFormat } from 'react-number-format';
 
 function CreateCompany(props) {
 	const dashboard = useNavigate();
@@ -74,7 +74,7 @@ function CreateCompany(props) {
         		console.log('error in getCompanyData in create_company.js', error)
         	})
 
-		axios.post('http://localhost:5080/credentials', {
+		axios.post('http://localhost:5080/credentials/register', {
 			shopifyId: newCompanyData.shopify_id,
 			username: newCompanyData.username,
 			password: newCompanyData.password
@@ -115,6 +115,8 @@ function CreateCompany(props) {
 			<nav>
 				<Link to='/dig_landing/companies_list'>Back to List of Companies</Link>
 			</nav>
+
+			<h1>Create A New Company</h1>
 		
 			<h2>Input Company Information</h2>
 
@@ -163,8 +165,8 @@ function CreateCompany(props) {
 
 				<div>
 					<label>Phone:</label><br/>
-					 <NumericFormat 
-						format='###-###-####'
+					 <PatternFormat 
+						format='(###)-###-####'
 						mask="_"
 						type='text' 
 						id='phone'
