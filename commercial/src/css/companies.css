@@ -1,11 +1,47 @@
 /* Global */
+.App {
+	/*text-align: center;*/
+	margin: auto;
+	width: 90%;
+}
+
+.client_header {
+	background-color: #282c34;
+	/*min-height: 100vh;*/
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+  
+.client_header a {
+	color: white;
+}
+
+.dig_header {
+	background-color: #282c34;
+	/*min-height: 100vh;*/
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.dig_header a {
+	color: white;
+}
+
 
 /* List of all companies page */
-.company-list-container {
+.company_list_container {
 	text-align: center;
 }
 
-.company-cards-container {
+.company_cards_container {
 	margin: 15px 5px;
 	text-align: center;
 	display: flex;
@@ -24,12 +60,12 @@
 	border: 5px solid white;
 }
 
-.company-cards-container a {
+.company_cards_container a {
 	color: black;
 	text-decoration: none;
 }
 
-.company-card {
+.company_card {
 	background-color: lightgrey;
 	text-align: left;
 	width: 350px;
@@ -40,20 +76,20 @@
 	flex-wrap: wrap;*/
 }
 
-.company-card div {
+.company_card div {
 /*	display: flex;
 	flex-direction: row;
 	justify-content: space-around;*/
 }
 
-.company-card button {
+.company_card button {
 	width: 200px ;
 	padding: 5px 20px;
 
 }
 
 @media only screen and ( max-width: 600px ) {
-	.company-card div {
+	.company_card div {
 		flex-direction: column;
 	}
 }
@@ -64,16 +100,6 @@ input {
 	background-color: lightgrey;
 	box-shadow: 5px 5px 5px black;
 	font-size: large;
-}
-
-.inside-card {
-	/*display: flex;
-	flex-direction: column;
-	padding: 5px;*/
-}
-
-.inside-card p {
-	/*margin: 0px;*/
 }
 
 #notes {
@@ -181,12 +207,19 @@ button {
 	background-color: #23453D;
 	padding: 8px 15px;
 	border-radius: 5px;
+	height: 50px;
 }
 
 .company button {
 	margin-top: 20px;
 	margin-left: 20px;
 	box-shadow: 5px 5px 8px lightblue;
+}
+
+#clearDraftOrder {
+	position: absolute;
+	bottom: 5px;
+	right: 15px;
 }
 
 .company h2 {
@@ -234,16 +267,32 @@ nav a {
 	color: black;
 }
 
+#nextPageButton {
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+#nextPageButton:hover {
+	background-color: #7FB38E;
+}
+
 .product_collections {
 	border: 2px solid green;
 	padding: 10px;
 	margin-top: 20px;
 	margin-bottom: 40px;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .product_collections a {
 	text-decoration: none;
 	color: black;
+	width: 300px;
+	background-color: #7FB38E;
+	border: 1px solid black;
+	margin: 5px;
+	padding: 5px;
 }
 
 .product_collections a:hover {
@@ -252,10 +301,27 @@ nav a {
 
 #product_search {
 	margin-left: 30px;
+	margin-bottom: 20px;
 }
 
 
 /* Product Collection and Collections nav */
+#variant_container {
+	position: relative;
+	border: 1px solid black;
+	background-color: lightgrey;
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	padding-top: 40px;
+}
+
+#draftOrderButton {
+	position: absolute;
+	right: 70px;
+	top: 5px;
+}
+
 .collectionLinks {
 	margin-right: 30px;
 	background-color: #7FB38E;
@@ -267,7 +333,7 @@ nav a {
 	/*box-shadow: 0 3px 0 0 black;*/
 }
 
-.collectionProducts {
+.collection_products {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -275,7 +341,7 @@ nav a {
 	padding: 20px;
 }
 
-.collectionProduct {
+.collection_product {
 	width: 300px;
 	height: auto;
 	padding: 5px;
@@ -286,13 +352,181 @@ nav a {
 	position: relative;
 }
 
-.collectionProduct button {
+.collection_product button {
 	position: absolute;
 	bottom: 5px;
 	left: 5px;
 }
 
-.collectionProduct img {
+.collection_product img {
 	width: 40%;
 	margin-bottom: 60px;
+}
+
+.collection_product a {
+	text-decoration: none;
+}
+
+.product_image {
+	width: 200px;
+}
+
+.add_to_order {
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	border: 1px solid black;
+	padding: 10px;
+	margin: 10px 5px 10px 5px;
+	background-color: white;
+}
+
+.client_cost {
+	border: 1px solid black;
+	width: 200px;
+	text-align: center;
+	background-color: rgba(140, 255, 26, .5);
+	font-size: 20px;
+	box-shadow: 4px 4px 4px black;
+}
+
+.product_quantity {
+	margin-top: 0;
+	margin-bottom: 30px;
+	font-size: 20px;
+	border: 1px solid black;
+	width: 150px;
+	text-align: center;
+	background-color: rgba(140, 255, 26, .5);
+	box-shadow: 4px 4px 4px black;
+}
+
+.inside_order_box {
+	flex-direction: column;
+}
+
+.popUp {
+	visibility: hidden;
+	position: absolute;
+	top: 40%;
+	left: 20%;
+	background-color: grey;
+	padding: 50px;
+	border: solid 2px black;
+}
+
+.show {
+	visibility: visible;
+	position: absolute;
+	top: 40%;
+	left: 20%;
+	background-color: grey;
+	padding: 50px;
+	border: solid 2px black;
+}
+
+
+/* Client landing page */
+.client_vitals {
+	border: 1px solid black;
+	margin-top: 30px;
+	padding: 10px;
+	background-color: lightgray;
+}
+
+.client_vitals h1 {
+	background-color: #7FB38E;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+
+/* Prodcut Page */
+.quantity {
+	margin: 5px;
+}
+
+#productDraftOrder {
+	display: flex;
+}
+
+.draftOrderBox {
+	border: 2px solid black;
+	width: 90%;
+	height: auto;
+	margin-bottom: 20px;
+	padding: 20px;
+	padding-bottom: 50px;
+	background-color: #7FB38E;
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	min-height: 300px;
+}
+
+.currentOrder {
+	margin: 10px;
+	margin-top: 40px;
+	border: 2px solid black;
+	padding: 5px;
+	width: 200px;
+	height: 300px;
+	background-color: lightgray;
+}
+
+.currentOrder h4 {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+#currentDraftOrderH2 {
+	/* position: relative;
+	left: 20%; */
+	margin-left: 30%;
+}
+
+.currentOrder p {
+	margin: 0;
+}
+
+#removeItemButton {
+	height: 40px;
+	margin-top: 10px;
+}
+
+
+/* Sign in sign up page */
+#username {
+	margin-bottom: 20px;
+}
+
+.sign_in_sign_up {
+	border: 1px solid black;
+	margin-top: 30px;
+	padding: 10px;
+	background-color: lightgray;
+	height: 70vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.sign_in_sign_up form input {
+	width: 350px;
+}
+
+#password {
+	margin-left: 5px;
+}
+
+.client_employee {
+	display: flex;
+}
+
+.client_employee button {
+	margin: 10%;
+	justify-content: center;
+	flex-direction: row;
+	width: 350px;
 }

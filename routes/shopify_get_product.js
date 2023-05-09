@@ -14,18 +14,22 @@ router.use(express.json());
 
 router.post('/', async (request, response) => {
     let product_id = JSON.stringify(request.body.id);
-    console.log('The Requesting body, shopify_get_product.js', product_id);
 
     let getProduct =`{
            product(id: ${product_id}) {
                id 
                title
+               description
+               featuredImage{
+                url
+               }
                variants(first: 30){
                 edges{
                     node{
                         id 
                         title
                         sku
+                        weight
                     }
                 }
                }

@@ -18,7 +18,7 @@ function SingleCompany(props) {
 			.catch(error => {
 				console.log('Error, error, error', error)
 			})
-	},[]);
+	},[id]);
 
 	const deleteItem = (event, item) => {
 	    event.preventDefault();

@@ -6,7 +6,6 @@ import '../css/companies.css';
 function CompaniesList(props) {
 	const [companiesList, setCompanyList] = useState([]);
 	const [searchedForCompany, setCompanyFilter] = useState([])
-	const [employees, setEmployees] = useState([]);
 
 	// Full list of companies
 	useEffect( () => {
@@ -27,14 +26,14 @@ function CompaniesList(props) {
 	}
 
 	return (
-		<div className='company-list-container'>
-			<Link to={'create_company'} id='create_company_button'>Create Company</Link>
+		<div className='company_list_container'>
+			<Link to={'/dig_landing/create_company'} id='create_company_button'>Create Company</Link>
 				<form>
 					<h3>Search for Company by Name</h3>
 					<input type='text' id='name' name='name' onChange={getCompanyName}></input>
 				</form>
 
-			<section className='company-cards-container'>
+			<section className='company_cards_container'>
 
 				{/* Filters list of Companies */}
 				{companiesList.filter((company) => {
@@ -45,11 +44,11 @@ function CompaniesList(props) {
 					}
 				}).map(({ company_name, cost_plus, annual_revenue, id, note, first_name, last_name, phone}) => (
 					
-						<div className='company-card' key={id}>
-							<Link to={`companies/company${id}`}>
+						<div className='company_card' key={id}>
+							<Link to={`/dig_landing/company/${id}`}>
 								<h3>{company_name}</h3>
 
-								<div className='inside-card'>
+								<div>
 									{/* Markup percentage to be entered from individual companies page */}
 									<p>Markup: {cost_plus}%</p>
 
@@ -59,17 +58,10 @@ function CompaniesList(props) {
 									{/* Besure to process annual revenue in dollars from the companies model or where ever becomes appropriate */}
 									<p>Annual Revenue: ${new  Intl.NumberFormat().format(annual_revenue)}</p>
 								</div>
-
-								{/*<div className='inside-card'>
-									<p>Primary Contact</p>
-									<p>Phone:</p>
-									<p>Email:</p>
-								</div>*/}
-
+								<p>ID: {id}</p>
 								<p id='notes'>{note}</p>
 							</Link>
 						</div>
-					
 				))}
 			</section>
 		</div>

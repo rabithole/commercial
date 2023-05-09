@@ -2,6 +2,7 @@ const { Model } = require('objection');
 const db = require('../../db/testDb.js')
 const Employee = require('./employees_model');
 const Memberships = require('./memberships_model');
+const Credentials = require('./credentials');
 
 Model.knex(db)
 
@@ -23,6 +24,14 @@ class Company extends Model {
             },
           to: 'employees.id'
         } 
+      },
+      credentials: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Credentials,
+        join: {
+          from: 'companies.id',
+          to: 'credentials.id'
+        }
       }
     }
   }

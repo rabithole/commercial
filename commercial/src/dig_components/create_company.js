@@ -1,32 +1,29 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/companies.css';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+import { Link, useNavigate } from 'react-router-dom';
+import { PatternFormat } from 'react-number-format';
 
 function CreateCompany(props) {
-	// console.log('Create Company Refresh')
 	const dashboard = useNavigate();
 	const digDashboard = () => {
 		setTimeout(() => {
-			dashboard("/")
+			dashboard("/dig_landing/companies_list")
 		}, 1000)
 	}
 
 	const [newCompany, setCompanyData] = useState({});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
-	console.log('New Company', newCompany);
-	console.log('Primary Contact', primaryContact);
-	console.log('Company', company);
+	const [credentials, setCredentials] = useState({});
+
+	console.log('new company----', newCompany)
 
 	function createShopifyCompany(event){
 		event.preventDefault();
 	    axios.post('http://localhost:5080/shopify_create_company', company)
 	      .then((response) => {
-	      	let companyId = response.data;
-	      	// setCompanyId(response.data);
-	        console.log('Response admin api', companyId);
+	      	let companyId = response.data.id;
 	      	updateLocalCompanyData({
 	      		shopify_id: companyId,
 	      		company_name: newCompany.company,
@@ -35,7 +32,9 @@ function CreateCompany(props) {
 	      		cost_plus: newCompany.cost_plus, 
 	      		note: newCompany.note, 
 	      		phone: primaryContact.phone,
-	      		email: primaryContact.email
+	      		email: primaryContact.email,
+				username: credentials.username,
+				password: credentials.password
 	      	});
 	      	digDashboard();
 	      })
@@ -49,19 +48,43 @@ function CreateCompany(props) {
 				},
 				addresses: {
 					...newCompany
+				},
+				credentials: {
+					...credentials
 				}
 			}
 		)
-	},[company]);
+	},[company, newCompany, primaryContact]);
 
 	function updateLocalCompanyData(newCompanyData){
-		axios.post('http://localhost:5080/companies', newCompanyData)
+		axios.post('http://localhost:5080/companies', {
+			shopify_id: newCompanyData.shopify_id,
+			company_name: newCompanyData.company_name,
+			first_name: newCompanyData.first_name,
+			last_name: newCompanyData.last_name,
+			cost_plus: newCompanyData.cost_plus,
+			note: newCompanyData.note,
+			phone: newCompanyData.phone,
+			email: newCompanyData.email
+		})
         	.then((res) => {
         		console.log('pass to local company state in create_company.js', res.data)
         	})
         	.catch(error => {
         		console.log('error in getCompanyData in create_company.js', error)
         	})
+
+		axios.post('http://localhost:5080/credentials/register', {
+			shopifyId: newCompanyData.shopify_id,
+			username: newCompanyData.username,
+			password: newCompanyData.password
+		})
+			.then((res) => {
+				console.log('credentials end point---', res.data)
+			})
+			.catch((error) => {
+				console.log('error', error)
+			})
 	}
 
 	const companyChange = (event) => {
@@ -80,13 +103,22 @@ function CreateCompany(props) {
 		companyData();
 	}
 	
+	const credentialsChange = event => {
+		setCredentials({
+			...credentials,
+			[event.target.name]: event.target.value,
+		})
+		companyData();
+	}
 	return (
 		<div className='company'>
 			<nav>
-				<Link to='/'>Back to List of Companies</Link>
+				<Link to='/dig_landing/companies_list'>Back to List of Companies</Link>
 			</nav>
+
+			<h1>Create A New Company</h1>
 		
-			<h2>Input Your Company Information</h2>
+			<h2>Input Company Information</h2>
 
 			<form onSubmit={createShopifyCompany}> 
 				<div>
@@ -96,7 +128,6 @@ function CreateCompany(props) {
 						id='name'
 						name='company'
 						onChange={companyChange}
-						 
 						autoFocus
 					/>
 				</div>
@@ -112,7 +143,7 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
-					<h3>Primary Contact</h3>
+					<h2>Primary Contact</h2>
 					<label>First Name</label>
 					<input
 						type='text'
@@ -134,8 +165,8 @@ function CreateCompany(props) {
 
 				<div>
 					<label>Phone:</label><br/>
-					<NumberFormat  
-						format='###-###-####'
+					 <PatternFormat 
+						format='(###)-###-####'
 						mask="_"
 						type='text' 
 						id='phone'
@@ -155,7 +186,7 @@ function CreateCompany(props) {
 				</div>
 
 				<div>
-					<h3>Company Address</h3>
+					<h2>Company Address</h2>
 					<label>Street:</label><br/>
 					<input 
 						type='text' 
@@ -224,6 +255,29 @@ function CreateCompany(props) {
 						onChange={companyChange} 
 					>
 					</textarea>
+				</div>
+
+				<h2>Username & Password</h2>
+				<div>
+					<label>Username:</label>
+					<input
+						type='text'
+						name='username'
+						id='username'
+						onChange={credentialsChange}
+					>
+					</input>
+				</div>
+
+				<div>
+					<label>Password</label>
+					<input
+						type='text'
+						name='password'
+						id='firstPassword'
+						onChange={credentialsChange}
+					>
+					</input>
 				</div>
 
 				<button>Create Company</button>

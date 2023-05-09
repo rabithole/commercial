@@ -1,7 +1,21 @@
 # To Do List
+------- REMEMBER NODEMON WON'T ALLOW THE UNIT COSTS UPDATE TO FINNISH ---------
+------------------ USE ( NPM START ) ----------------
+
 - Add restrictions to making duplicate companies etc
+- Set unit cost query process to a regular schedule when deployed.
+- Update company info without having to make a change in every form field. 
+- TypeError in product collection when paginating
+- refine product search more... Add regex to local array of products
+- add notes to draft order submision
+- Error handling if product does not have an accurate price displayed.
+- Implement login and account creation for clients
+- Error handling for all graphQl calls
+- Product search error handling when image isn't available
+- Add ternary operator for sign in or sign up page
 
 - Login and protected route emplementation
+--- This will set the company Shopify ID.
 - Headers and footers per page context
 - Place a link to each Graphql endpoint in their perspective route file. 
 
