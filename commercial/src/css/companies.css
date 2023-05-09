@@ -145,6 +145,11 @@ blockquote {
 	box-shadow: 5px 5px 8px lightblue;
 }
 
+.company a:hover {
+	background-color: yellow;
+	color: black;
+}
+
 .employee_list {
 	border: 2px solid black;
 	padding: 10px;

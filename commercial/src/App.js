@@ -1,6 +1,6 @@
 import { React, useReducer } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AuthProvider } from 'react-auth-kit';
+// import { AuthProvider } from 'react-auth-kit';
 // import axios from 'axios';
 import CompaniesList from './dig_components/companies_list';
 // import Company from './dig_components/company';

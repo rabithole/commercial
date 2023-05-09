@@ -87,6 +87,19 @@ function CreateCompany(props) {
 			})
 	}
 
+	function runRegister(){
+		axios.post('http://localhost:5080/credentials/register', {
+			username: 'bobo',
+			password: 'hashed'
+		})
+			.then((res) => {
+				console.log('credentials end point---', res.data)
+			})
+			.catch((error) => {
+				console.log('error', error)
+			})
+	}
+
 	const companyChange = (event) => {
 		setCompanyData({
 			...newCompany,
@@ -114,6 +127,7 @@ function CreateCompany(props) {
 		<div className='company'>
 			<nav>
 				<Link to='/dig_landing/companies_list'>Back to List of Companies</Link>
+				<button onClick={runRegister}>Testing Creds</button>
 			</nav>
 
 			<h1>Create A New Company</h1>

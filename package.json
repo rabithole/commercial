@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
-    "senv": "^1.0.2"
+    "senv": "^1.0.2",
+    "web-vitals": "^3.3.1"
   }
 }
