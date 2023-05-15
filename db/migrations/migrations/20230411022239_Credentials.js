@@ -7,7 +7,7 @@ exports.up = function(knex) {
     table.increments();
     table.text('username').notNullable();
     table.text('password').notNullable();
-    table.text('shopifyId').notNullable().unique();
+    table.text('shopify_id').notNullable().unique();
   })
 };
 

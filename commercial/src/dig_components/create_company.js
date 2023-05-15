@@ -57,6 +57,18 @@ function CreateCompany(props) {
 	},[company, newCompany, primaryContact]);
 
 	function updateLocalCompanyData(newCompanyData){
+		axios.post('http://localhost:5080/credentials/register', {
+			shopify_id: newCompanyData.shopify_id,
+			username: newCompanyData.username,
+			password: newCompanyData.password
+		})
+			.then((res) => {
+				console.log('credentials end point---', res.data)
+			})
+			.catch((error) => {
+				console.log('error', error)
+			})
+
 		axios.post('http://localhost:5080/companies', {
 			shopify_id: newCompanyData.shopify_id,
 			company_name: newCompanyData.company_name,
@@ -73,18 +85,6 @@ function CreateCompany(props) {
         	.catch(error => {
         		console.log('error in getCompanyData in create_company.js', error)
         	})
-
-		axios.post('http://localhost:5080/credentials/register', {
-			shopifyId: newCompanyData.shopify_id,
-			username: newCompanyData.username,
-			password: newCompanyData.password
-		})
-			.then((res) => {
-				console.log('credentials end point---', res.data)
-			})
-			.catch((error) => {
-				console.log('error', error)
-			})
 	}
 
 	function runRegister(){

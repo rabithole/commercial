@@ -8,7 +8,7 @@ router.use(express.json());
 // List of companies with employees
 router.get('/', (req, res) => {
     // console.log('req, res', req, res)
-    Company.query().withGraphFetched('employees')
+    Company.query()
         .then(company => {
             res.status(200).json(company);
             // console.log(process.env.SECRET_KEY);
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 router.get('/company/:id', async (req, res) => {
     let id = req.params.id;
 
-    await Company.query().findOne({ id: id }).withGraphFetched('employees')
+    await Company.query().findOne({ id: id })
         .then(data => {
             res.status(200).json(data)
         })

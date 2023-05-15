@@ -13,18 +13,18 @@ class Company extends Model {
 
   static get relationMappings() {
     return {
-      employees: {
-        relation: Model.ManyToManyRelation,
-        modelClass: Employee,
-        join: {
-          from: 'companies.id',
-            through: {
-              from: 'memberships.company_id',
-              to: 'memberships.user_id'
-            },
-          to: 'employees.id'
-        } 
-      },
+      // employees: {
+      //   relation: Model.ManyToManyRelation,
+      //   modelClass: Employee,
+      //   join: {
+      //     from: 'companies.id',
+      //       through: {
+      //         from: 'memberships.company_id',
+      //         to: 'memberships.user_id'
+      //       },
+      //     to: 'employees.id'
+      //   } 
+      // },
       credentials: {
         relation: Model.BelongsToOneRelation,
         modelClass: Credentials,

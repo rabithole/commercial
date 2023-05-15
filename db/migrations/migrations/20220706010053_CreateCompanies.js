@@ -21,7 +21,7 @@ exports.up = function(knex) {
         table.float('annual_revenue').unsigned(); // Foreign key? 
         table.integer('user_id').references('id').inTable('employees').onUpdate('CASCADE').onDelete('CASCADE');
         table.string('note', 1000);
-        table.string('shopify_id').references('shopifyId').inTable('credentials').onUpdate('CASCADE').onDelete('CASCADE');
+        table.string('shopify_id').references('shopify_id').inTable('credentials').onUpdate('CASCADE').onDelete('CASCADE');
     })
 };
 
