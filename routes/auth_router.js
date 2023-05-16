@@ -1,4 +1,5 @@
 const express = require('express');
+const Credentials = require('../db/models/credentials.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 // const Users = require('../users/users-model');
@@ -9,20 +10,22 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     console.log('register end point reached')
-    // let user = req.body;
-    // const hash = bcrypt.hashSync(user.password, 5);
-    // user.password = hash;
+    let user = req.body;
+    const hash = bcrypt.hashSync(user.password, 8);
+    user.password = hash;
 
-    // Users.add(user)
-    // .then(saved => {
-    //     const token = genToken(user, saved.id);
-    //     res.status(201).json({message: `Registration successful ${user.username}!`, token: token });
-    // })
-    // .catch(error => {
-    //     res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
-    // })
+    await Credentials.query().insert(req.body)
+    .then(data => {
+        console.log(data)
+        const token = genToken(user, data.id);
+        console.log(data)
+        res.status(201).json({message: `Registration successful ${user.username}!`, token: token });
+    })
+    .catch(error => {
+        res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
+    })
 })
 
 router.post('/login', (req, res) => {

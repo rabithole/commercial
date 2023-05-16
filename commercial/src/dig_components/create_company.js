@@ -57,7 +57,7 @@ function CreateCompany(props) {
 	},[company, newCompany, primaryContact]);
 
 	function updateLocalCompanyData(newCompanyData){
-		axios.post('http://localhost:5080/credentials/register', {
+		axios.post('http://localhost:5080/register/register', {
 			shopify_id: newCompanyData.shopify_id,
 			username: newCompanyData.username,
 			password: newCompanyData.password
