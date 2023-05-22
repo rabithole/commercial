@@ -28,22 +28,23 @@ router.post('/register', async (req, res) => {
     })
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     let { username, password } = req.body;
-
-    Users.findBy({ username })
-    .first()
-    .then(user => {
-        if(user && bcrypt.compareSync(password, user.password)) {
-            const token = genToken(user, user.id);
-            res.status(202).json({message: `Welcome ${user.username}!`, token})
-        } else {
-            res.status(401).json({message: 'Invalid username or password'});
-        }        
-    })
-    .catch(error => {
-        res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
-    })
+    console.log('username & password', username, password)
+    await Credentials.query().findOne({username: username})
+        .then(credentials => {
+            console.log('.then in find username', credentials)
+            // res.status(200).json(credentials)
+            if(credentials && bcrypt.compareSync(password, credentials.password)) {
+                const token = genToken(credentials, credentials.id);
+                res.status(202).json({message: `Welcome ${credentials.username}!`, token})
+            } else {
+                res.status(401).json({message: 'Invalid username or password'});
+            }        
+        })
+        .catch(error => {
+            res.status(500).json({message: 'Internal Server Error, Error Returned: ' + error })
+        })
 })
 
 function genToken(user, id) {

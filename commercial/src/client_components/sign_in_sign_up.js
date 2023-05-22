@@ -50,6 +50,23 @@ function SignInSignUp() {
     console.log('Client employee function', employeeClient)
   }
 
+  function signIn(){
+    console.log('send credentials')
+    let username = credentials.username;
+    let password = credentials.password;
+
+    axios.post('http://localhost:5080/register/login', {
+      username: username,
+      password: password
+    })
+    .then((res) => {
+      console.log('.then', res.data)
+    })
+    .catch((error) => {
+      console.log('catch')
+    })
+  }
+
   return (
     <div className='sign_in_sign_up'>
         {employeeOrClient == 'client' ? <h1>Cultivator</h1> : <h1>Employee</h1>}
@@ -76,6 +93,7 @@ function SignInSignUp() {
             onChange={onChange}
             />
     </form>}
+          {whoIsSigningIn == true ? <button onClick={() => signIn()}>Submit</button> : <h1></h1>}
     </div>
   );
 }

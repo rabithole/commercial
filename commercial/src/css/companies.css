@@ -521,6 +521,10 @@ nav a {
 	width: 350px;
 }
 
+.sign_in_sign_up button {
+	margin-top: 20px;
+}
+
 #password {
 	margin-left: 5px;
 }

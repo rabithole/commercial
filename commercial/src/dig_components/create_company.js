@@ -12,7 +12,16 @@ function CreateCompany(props) {
 		}, 1000)
 	}
 
-	const [newCompany, setCompanyData] = useState({});
+	const [newCompany, setCompanyData] = useState({
+		address1: '',
+		address2: '',
+		city: '',
+		company: '',
+		cost_plus: '',
+		note: '',
+		state: '',
+		zip: ''
+	});
 	const [primaryContact, setPrimaryContact] = useState({});
 	const [company, setNewCompany] = useState();
 	const [credentials, setCredentials] = useState({});
